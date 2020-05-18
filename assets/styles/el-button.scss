@@ -1,0 +1,45 @@
+.el-button {
+    &--primary {
+      color: $color-second !important;
+      background-color: $color-primary !important;
+      border-color: $color-primary !important;
+  
+      &:hover {
+        background: mix($color-primary, $color-second,80%) !important;
+        border-color:  $color-primary !important;
+      }
+    }
+  
+    &--danger {
+      color: $color-second !important;
+      background: $color-danger !important;
+      border-color: $color-danger !important;
+  
+      &:hover {
+        background: mix($color-danger, $color-second,80%) !important;
+        border-color:  $color-danger !important;
+      }
+    }
+  
+    &--warning {
+      color: $color-second !important;
+      background: $color-warning !important;
+      border-color: $color-warning !important;
+  
+      &:hover {
+        background: mix($color-warning, $color-second,80%) !important;
+        border-color:  $color-warning !important;
+      }
+    }
+  
+    &--success {
+      color: $color-second !important;
+      background: $color-success !important;
+      border-color: $color-success !important;
+  
+      &:hover {
+        background: mix($color-success, $color-second,80%) !important;
+        border-color:  $color-success !important;
+      }
+    }
+  }

@@ -1,0 +1,13 @@
+.el-breadcrumb {
+    &__inner {
+      color: $color-primary !important;
+      &.is-link {
+        text-decoration: underline !important;
+      }
+    }
+  
+    &__separator {
+      color: $color-primary !important;
+    }
+  }
+  

@@ -1,0 +1,132 @@
+.el-table {
+    font-size: 14px;
+    color: $color-primary !important;
+    background-color: rgba($color-second, 1) !important;
+    border-radius: 5px !important;
+    height: calc(100vh - 170px);
+    &::before {
+      display: none !important;
+    }
+
+    @include hd-plus {
+      
+    }
+  
+    @include wsx {
+      font-size: 12px !important;
+    }
+  
+    @include hd {
+     
+    }
+  }
+
+  .el-table thead {
+    color: $color-second !important;
+  }
+
+  .el-table thead th {
+    background-color: $color-primary !important;
+  }
+
+  .el-table tr {
+    background-color: rgba($color-second, 0) !important;
+  }
+
+  .el-table td,
+  .el-table th.is-leaf {
+    border-bottom: 1px solid $color-primary !important;
+    border-right: 1px solid $color-primary !important;
+  }
+
+  .el-table th {
+    @include hd-plus {
+      padding: 10px 0 !important;
+    }
+  
+    @include wsx {
+      padding: 7px 0 !important;
+    }
+  
+    @include hd {
+      padding: 5px 0 !important;
+    }
+  }
+
+  .el-table td {
+    @include hd-plus {
+      padding: 10px 0 !important;
+    }
+  
+    @include wsx {
+      padding: 7px 0 !important;
+    }
+  
+    @include hd {
+      padding: 5px 0 !important;
+    }
+  }
+
+  .el-table td:last-child {
+    border-right: none !important;
+  }
+
+  .el-table--enable-row-hover .el-table__body tr:hover > td {
+    background-color: rgba($color-second, 0) !important;
+  }
+
+  .el-tag--primary {
+    background-color: rgba($color-success, 0.8) !important;
+    border-color: rgba($color-success, 0.8) !important;
+    display: inline-block;
+    height: 32px;
+    padding: 0 10px;
+    line-height: 30px;
+    font-size: 12px;
+    color: $color-second !important;
+
+    @include hd-plus {
+      height: 27px !important;
+      padding: 0 10px !important;
+      line-height: 25px !important;
+      font-size: 10px !important;
+    }
+
+    @include wsx {
+      height: 22px !important;
+      padding: 0 10px !important;
+      line-height: 20px !important;
+      font-size: 10px !important;
+    }
+  }
+
+  .el-tag--danger {
+    background-color: rgba($color-danger, 0.8) !important;
+    border-color: rgba($color-danger, 0.8) !important;
+    display: inline-block;
+    height: 32px;
+    padding: 0 10px;
+    line-height: 30px;
+    font-size: 12px;
+    color: $color-second !important;
+
+    @include hd-plus {
+      height: 27px !important;
+      padding: 0 10px !important;
+      line-height: 25px !important;
+      font-size: 10px !important;
+    }
+  
+    @include wsx {
+      height: 22px !important;
+      padding: 0 10px !important;
+      line-height: 20px !important;
+      font-size: 10px !important;
+    }
+  
+    @include hd {
+     
+    }
+
+    
+  }

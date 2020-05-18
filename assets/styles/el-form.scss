@@ -1,0 +1,54 @@
+.el-form-item.is-error .el-input__inner, .el-form-item.is-error .el-input__inner:focus, .el-form-item.is-error .el-textarea__inner, .el-form-item.is-error .el-textarea__inner:focus, .el-message-box__input input.invalid, .el-message-box__input input.invalid:focus {
+    border-color: $color-danger !important;
+  }
+
+  .el-form-item__label {
+    color: $color-primary !important;
+    line-height: 25px !important;
+}
+
+  .el-form-item__error {
+    color: $color-danger !important;
+  }
+
+  .el-input__inner, .el-textarea__inner {
+    border-color: $color-primary !important;
+    &:hover,
+    &:focus {
+      border-color: $color-primary !important;
+    }
+  }
+
+  .el-input--prefix .el-input__inner {
+    padding-left: 40px !important;
+  }
+
+  .el-input__prefix {
+    left: 10px !important;
+  }
+
+  .el-checkbox {
+    color: $color-primary !important;
+
+    &__inner {
+      border: 1px solid $color-primary !important;
+    }
+
+    &.is-bordered {
+      border: 1px solid $color-primary !important;
+
+      &.is-checked {
+        border: 1px solid $color-primary !important;
+        .el-checkbox__label {
+          color: $color-primary !important;
+        }
+        .el-checkbox__inner {
+          background-color: $color-primary !important;
+          border-color: $color-primary !important;
+        }
+      }
+    }
+  }
+  .el-checkbox__input.is-focus .el-checkbox__inner {
+    border-color: $color-primary !important;
+  }

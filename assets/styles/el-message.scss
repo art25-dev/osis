@@ -1,0 +1,43 @@
+.el-message {
+  border: 0 !important;
+
+  &-box {
+    background-color: $color-second !important;
+    border-radius: 5px !important;
+    border: 0px !important;
+    font-size: 18px;
+
+    &__status {
+      &.el-icon-warning {
+        color: $color-warning !important;
+      }
+    }
+
+    &__title,
+    &__content {
+      color: $color-primary !important;
+    }
+  }
+
+  &--info {
+    background: rgba($color-second, 0.8) !important;
+    .el-icon-info {
+      color: $color-primary !important;
+    }
+
+    .el-message__content {
+      color: $color-primary !important;
+    }
+  }
+
+  &--success {
+    background: rgba($color-success, 0.8) !important;
+    .el-icon-success {
+      color: $color-second !important;
+    }
+
+    .el-message__content {
+      color: $color-second !important;
+    }
+  }
+}
