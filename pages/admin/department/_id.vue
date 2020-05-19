@@ -53,6 +53,7 @@ export default {
       "department/fetchAdminById",
       params.id
     );
+    
     return { department };
   },
   data() {
@@ -107,6 +108,8 @@ export default {
             pathOldImage: this.currentImageFile
           };
 
+          console.log(formData);
+
           // Отправка объекта с данными формы в store/department.js и вызов Action update()
           try {
             await this.$store.dispatch("department/update", formData);
@@ -115,6 +118,8 @@ export default {
             this.$message.success("Изменения сохранены");
             this.loading = false;
           }
+        } else {
+          this.$message.warning("Форма не валидна");
         }
       });
     },
@@ -133,6 +138,7 @@ export default {
     this.controls.title = this.department.title;
     this.currentImagePreview = this.department.imageUrl;
     this.currentImageFile = this.department.imageUrl;
+    console.log(this.department);
   }
 };
 </script>

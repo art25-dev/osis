@@ -3,6 +3,8 @@ const multer = require('multer')
 const moment = require('moment')
 const cyrillicToTranslit = require("cyrillic-to-translit-js")
 
+
+
 const storage = multer.diskStorage({
   destination(req, file, cb) {
     cb(null, path.resolve(__dirname, '../..', 'static/images/departments'))

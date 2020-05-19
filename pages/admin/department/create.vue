@@ -92,6 +92,8 @@ export default {
             image: this.image
           };
 
+          console.log(formData);
+
           // Отправка объекта с данными формы в store/department.js и вызов Action create()
           try {
             await this.$store.dispatch("department/create", formData);

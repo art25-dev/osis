@@ -18,26 +18,45 @@ module.exports.create = async (req, res) => {
 }
 
 module.exports.update = async (req, res) => {
-  console.log(req.body);
-  const $set = {
-    title: req.body.title,
-    imageUrl: `/${req.file.filename}`
-  }
-  try {
-    const department = await Department.findOneAndUpdate({
-      _id: req.params.id,
-    }, { $set }, { new: true })
-    res.json(department)
-  } catch (e) {
-    res.status(500).json(e)
-  }
+  console.log(req.file.filename);
 
-  const pathFile = path.resolve(`static/images/departments${req.body['pathOldImage']}`)
-  fs.unlink(pathFile, (err) => {
-    if (err) throw err;
-    console.log("file deleted");
+  if (req.file.filename) {
+    const $set = {
+      title: req.body.title,
+      imageUrl: `/${req.file.filename}`
+    }
+    // Отправка запроса на изменение записи в БД
+    try {
+      const department = await Department.findOneAndUpdate({
+        _id: req.params.id,
+      }, { $set }, { new: true })
+      res.json(department)
+    } catch (e) {
+      res.status(500).json(e)
+    }
 
-  })
+    // Удаление старого файла
+    const pathFile = path.resolve(`static/images/departments${req.body['pathOldImage']}`)
+    fs.unlink(pathFile, (err) => {
+      if (err) throw err;
+      console.log("file deleted");
+  
+    })
+  } else {
+    const $set = {
+      title: req.body.title
+    }
+    // Отправка запроса на изменение записи в БД
+    try {
+      const department = await Department.findOneAndUpdate({
+        _id: req.params.id,
+      }, { $set }, { new: true })
+      res.json(department)
+    } catch (e) {
+      res.status(500).json(e)
+    }
+  } 
+ 
 }
 
 module.exports.getAll = async (req, res) => {

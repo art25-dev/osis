@@ -33,7 +33,9 @@ export const actions = {
     try {
       const fd = new FormData()
       fd.append("title", title)
-      fd.append("newImageFile", newImageFile, newImageFile.name)
+      if (!newImageFile) {
+        fd.append("newImageFile", null)
+      }
       fd.append("pathOldImage", pathOldImage)
 
       return await this.$axios.$put(`/api/department/admin/${id}`, fd)
