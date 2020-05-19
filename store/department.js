@@ -33,8 +33,8 @@ export const actions = {
     try {
       const fd = new FormData()
       fd.append("title", title)
-      if (!newImageFile) {
-        fd.append("newImageFile", null)
+      if (newImageFile) {
+        fd.append("newImageFile", newImageFile, newImageFile.name)
       }
       fd.append("pathOldImage", pathOldImage)
 

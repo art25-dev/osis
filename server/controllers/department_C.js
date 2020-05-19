@@ -18,9 +18,8 @@ module.exports.create = async (req, res) => {
 }
 
 module.exports.update = async (req, res) => {
-  console.log(req.file.filename);
 
-  if (req.file.filename) {
+  if (req.file) {
     const $set = {
       title: req.body.title,
       imageUrl: `/${req.file.filename}`
@@ -40,7 +39,7 @@ module.exports.update = async (req, res) => {
     fs.unlink(pathFile, (err) => {
       if (err) throw err;
       console.log("file deleted");
-  
+
     })
   } else {
     const $set = {
@@ -55,8 +54,8 @@ module.exports.update = async (req, res) => {
     } catch (e) {
       res.status(500).json(e)
     }
-  } 
- 
+  }
+
 }
 
 module.exports.getAll = async (req, res) => {

@@ -3,6 +3,8 @@ const upload = require("../middleware/upload")
 const department_C = require("../controllers/department_C")
 const router = Router()
 
+
+
 // /api/department/admin
 // Admin
 router.post(

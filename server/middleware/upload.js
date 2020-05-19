@@ -13,7 +13,6 @@ const storage = multer.diskStorage({
     const fileName = cyrillicToTranslit().transform(req.body.title, "_")
     const fileFormat = file.mimetype.split("/")[1]
     const fileDate = moment().format('HHmmss_SSS')
-
     cb(null, `${fileName}-${fileDate}.${fileFormat}`)
   }
 })
@@ -26,6 +25,8 @@ const fileFilter = (req, file, cb) => {
   }
 }
 
-module.exports = multer({
+const file = multer({
   storage, fileFilter, limits: { fileSize: 1024 * 1024 * 5 }
 })
+
+module.exports = file
