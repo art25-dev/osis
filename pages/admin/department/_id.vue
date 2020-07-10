@@ -14,7 +14,7 @@
     >
       <h2>Редактор подразделения</h2>
       <el-form-item prop="title">
-        <el-input placeholder="Заголовок" v-model="controls.title" maxlength="40" show-word-limit></el-input>
+        <el-input placeholder="Заголовок" v-model="controls.title" maxlength="60" show-word-limit></el-input>
       </el-form-item>
 
       <el-form-item class="mb-0">
