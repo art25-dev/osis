@@ -14,7 +14,7 @@
       >
         <h2>Редактор объявления</h2>
         <el-form-item prop="title">
-          <el-input placeholder="Заголовок" v-model="controls.title" maxlength="40" show-word-limit></el-input>
+          <el-input placeholder="Заголовок" v-model="controls.title" maxlength="60" show-word-limit></el-input>
         </el-form-item>
 
         <el-form-item prop="text">
@@ -22,7 +22,7 @@
             type="textarea"
             resize="none"
             :rows="15"
-            placeholder="Текст"
+            placeholder="Текст объявления"
             v-model="controls.text"
           >
             <font-awesome-icon class="icon" slot="prefix" icon="user" size="1x" />
