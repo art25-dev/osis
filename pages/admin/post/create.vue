@@ -121,23 +121,23 @@ export default {
   min-height: 100%;
 }
 
-.post-setting {
-  display: grid;
-  grid-template-columns: 35% 65%;
-  grid-template-rows: 1fr;
+// .post-setting {
+//   display: grid;
+//   grid-template-columns: 35% 65%;
+//   grid-template-rows: 1fr;
 
-  @include hd-plus {
-    grid-template-columns: 40% 60% !important;
-  }
+//   @include hd-plus {
+//     grid-template-columns: 40% 60% !important;
+//   }
 
-  @include wsx {
-    grid-template-columns: 45% 55% !important;
-  }
+//   @include wsx {
+//     grid-template-columns: 45% 55% !important;
+//   }
 
-  @include hd {
-    grid-template-columns: 50% 50% !important;
-  }
-}
+//   @include hd {
+//     grid-template-columns: 50% 50% !important;
+//   }
+// }
 
 // .post-form {
 //   padding-right: 2rem;
