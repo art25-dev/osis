@@ -4,7 +4,7 @@
       <el-breadcrumb-item to="/admin/post/">Все объявления</el-breadcrumb-item>
       <el-breadcrumb-item></el-breadcrumb-item>
     </el-breadcrumb>
-    <div >
+    <div class="post-setting">
       <el-form
         :model="controls"
         :rules="rules"

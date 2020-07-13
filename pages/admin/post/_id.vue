@@ -4,7 +4,7 @@
       <el-breadcrumb-item to="/admin/post/">Все объявления</el-breadcrumb-item>
       <el-breadcrumb-item>Объявление ID-{{ post._id }} от {{ $moment(post.date).format("LL") }}</el-breadcrumb-item>
     </el-breadcrumb>
-    <div>
+    <div class="post-setting">
       <el-form
         :model="controls"
         :rules="rules"
@@ -45,8 +45,8 @@
           <span class="department"></span>
           <span class="date">{{ $moment(post.date).format("LL") }}</span>
         </div>
-      </div> -->
-    <!-- </div>
+      </div>
+    </div>
   </div>
 </template>
 
