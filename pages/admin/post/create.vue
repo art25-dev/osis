@@ -22,7 +22,7 @@
             type="textarea"
             resize="none"
             :rows="15"
-            placeholder="Текст объявления"
+            placeholder="Текст в формате .md или .html"
             v-model="controls.text"
           >
             <font-awesome-icon class="icon" slot="prefix" icon="user" size="1x" />
@@ -33,6 +33,7 @@
             <el-checkbox v-model="controls.status" label="Опубликовать" border></el-checkbox>
           </el-form-item>
           <el-form-item>
+            <el-button type="info">Предпросмотр</el-button>
             <el-button type="warning" @click="clearForm">Очистить</el-button>
             <el-button type="primary" native-type="submit" :loading="loading">Создать</el-button>
           </el-form-item>
@@ -119,6 +120,7 @@ export default {
 .create-container {
   display: block;
   min-height: 100%;
+  max-width: 50%;
 }
 
 // .post-setting {

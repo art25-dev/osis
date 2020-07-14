@@ -42,4 +42,15 @@
         border-color:  $color-success !important;
       }
     }
+
+    &--info {
+      color: $color-second !important;
+      background: $color-info !important;
+      border-color: $color-info !important;
+  
+      &:hover {
+        background: mix($color-info, $color-second,80%) !important;
+        border-color:  $color-info !important;
+      }
+    }
   }
