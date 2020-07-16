@@ -5,41 +5,59 @@
       <el-breadcrumb-item></el-breadcrumb-item>
     </el-breadcrumb>
     <!-- <div > -->
-      <el-form
-        :model="controls"
-        :rules="rules"
-        ref="form"
-        @submit.native.prevent="onSubmit"
-        class="post-form"
-      >
-        <h2>Создать объявление</h2>
-        <el-form-item prop="title">
-          <el-input placeholder="Заголовок" v-model="controls.title" maxlength="60" show-word-limit></el-input>
-        </el-form-item>
+    <el-form
+      :model="controls"
+      :rules="rules"
+      ref="form"
+      @submit.native.prevent="onSubmit"
+      class="post-form"
+    >
+      <h2>Создать объявление</h2>
+      <el-form-item prop="title">
+        <el-input
+          placeholder="Заголовок"
+          v-model="controls.title"
+          maxlength="60"
+          show-word-limit
+        ></el-input>
+      </el-form-item>
 
-        <el-form-item prop="text">
-          <el-input
-            type="textarea"
-            resize="none"
-            :rows="15"
-            placeholder="Текст в формате .md или .html"
-            v-model="controls.text"
-          >
-            <font-awesome-icon class="icon" slot="prefix" icon="user" size="1x" />
-          </el-input>
-        </el-form-item>
-        <div class="controls">
-          <el-form-item label prop="status">
-            <el-checkbox v-model="controls.status" label="Опубликовать" border></el-checkbox>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="info">Предпросмотр</el-button>
-            <el-button type="warning" @click="clearForm">Очистить</el-button>
-            <el-button type="primary" native-type="submit" :loading="loading">Создать</el-button>
-          </el-form-item>
+      <el-form-item prop="text">
+        <el-input
+          type="textarea"
+          resize="none"
+          :rows="15"
+          placeholder="Текст в формате .md или .html"
+          v-model="controls.text"
+        >
+          <font-awesome-icon class="icon" slot="prefix" icon="user" size="1x" />
+        </el-input>
+      </el-form-item>
+
+      <el-dialog title="Предпросмотр" :visible.sync="previewDialog">
+        <div :key="controls.text">
+          <vue-markdown>{{controls.text}}</vue-markdown>
         </div>
-      </el-form>
-      <!-- <div class="post-preview">
+      </el-dialog>
+
+      <div class="controls">
+        <el-form-item label prop="status">
+          <el-checkbox
+            v-model="controls.status"
+            label="Опубликовать"
+            border
+          ></el-checkbox>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="info" @click="previewDialog = true">Предпросмотр</el-button>
+          <el-button type="warning" @click="clearForm">Очистить</el-button>
+          <el-button type="primary" native-type="submit" :loading="loading"
+            >Создать</el-button
+          >
+        </el-form-item>
+      </div>
+    </el-form>
+    <!-- <div class="post-preview">
         <div class="post">
           <h3>{{ controls.title }}</h3>
           <p>{{ controls.text }}</p>
@@ -58,6 +76,7 @@ export default {
   data() {
     return {
       loading: false,
+      previewDialog: false,
       controls: {
         title: "",
         text: "",

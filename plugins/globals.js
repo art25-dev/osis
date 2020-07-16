@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueMarkdown from 'vue-markdown'
 import Element from 'element-ui'
 import locale from 'element-ui/lib/locale/lang/ru-RU'
 
@@ -21,5 +22,7 @@ library.add(fas)
 
 // Register the component globally
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('vue-markdown', VueMarkdown)
 Vue.use(Element, { locale })
+
 
