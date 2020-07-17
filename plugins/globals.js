@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 
 
-
 export default function ({ $moment }) {
   $moment.locale("ru");
 }

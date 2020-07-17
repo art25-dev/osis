@@ -22,13 +22,15 @@
       </el-form-item>
 
       <div class="controls-text">
-        <el-button type="primary" class="btnAddImage">
-          <font-awesome-icon class="icon" icon="image" size="1x" fixed-width />
-        </el-button>  
+        <el-button type="primary" class="btnAddImage" @click="addImage">
+          <font-awesome-icon class="icon" icon="image" size="lg" fixed-width/>
+        </el-button>
       </div>
 
       <el-form-item prop="text">
         <el-input
+          contenteditable="true"
+          ref="ta"
           type="textarea"
           resize="none"
           :rows="15"
@@ -69,6 +71,7 @@
 </template>
 
 <script>
+import insertTextAtCursor from 'insert-text-at-cursor';
 export default {
   layout: "admin",
   middleware: ["adminAuth"],
@@ -129,6 +132,9 @@ export default {
       this.controls.text = "";
       this.controls.status = false;
       this.loading = false;
+    },
+    addImage() {
+      insertTextAtCursor(this.$refs.ta, 'Тест');
     }
   }
 };
@@ -205,12 +211,17 @@ export default {
   }
 }
 
+.controls-text {
+  margin-bottom: 5px;
+}
+
 .btnAddImage {
   border: 1px solid $color-primary;
   border-radius: 5px;
   outline: none;
   color: $color-second;
   background: $color-primary;
+  padding: 8px !important;
 }
 
 h2 {
