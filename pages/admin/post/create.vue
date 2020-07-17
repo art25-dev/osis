@@ -21,6 +21,12 @@
         ></el-input>
       </el-form-item>
 
+      <div class="controls-text">
+        <el-button type="primary" class="btnAddImage">
+          <font-awesome-icon class="icon" icon="image" size="1x" fixed-width />
+        </el-button>  
+      </div>
+
       <el-form-item prop="text">
         <el-input
           type="textarea"
@@ -29,7 +35,7 @@
           placeholder="Текст в формате .md или .html"
           v-model="controls.text"
         >
-          <font-awesome-icon class="icon" slot="prefix" icon="user" size="1x" />
+          <font-awesome-icon class="icon" slot="prefix" icon="user" size="1x"  />
         </el-input>
       </el-form-item>
 
@@ -164,26 +170,28 @@ export default {
     text-align: justify;
     font-size: 1.5rem;
     overflow-y: scroll;
-    max-height: 500px;
+    max-height: 450px;
     padding: 0rem 1rem 0rem 0rem;
     margin-bottom: 2.5rem;
+    white-space: pre-line;
+    word-break: keep-all;
   }
 }
 
 .department {
   position: absolute;
-  bottom: 1.5rem;
+  bottom: 2rem;
   left: 2rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
   color: $color-info;
   font-weight: bold;
 }
 
 .date {
-  font-size: 1.1rem;
+  font-size: 1rem;
   position: absolute;
   right: 2rem;
-  bottom: 1.5rem;
+  bottom: 2rem;
   color: $color-info;
   font-weight: bold;
 }
@@ -195,6 +203,14 @@ export default {
   .el-form-item {
     margin-bottom: 0;
   }
+}
+
+.btnAddImage {
+  border: 1px solid $color-primary;
+  border-radius: 5px;
+  outline: none;
+  color: $color-second;
+  background: $color-primary;
 }
 
 h2 {
