@@ -22,9 +22,16 @@
       </el-form-item>
 
       <div class="controls-text">
-        <el-button type="primary" class="btnAddImage" @click="addImage">
-          <font-awesome-icon class="icon" icon="image" size="lg" fixed-width/>
-        </el-button>
+
+      <el-upload action="http://localhost:3000/admin" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+        <el-tooltip class="item" effect="dark" content="Добавить картинку слева" placement="bottom-start">
+          <el-button type="primary" class="btnAddImage">
+            <font-awesome-icon icon="image"/> 
+            <font-awesome-icon icon="align-justify"/> 
+          </el-button>
+        </el-tooltip>
+      </el-upload> 
+
       </div>
 
       <el-form-item prop="text">
@@ -79,6 +86,8 @@ export default {
     return {
       loading: false,
       previewDialog: false,
+      image: null,
+      imagePreview: null,
       controls: {
         title: "",
         text: "",
@@ -102,7 +111,26 @@ export default {
       }
     };
   },
+
   methods: {
+    handleAvatarSuccess(res, file) {
+      this.imagePreview = URL.createObjectURL(file.raw);
+      this.image = file.raw;
+      console.log(this.imagePreview);
+      insertTextAtCursor(this.$refs.ta, `<img width="50%" style="float: left;" src="${this.imagePreview}">`);
+    },
+    beforeAvatarUpload(file) {
+      const format = file.type === "image/jpeg" || file.type === "image/png";
+      const size = file.size / 1024 / 1024 < 2;
+
+      if (!format) {
+        this.$message.error("Формат изображения должен быть JPEG или PNG");
+      }
+      if (!size) {
+        this.$message.error("Размер изображения должен быть не более 2 МБ");
+      }
+      return format && size;
+    },
     onSubmit() {
       this.$refs.form.validate(async valid => {
         if (valid) {
@@ -133,9 +161,18 @@ export default {
       this.controls.status = false;
       this.loading = false;
     },
-    addImage() {
-      insertTextAtCursor(this.$refs.ta, 'Тест');
-    }
+
+    // addImageLeft(file) {
+    //   this.image = file.raw
+    //   console.log("left");
+    //   console.log(file);
+    //   // insertTextAtCursor(this.$refs.ta, 'Тест');
+    // },
+    // addImageRight(file) {
+    //   console.log("right");
+    //   console.log(file);
+    //   // insertTextAtCursor(this.$refs.ta, 'Тест');
+    // }
   }
 };
 </script>
@@ -145,6 +182,14 @@ export default {
   display: block;
   min-height: 100%;
   max-width: 50%;
+}
+
+.addImage {
+  // display: block !important;
+  // float: left !important;
+  // line-height: 0 !important;
+  // width: 25% !important;
+  // height: auto !important;
 }
 
 .post {
@@ -181,6 +226,11 @@ export default {
     margin-bottom: 2.5rem;
     white-space: pre-line;
     word-break: keep-all;
+
+    p {
+      margin: 0 0 1rem 0 !important;
+      padding: 0;
+    }
   }
 }
 
@@ -213,6 +263,11 @@ export default {
 
 .controls-text {
   margin-bottom: 5px;
+
+  div {
+    display: inline-block !important;
+    width: auto;
+  }
 }
 
 .btnAddImage {

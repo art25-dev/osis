@@ -1,37 +1,9 @@
 .el-upload {
     display: inline-block !important;
-    min-width: 400px;
+    // min-width: 400px;
     width: 100%;
     overflow: hidden;
 }
-
-// .el-upload-dragger {
-//     background-color: #fff;
-//     border: 1px dashed $color-primary !important;
-//     border-radius: 5px !important; 
-//     box-sizing: border-box;
-//     width: 100% !important;
-//     height: 180px;
-//     text-align: center;
-//     position: relative;
-//     overflow: hidden;
-// }
-
-// .el-upload-dragger .el-icon-upload {
-//     font-size: 67px;
-//     color: $color-info !important;
-//     margin: 40px 0 16px;
-//     line-height: 50px;
-// }
-
-// .el-upload-dragger .el-upload__text {
-//     color: $color-info !important;
-// }
-
-// .el-upload-dragger .el-upload__text em {
-//     color: $color-primary !important;
-//     font-style: normal;
-// }
 
 .avatar-uploader .el-upload {
     border: 1px dashed $color-primary;
