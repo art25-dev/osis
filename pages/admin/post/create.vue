@@ -10,20 +10,27 @@
         <el-input placeholder="Заголовок" v-model="controls.title" maxlength="60" show-word-limit></el-input>
       </el-form-item>
       <div class="controls-text">
+        <div class="el-upload el-upload--text">
+          <el-tooltip class="item" effect="dark" content="Добавить абзац" placement="bottom-start">
+            <el-button type="primary" class="controls-text__add-image">
+              <font-awesome-icon icon="paragraph"/>
+            </el-button>
+          </el-tooltip>
+        </div>
         <el-upload action="http://localhost:3000/admin" :show-file-list="false" :on-success="previewImage" :before-upload="beforeAvatarUpload">
           <el-tooltip class="item" effect="dark" content="Добавить картинку слева" placement="bottom-start">
             <el-button @click="imageClass = 'img-left'" type="primary" class="controls-text__add-image">
-              <font-awesome-icon icon="image"/> 
-              <font-awesome-icon icon="align-justify"/> 
+              <font-awesome-icon icon="image"/>
+              <font-awesome-icon icon="align-justify"/>
             </el-button>
           </el-tooltip>
-        </el-upload> 
+        </el-upload>
 
         <el-upload action="http://localhost:3000/admin" :show-file-list="false" :on-success="previewImage" :before-upload="beforeAvatarUpload">
           <el-tooltip class="item" effect="dark" content="Добавить картинку слева" placement="bottom-start">
             <el-button @click="imageClass = 'img-right'" type="primary" class="controls-text__add-image">
-              <font-awesome-icon icon="align-justify"/> 
-              <font-awesome-icon icon="image"/> 
+              <font-awesome-icon icon="align-justify"/>
+              <font-awesome-icon icon="image"/>
             </el-button>
           </el-tooltip>
         </el-upload>
