@@ -4,18 +4,25 @@
       <el-breadcrumb-item to="/admin/post/">Все объявления</el-breadcrumb-item>
       <el-breadcrumb-item></el-breadcrumb-item>
     </el-breadcrumb>
-
     <el-form :model="controls" :rules="rules" ref="form" @submit.native.prevent="onSubmit">
       <h2>Создать объявление</h2>
       <el-form-item prop="title">
         <el-input placeholder="Заголовок" v-model="controls.title" maxlength="60" show-word-limit></el-input>
       </el-form-item>
       <div class="controls-text">
-        <el-upload action="http://localhost:3000/admin" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+        <el-upload action="http://localhost:3000/admin" :show-file-list="false" :on-success="handleImageLeft" :before-upload="beforeAvatarUpload">
           <el-tooltip class="item" effect="dark" content="Добавить картинку слева" placement="bottom-start">
-            <el-button type="primary" class="btnAddImage">
+            <el-button type="primary" class="controls-text__add-image">
               <font-awesome-icon icon="image"/> 
               <font-awesome-icon icon="align-justify"/> 
+            </el-button>
+          </el-tooltip>
+        </el-upload> 
+        <el-upload action="http://localhost:3000/admin" :show-file-list="false" :on-success="handleImageRight" :before-upload="beforeAvatarUpload">
+          <el-tooltip class="item" effect="dark" content="Добавить картинку справа" placement="bottom-start">
+            <el-button type="primary" class="controls-text__add-image">
+              <font-awesome-icon icon="align-justify"/> 
+              <font-awesome-icon icon="image"/> 
             </el-button>
           </el-tooltip>
         </el-upload> 
@@ -28,12 +35,12 @@
       <el-dialog class="post-preview" :visible.sync="previewDialog">
         <h2 class="post-preview__title">{{ controls.title }}</h2>
         <div class="post-preview__text" :key="controls.text">
-          <vue-markdown>{{controls.text}}</vue-markdown>
+          <vue-markdown :key="controls.text">{{controls.text}}</vue-markdown>
         </div>
         <span class="post-preview__department">Отдел воспитательной работы</span>
         <span class="post-preview__date">{{ $moment().format("LL") }}</span>
       </el-dialog>
-      <div class="controls">
+      <div class="controls-post">
         <el-form-item label prop="status">
           <el-checkbox v-model="controls.status" label="Опубликовать" border></el-checkbox>
         </el-form-item>
@@ -44,74 +51,6 @@
         </el-form-item>
       </div>
     </el-form>
-      
-    <!-- <div class="post-setting">
-      <el-form
-        :model="controls"
-        :rules="rules"
-        ref="form"
-        @submit.native.prevent="onSubmit"
-        class="post-form"
-      >
-        <h2>Создать объявление</h2>
-        <el-form-item prop="title">
-          <el-input placeholder="Заголовок" v-model="controls.title" maxlength="60" show-word-limit></el-input>
-        </el-form-item>
-
-      </div>
-
-      <el-form-item prop="text">
-        <el-input
-          contenteditable="true"
-          ref="ta"
-          type="textarea"
-          resize="none"
-          :rows="15"
-          placeholder="Текст в формате .md или .html"
-          v-model="controls.text"
-        >
-          <font-awesome-icon class="icon" slot="prefix" icon="user" size="1x"  />
-        </el-input>
-      </el-form-item>
-
-      <el-dialog class="post" :visible.sync="previewDialog">
-        <h2>{{ controls.title }}</h2>
-        <div class="text" :key="controls.text">
-          <vue-markdown>{{controls.text}}</vue-markdown>
-        </div>
-        <span class="department">Отдел воспитательной работы</span>
-        <span class="date">{{ $moment().format("LL") }}</span>
-      </el-dialog>
-
-      <div class="controls">
-        <el-form-item label prop="status">
-          <el-checkbox
-            v-model="controls.status"
-            label="Опубликовать"
-            border
-          ></el-checkbox>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="info" @click="previewDialog = true">Предпросмотр</el-button>
-          <el-button type="warning" @click="clearForm">Очистить</el-button>
-          <el-button type="primary" native-type="submit" :loading="loading"
-            >Создать</el-button
-          >
-        </el-form-item>
-      </div>
-    </el-form> -->
-
-        
-      <!-- <div class="post-preview">
-        <div class="post">
-          <h3>{{ controls.title }}</h3>
-          <p>{{ controls.text }}</p>
-          <span class="department"></span>
-          <span class="date">{{ $moment().format("LL") }}</span>
-        </div>
-      </div> -->
-    <!-- </div> -->
-
   </div>
 </template>
 
@@ -151,12 +90,18 @@ export default {
   },
 
   methods: {
-    handleAvatarSuccess(res, file) {
+    handleImageLeft(res, file) {
       this.imagePreview = URL.createObjectURL(file.raw);
       this.image = file.raw;
-      console.log(this.imagePreview);
-      insertTextAtCursor(this.$refs.ta, `<img width="50%" style="float: left;" src="${this.imagePreview}">`);
+      insertTextAtCursor(this.$refs.ta, `<img class="img-left" src="${this.imagePreview}">`);
     },
+
+    handleImageRight(res, file) {
+      this.imagePreview = URL.createObjectURL(file.raw);
+      this.image = file.raw;
+      insertTextAtCursor(this.$refs.ta, `<img class="img-right" src="${this.imagePreview}">`);
+    },
+
     beforeAvatarUpload(file) {
       const format = file.type === "image/jpeg" || file.type === "image/png";
       const size = file.size / 1024 / 1024 < 2;
@@ -204,6 +149,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.left {
+  border: 5px solid red;
+}
+
 .create-container {
   display: block;
   min-height: 100%;
@@ -251,6 +201,13 @@ export default {
     }
   }
 
+  &__markdown {
+    p {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
   &__department {
     position: absolute;
     bottom: 2rem;
@@ -271,7 +228,7 @@ export default {
 }
 
 
-.controls {
+.controls-post {
   display: flex;
   justify-content: space-between;
 
@@ -283,19 +240,19 @@ export default {
 .controls-text {
   margin-bottom: 5px;
 
+  &__add-image {
+    border: 1px solid $color-primary;
+    border-radius: 5px;
+    outline: none;
+    color: $color-second;
+    background: $color-primary;
+    padding: 8px !important;
+  }
+
   div {
     display: inline-block !important;
     width: auto;
   }
-}
-
-.btnAddImage {
-  border: 1px solid $color-primary;
-  border-radius: 5px;
-  outline: none;
-  color: $color-second;
-  background: $color-primary;
-  padding: 8px !important;
 }
 
 h2 {
