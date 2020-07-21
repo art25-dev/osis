@@ -4,33 +4,59 @@
       <el-breadcrumb-item to="/admin/post/">Все объявления</el-breadcrumb-item>
       <el-breadcrumb-item></el-breadcrumb-item>
     </el-breadcrumb>
-    <el-form
-      :model="controls"
-      :rules="rules"
-      ref="form"
-      @submit.native.prevent="onSubmit"
-      class="post-form"
-    >
+
+    <el-form :model="controls" :rules="rules" ref="form" @submit.native.prevent="onSubmit">
       <h2>Создать объявление</h2>
       <el-form-item prop="title">
-        <el-input
-          placeholder="Заголовок"
-          v-model="controls.title"
-          maxlength="60"
-          show-word-limit
-        ></el-input>
+        <el-input placeholder="Заголовок" v-model="controls.title" maxlength="60" show-word-limit></el-input>
       </el-form-item>
-
       <div class="controls-text">
-
-      <el-upload action="http://localhost:3000/admin" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
-        <el-tooltip class="item" effect="dark" content="Добавить картинку слева" placement="bottom-start">
-          <el-button type="primary" class="btnAddImage">
-            <font-awesome-icon icon="image"/> 
-            <font-awesome-icon icon="align-justify"/> 
-          </el-button>
-        </el-tooltip>
-      </el-upload> 
+        <el-upload action="http://localhost:3000/admin" :show-file-list="false" :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
+          <el-tooltip class="item" effect="dark" content="Добавить картинку слева" placement="bottom-start">
+            <el-button type="primary" class="btnAddImage">
+              <font-awesome-icon icon="image"/> 
+              <font-awesome-icon icon="align-justify"/> 
+            </el-button>
+          </el-tooltip>
+        </el-upload> 
+      </div>
+      <el-form-item prop="text">
+        <el-input contenteditable="true" ref="ta" type="textarea" resize="none" :rows="15" placeholder="Текст в формате .md или .html" v-model="controls.text">
+          <font-awesome-icon class="icon" slot="prefix" icon="user" size="1x"  />
+        </el-input>
+      </el-form-item>
+      <el-dialog class="post-preview" :visible.sync="previewDialog">
+        <h2 class="post-preview__title">{{ controls.title }}</h2>
+        <div class="post-preview__text" :key="controls.text">
+          <vue-markdown>{{controls.text}}</vue-markdown>
+        </div>
+        <span class="post-preview__department">Отдел воспитательной работы</span>
+        <span class="post-preview__date">{{ $moment().format("LL") }}</span>
+      </el-dialog>
+      <div class="controls">
+        <el-form-item label prop="status">
+          <el-checkbox v-model="controls.status" label="Опубликовать" border></el-checkbox>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="info" @click="previewDialog = true">Предпросмотр</el-button>
+          <el-button type="warning" @click="clearForm">Очистить</el-button>
+          <el-button type="primary" native-type="submit" :loading="loading">Создать</el-button>
+        </el-form-item>
+      </div>
+    </el-form>
+      
+    <!-- <div class="post-setting">
+      <el-form
+        :model="controls"
+        :rules="rules"
+        ref="form"
+        @submit.native.prevent="onSubmit"
+        class="post-form"
+      >
+        <h2>Создать объявление</h2>
+        <el-form-item prop="title">
+          <el-input placeholder="Заголовок" v-model="controls.title" maxlength="60" show-word-limit></el-input>
+        </el-form-item>
 
       </div>
 
@@ -73,7 +99,19 @@
           >
         </el-form-item>
       </div>
-    </el-form>
+    </el-form> -->
+
+        
+      <!-- <div class="post-preview">
+        <div class="post">
+          <h3>{{ controls.title }}</h3>
+          <p>{{ controls.text }}</p>
+          <span class="department"></span>
+          <span class="date">{{ $moment().format("LL") }}</span>
+        </div>
+      </div> -->
+    <!-- </div> -->
+
   </div>
 </template>
 
@@ -161,18 +199,6 @@ export default {
       this.controls.status = false;
       this.loading = false;
     },
-
-    // addImageLeft(file) {
-    //   this.image = file.raw
-    //   console.log("left");
-    //   console.log(file);
-    //   // insertTextAtCursor(this.$refs.ta, 'Тест');
-    // },
-    // addImageRight(file) {
-    //   console.log("right");
-    //   console.log(file);
-    //   // insertTextAtCursor(this.$refs.ta, 'Тест');
-    // }
   }
 };
 </script>
@@ -184,20 +210,9 @@ export default {
   max-width: 50%;
 }
 
-.addImage {
-  // display: block !important;
-  // float: left !important;
-  // line-height: 0 !important;
-  // width: 25% !important;
-  // height: auto !important;
-}
+.post-preview {
 
-.post {
-  min-height: 100%;
-  overflow: hidden;
-
-
-  h2 {
+  &__title {
     display: block;
     padding-bottom: 0.3rem;
     margin-bottom: 1rem;
@@ -217,40 +232,44 @@ export default {
     }
   }
 
-  & .text {
+  &__text {
     text-align: justify;
     font-size: 1.5rem;
     overflow-y: scroll;
     max-height: 450px;
     padding: 0rem 1rem 0rem 0rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
     white-space: pre-line;
     word-break: keep-all;
 
     p {
-      margin: 0 0 1rem 0 !important;
-      padding: 0;
+      text-align: justify;
+      font-size: 1.5rem;
+      overflow-y: scroll;
+      max-height: 450px;
+      padding-right: 1rem;
     }
+  }
+
+  &__department {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    font-size: 1rem;
+    color: $color-info;
+    font-weight: bold;
+  }
+
+  &__date {
+    font-size: 1rem;
+    position: absolute;
+    right: 2rem;
+    bottom: 1.5rem;
+    color: $color-info;
+    font-weight: bold;
   }
 }
 
-.department {
-  position: absolute;
-  bottom: 2rem;
-  left: 2rem;
-  font-size: 1rem;
-  color: $color-info;
-  font-weight: bold;
-}
-
-.date {
-  font-size: 1rem;
-  position: absolute;
-  right: 2rem;
-  bottom: 2rem;
-  color: $color-info;
-  font-weight: bold;
-}
 
 .controls {
   display: flex;
@@ -296,4 +315,5 @@ h2 {
     display: block;
   }
 }
+
 </style>
