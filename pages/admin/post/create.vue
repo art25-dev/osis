@@ -10,22 +10,23 @@
         <el-input placeholder="Заголовок" v-model="controls.title" maxlength="60" show-word-limit></el-input>
       </el-form-item>
       <div class="controls-text">
-        <el-upload action="http://localhost:3000/admin" :show-file-list="false" :on-success="handleImageLeft" :before-upload="beforeAvatarUpload">
+        <el-upload action="http://localhost:3000/admin" :show-file-list="false" :on-success="previewImage" :before-upload="beforeAvatarUpload">
           <el-tooltip class="item" effect="dark" content="Добавить картинку слева" placement="bottom-start">
-            <el-button type="primary" class="controls-text__add-image">
+            <el-button @click="imageClass = 'img-left'" type="primary" class="controls-text__add-image">
               <font-awesome-icon icon="image"/> 
               <font-awesome-icon icon="align-justify"/> 
             </el-button>
           </el-tooltip>
         </el-upload> 
-        <el-upload action="http://localhost:3000/admin" :show-file-list="false" :on-success="handleImageRight" :before-upload="beforeAvatarUpload">
-          <el-tooltip class="item" effect="dark" content="Добавить картинку справа" placement="bottom-start">
-            <el-button type="primary" class="controls-text__add-image">
+
+        <el-upload action="http://localhost:3000/admin" :show-file-list="false" :on-success="previewImage" :before-upload="beforeAvatarUpload">
+          <el-tooltip class="item" effect="dark" content="Добавить картинку слева" placement="bottom-start">
+            <el-button @click="imageClass = 'img-right'" type="primary" class="controls-text__add-image">
               <font-awesome-icon icon="align-justify"/> 
               <font-awesome-icon icon="image"/> 
             </el-button>
           </el-tooltip>
-        </el-upload> 
+        </el-upload>
       </div>
       <el-form-item prop="text">
         <el-input contenteditable="true" ref="ta" type="textarea" resize="none" :rows="15" placeholder="Текст в формате .md или .html" v-model="controls.text">
@@ -65,6 +66,7 @@ export default {
       previewDialog: false,
       image: null,
       imagePreview: null,
+      imageClass: null,
       controls: {
         title: "",
         text: "",
@@ -90,16 +92,11 @@ export default {
   },
 
   methods: {
-    handleImageLeft(res, file) {
+    previewImage(res, file, event) {
+      console.log(this.imageClass);
       this.imagePreview = URL.createObjectURL(file.raw);
       this.image = file.raw;
-      insertTextAtCursor(this.$refs.ta, `<img class="img-left" src="${this.imagePreview}">`);
-    },
-
-    handleImageRight(res, file) {
-      this.imagePreview = URL.createObjectURL(file.raw);
-      this.image = file.raw;
-      insertTextAtCursor(this.$refs.ta, `<img class="img-right" src="${this.imagePreview}">`);
+      insertTextAtCursor(this.$refs.ta, `<img class="${this.imageClass}" src="${this.imagePreview}">`);
     },
 
     beforeAvatarUpload(file) {
