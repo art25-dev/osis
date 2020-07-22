@@ -27,7 +27,7 @@
         </el-upload>
 
         <el-upload action="http://localhost:3000/admin" :show-file-list="false" :on-success="previewImage" :before-upload="beforeAvatarUpload">
-          <el-tooltip class="item" effect="dark" content="Добавить картинку слева" placement="bottom-start">
+          <el-tooltip class="item" effect="dark" content="Добавить картинку справа" placement="bottom-start">
             <el-button @click="imageClass = 'img-right'" type="primary" class="controls-text__add-image">
               <font-awesome-icon icon="align-justify"/>
               <font-awesome-icon icon="image"/>
