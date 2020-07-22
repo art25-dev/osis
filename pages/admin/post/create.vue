@@ -12,12 +12,12 @@
       <div class="controls-text">
         <div class="el-upload el-upload--text">
           <el-tooltip class="item" effect="dark" content="Добавить абзац" placement="bottom-start">
-            <el-button type="primary" class="controls-text__add-image">
+            <el-button @click="addParagraphPreview" type="primary" class="controls-text__add-paragraph">
               <font-awesome-icon icon="paragraph"/>
             </el-button>
           </el-tooltip>
         </div>
-        <el-upload action="http://localhost:3000/admin" :show-file-list="false" :on-success="previewImage" :before-upload="beforeAvatarUpload">
+        <el-upload action="http://localhost:3000/admin" :show-file-list="false" :on-success="addImagePreview" :before-upload="beforeAvatarUpload">
           <el-tooltip class="item" effect="dark" content="Добавить картинку слева" placement="bottom-start">
             <el-button @click="imageClass = 'img-left'" type="primary" class="controls-text__add-image">
               <font-awesome-icon icon="image"/>
@@ -26,7 +26,7 @@
           </el-tooltip>
         </el-upload>
 
-        <el-upload action="http://localhost:3000/admin" :show-file-list="false" :on-success="previewImage" :before-upload="beforeAvatarUpload">
+        <el-upload action="http://localhost:3000/admin" :show-file-list="false" :on-success="addImagePreview" :before-upload="beforeAvatarUpload">
           <el-tooltip class="item" effect="dark" content="Добавить картинку справа" placement="bottom-start">
             <el-button @click="imageClass = 'img-right'" type="primary" class="controls-text__add-image">
               <font-awesome-icon icon="align-justify"/>
@@ -67,6 +67,7 @@ import insertTextAtCursor from 'insert-text-at-cursor';
 export default {
   layout: "admin",
   middleware: ["adminAuth"],
+  components: {},
   data() {
     return {
       loading: false,
@@ -74,6 +75,7 @@ export default {
       image: null,
       imagePreview: null,
       imageClass: null,
+      paragraphClass: null,
       controls: {
         title: "",
         text: "",
@@ -99,13 +101,15 @@ export default {
   },
 
   methods: {
-    previewImage(res, file, event) {
-      console.log(this.imageClass);
+    addImagePreview(res, file, event) {
       this.imagePreview = URL.createObjectURL(file.raw);
       this.image = file.raw;
       insertTextAtCursor(this.$refs.ta, `<img class="${this.imageClass}" src="${this.imagePreview}">`);
     },
-
+    addParagraphPreview() {
+      this.paragraphClass = 'paragraph';
+      insertTextAtCursor(this.$refs.ta, `<p class="${this.paragraphClass}"></p>`);
+    },
     beforeAvatarUpload(file) {
       const format = file.type === "image/jpeg" || file.type === "image/png";
       const size = file.size / 1024 / 1024 < 2;
@@ -244,7 +248,7 @@ export default {
 .controls-text {
   margin-bottom: 5px;
 
-  &__add-image {
+  &__add-image, &__add-paragraph {
     border: 1px solid $color-primary;
     border-radius: 5px;
     outline: none;

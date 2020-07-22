@@ -2,10 +2,22 @@
     float: left;
     width: 45%;
     height: auto;
+    border: 5px solid $color-info;
+    margin-right: 10px;
+    box-sizing: border-box;
 }
 
 .img-right {
     float: right;
     width: 45%;
     height: auto;
+    border: 5px solid $color-info;
+    margin-left: 15px;
+    box-sizing: border-box;
+}
+
+.paragraph {
+    margin: 0 0 10px 0;
+    padding: 0;
+    text-align: justify;
 }
