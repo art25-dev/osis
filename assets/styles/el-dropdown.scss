@@ -1,0 +1,17 @@
+.el-dropdown-menu {
+    &__item {
+        list-style: none;
+        line-height: 36px;
+        padding: 0 15px;
+        margin: 0;
+        font-size: 14px;
+        color: $color-primary !important;
+        cursor: pointer;
+        outline: 0;
+    }
+}
+
+.el-dropdown-menu__item:not(.is-disabled):hover {
+    background-color: $color-second !important;
+    color: $color-primary !important;
+}

@@ -4,58 +4,108 @@
       <el-breadcrumb-item to="/admin/post/">Все объявления</el-breadcrumb-item>
       <el-breadcrumb-item></el-breadcrumb-item>
     </el-breadcrumb>
-    <el-form :model="controls" :rules="rules" ref="form" @submit.native.prevent="onSubmit">
+    <el-form
+      :model="controls"
+      :rules="rules"
+      ref="form"
+      @submit.native.prevent="onSubmit"
+    >
       <h2>Создать объявление</h2>
       <el-form-item prop="title">
-        <el-input placeholder="Заголовок" v-model="controls.title" maxlength="60" show-word-limit></el-input>
+        <el-input
+          placeholder="Заголовок"
+          v-model="controls.title"
+          maxlength="60"
+          show-word-limit
+        ></el-input>
       </el-form-item>
       <div class="controls-text">
+        <el-dropdown trigger="click" class="el-upload el-upload--text">
+          <el-button type="primary" class="el-upload el-upload--text">
+            <font-awesome-icon icon="code"/>
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>Action 1</el-dropdown-item>
+            <el-dropdown-item>Action 2</el-dropdown-item>
+            <el-dropdown-item>Action 3</el-dropdown-item>
+            <el-dropdown-item>Action 4</el-dropdown-item>
+            <el-dropdown-item>Action 5</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+
         <div class="el-upload el-upload--text">
-          <el-tooltip class="item" effect="dark" content="Добавить абзац" placement="bottom-start">
-            <el-button @click="addParagraphPreview" type="primary" class="controls-text__add-paragraph">
-              <font-awesome-icon icon="paragraph"/>
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content="Добавить абзац"
+            placement="bottom-start"
+          >
+            <el-button
+              @click="addParagraphPreview"
+              type="primary"
+              class="controls-text__add-paragraph"
+            >
+              <font-awesome-icon icon="paragraph" />
             </el-button>
           </el-tooltip>
         </div>
-        <el-upload action="http://localhost:3000/admin" :show-file-list="false" :on-success="addImagePreview" :before-upload="beforeAvatarUpload">
-          <el-tooltip class="item" effect="dark" content="Добавить картинку слева" placement="bottom-start">
-            <el-button @click="imageClass = 'img-left'" type="primary" class="controls-text__add-image">
-              <font-awesome-icon icon="image"/>
-              <font-awesome-icon icon="align-justify"/>
-            </el-button>
-          </el-tooltip>
-        </el-upload>
-
-        <el-upload action="http://localhost:3000/admin" :show-file-list="false" :on-success="addImagePreview" :before-upload="beforeAvatarUpload">
-          <el-tooltip class="item" effect="dark" content="Добавить картинку справа" placement="bottom-start">
-            <el-button @click="imageClass = 'img-right'" type="primary" class="controls-text__add-image">
-              <font-awesome-icon icon="align-justify"/>
-              <font-awesome-icon icon="image"/>
+        <el-upload
+          action="http://localhost:3000/admin"
+          :show-file-list="false"
+          :on-success="addImagePreview"
+          :before-upload="beforeImageUpload"
+        >
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content="Добавить картинку"
+            placement="bottom-start"
+          >
+            <el-button type="primary" class="controls-text__add-image">
+              <font-awesome-icon icon="image" />
             </el-button>
           </el-tooltip>
         </el-upload>
       </div>
       <el-form-item prop="text">
-        <el-input contenteditable="true" ref="ta" type="textarea" resize="none" :rows="15" placeholder="Текст в формате .md или .html" v-model="controls.text">
-          <font-awesome-icon class="icon" slot="prefix" icon="user" size="1x"  />
+        <el-input
+          contenteditable="true"
+          ref="ta"
+          type="textarea"
+          resize="none"
+          :rows="15"
+          placeholder="Текст в формате .md или .html"
+          v-model="controls.text"
+        >
+          <font-awesome-icon class="icon" slot="prefix" icon="user" size="1x" />
         </el-input>
       </el-form-item>
       <el-dialog class="post-preview" :visible.sync="previewDialog">
         <h2 class="post-preview__title">{{ controls.title }}</h2>
         <div class="post-preview__text" :key="controls.text">
-          <vue-markdown :key="controls.text">{{controls.text}}</vue-markdown>
+          <vue-markdown :key="controls.text">{{ controls.text }}</vue-markdown>
         </div>
-        <span class="post-preview__department">Отдел воспитательной работы</span>
+        <span class="post-preview__department"
+          >Отдел воспитательной работы</span
+        >
         <span class="post-preview__date">{{ $moment().format("LL") }}</span>
       </el-dialog>
       <div class="controls-post">
         <el-form-item label prop="status">
-          <el-checkbox v-model="controls.status" label="Опубликовать" border></el-checkbox>
+          <el-checkbox
+            v-model="controls.status"
+            label="Опубликовать"
+            border
+          ></el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button type="info" @click="previewDialog = true">Предпросмотр</el-button>
+          <el-button type="info" @click="previewDialog = true"
+            >Предпросмотр</el-button
+          >
           <el-button type="warning" @click="clearForm">Очистить</el-button>
-          <el-button type="primary" native-type="submit" :loading="loading">Создать</el-button>
+          <el-button type="primary" native-type="submit" :loading="loading"
+            >Создать</el-button
+          >
         </el-form-item>
       </div>
     </el-form>
@@ -63,7 +113,7 @@
 </template>
 
 <script>
-import insertTextAtCursor from 'insert-text-at-cursor';
+import insertTextAtCursor from "insert-text-at-cursor";
 export default {
   layout: "admin",
   middleware: ["adminAuth"],
@@ -74,8 +124,6 @@ export default {
       previewDialog: false,
       image: null,
       imagePreview: null,
-      imageClass: null,
-      paragraphClass: null,
       controls: {
         title: "",
         text: "",
@@ -104,13 +152,18 @@ export default {
     addImagePreview(res, file, event) {
       this.imagePreview = URL.createObjectURL(file.raw);
       this.image = file.raw;
-      insertTextAtCursor(this.$refs.ta, `<img class="${this.imageClass}" src="${this.imagePreview}">`);
+      insertTextAtCursor(
+        this.$refs.ta,
+        `<img class="img" src="${this.imagePreview}">`
+      );
     },
     addParagraphPreview() {
-      this.paragraphClass = 'paragraph';
-      insertTextAtCursor(this.$refs.ta, `<p class="${this.paragraphClass}"></p>`);
+      insertTextAtCursor(
+        this.$refs.ta,
+        `<p class="paragraph">Введите текст</p>`
+      );
     },
-    beforeAvatarUpload(file) {
+    beforeImageUpload(file) {
       const format = file.type === "image/jpeg" || file.type === "image/png";
       const size = file.size / 1024 / 1024 < 2;
 
@@ -151,13 +204,12 @@ export default {
       this.controls.text = "";
       this.controls.status = false;
       this.loading = false;
-    },
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-
 .left {
   border: 5px solid red;
 }
@@ -169,7 +221,6 @@ export default {
 }
 
 .post-preview {
-
   &__title {
     display: block;
     padding-bottom: 0.3rem;
@@ -235,7 +286,6 @@ export default {
   }
 }
 
-
 .controls-post {
   display: flex;
   justify-content: space-between;
@@ -248,7 +298,8 @@ export default {
 .controls-text {
   margin-bottom: 5px;
 
-  &__add-image, &__add-paragraph {
+  &__add-image,
+  &__add-paragraph {
     border: 1px solid $color-primary;
     border-radius: 5px;
     outline: none;
@@ -280,5 +331,4 @@ h2 {
     display: block;
   }
 }
-
 </style>

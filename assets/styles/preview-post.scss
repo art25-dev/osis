@@ -1,18 +1,8 @@
-.img-left {
-    float: left;
-    width: 45%;
+.img {
+    width: 100%;
+    display: block;
     height: auto;
     border: 5px solid $color-info;
-    margin-right: 10px;
-    box-sizing: border-box;
-}
-
-.img-right {
-    float: right;
-    width: 45%;
-    height: auto;
-    border: 5px solid $color-info;
-    margin-left: 15px;
     box-sizing: border-box;
 }
 
