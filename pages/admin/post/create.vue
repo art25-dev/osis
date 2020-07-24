@@ -20,20 +20,25 @@
         ></el-input>
       </el-form-item>
       <div class="controls-text">
-        <el-dropdown trigger="click" class="el-upload el-upload--text">
-          <el-button type="primary" class="el-upload el-upload--text">
+        <el-dropdown trigger="click" class="el-upload">
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content="Добавить шаблон"
+            placement="bottom-start"
+          >
+          <el-button type="primary" class="el-upload controls-text__add-template">
             <font-awesome-icon icon="code"/>
           </el-button>
+          </el-tooltip>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>Action 1</el-dropdown-item>
-            <el-dropdown-item>Action 2</el-dropdown-item>
-            <el-dropdown-item>Action 3</el-dropdown-item>
-            <el-dropdown-item>Action 4</el-dropdown-item>
-            <el-dropdown-item>Action 5</el-dropdown-item>
+            <el-dropdown-item><el-button type="text" @click="addTemplatePreview(1)">1</el-button></el-dropdown-item>
+            <el-dropdown-item><el-button type="text" @click="addTemplatePreview(2)">2</el-button></el-dropdown-item>
+            <el-dropdown-item><el-button type="text" @click="addTemplatePreview(3)">3</el-button></el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
 
-        <div class="el-upload el-upload--text">
+        <div class="el-upload">
           <el-tooltip
             class="item"
             effect="dark"
@@ -147,7 +152,6 @@ export default {
       }
     };
   },
-
   methods: {
     addImagePreview(res, file, event) {
       this.imagePreview = URL.createObjectURL(file.raw);
@@ -161,6 +165,12 @@ export default {
       insertTextAtCursor(
         this.$refs.ta,
         `<p class="paragraph">Введите текст</p>`
+      );
+    },
+    addTemplatePreview(col) {
+      insertTextAtCursor(
+        this.$refs.ta,
+        `<div class="grid-row">${col}</div>`
       );
     },
     beforeImageUpload(file) {
@@ -299,7 +309,8 @@ export default {
   margin-bottom: 5px;
 
   &__add-image,
-  &__add-paragraph {
+  &__add-paragraph,
+  &__add-template {
     border: 1px solid $color-primary;
     border-radius: 5px;
     outline: none;

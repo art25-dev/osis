@@ -12,6 +12,6 @@
 }
 
 .el-dropdown-menu__item:not(.is-disabled):hover {
-    background-color: $color-second !important;
+    background-color: rgba($color-info, .1) !important;
     color: $color-primary !important;
 }
