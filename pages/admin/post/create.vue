@@ -4,47 +4,48 @@
       <el-breadcrumb-item to="/admin/post/">Все объявления</el-breadcrumb-item>
       <el-breadcrumb-item></el-breadcrumb-item>
     </el-breadcrumb>
-    <el-form
-      :model="controls"
-      :rules="rules"
-      ref="form"
-      @submit.native.prevent="onSubmit"
-    >
+    <el-form :model="controls" :rules="rules" ref="form" @submit.native.prevent="onSubmit">
       <h2>Создать объявление</h2>
       <el-form-item prop="title">
-        <el-input
-          placeholder="Заголовок"
-          v-model="controls.title"
-          maxlength="60"
-          show-word-limit
-        ></el-input>
+        <el-input placeholder="Заголовок" v-model="controls.title" maxlength="60" show-word-limit></el-input>
       </el-form-item>
       <div class="controls-text">
         <el-dropdown trigger="click" class="el-upload">
-          <el-tooltip
-            class="item"
-            effect="dark"
-            content="Добавить шаблон"
-            placement="bottom-start"
-          >
-          <el-button type="primary" class="el-upload controls-text__add-template">
-            <font-awesome-icon icon="code"/>
-          </el-button>
+          <el-tooltip class="item" effect="dark" content="Добавить шаблон" placement="bottom-start">
+            <el-button type="primary" class="el-upload controls-text__add-template">
+              <font-awesome-icon icon="code" />
+            </el-button>
           </el-tooltip>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item><el-button type="text" @click="addTemplatePreview(1)">1</el-button></el-dropdown-item>
-            <el-dropdown-item><el-button type="text" @click="addTemplatePreview(2)">2</el-button></el-dropdown-item>
-            <el-dropdown-item><el-button type="text" @click="addTemplatePreview(3)">3</el-button></el-dropdown-item>
+            <el-dropdown-item>
+              <el-button type="text" @click="addTemplatePreview(1)">1 элемент</el-button>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <el-button type="text" @click="addTemplatePreview(2)">2 элемента</el-button>
+            </el-dropdown-item>
+            <el-dropdown-item>
+              <el-button type="text" @click="addTemplatePreview(3)">3 элемента</el-button>
+            </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-
         <div class="el-upload">
           <el-tooltip
             class="item"
             effect="dark"
-            content="Добавить абзац"
+            content="Добавить подзаголовок"
             placement="bottom-start"
           >
+            <el-button
+              @click="addSubtitlePreview"
+              type="primary"
+              class="controls-text__add-subtitle"
+            >
+              <font-awesome-icon icon="text-height" />
+            </el-button>
+          </el-tooltip>
+        </div>
+        <div class="el-upload">
+          <el-tooltip class="item" effect="dark" content="Добавить абзац" placement="bottom-start">
             <el-button
               @click="addParagraphPreview"
               type="primary"
@@ -54,6 +55,7 @@
             </el-button>
           </el-tooltip>
         </div>
+
         <el-upload
           action="http://localhost:3000/admin"
           :show-file-list="false"
@@ -88,29 +90,19 @@
       <el-dialog class="post-preview" :visible.sync="previewDialog">
         <h2 class="post-preview__title">{{ controls.title }}</h2>
         <div class="post-preview__text" :key="controls.text">
-          <vue-markdown :key="controls.text">{{ controls.text }}</vue-markdown>
+          <vue-markdown :breaks="false" :key="controls.text">{{ controls.text }}</vue-markdown>
         </div>
-        <span class="post-preview__department"
-          >Отдел воспитательной работы</span
-        >
+        <span class="post-preview__department">Отдел воспитательной работы</span>
         <span class="post-preview__date">{{ $moment().format("LL") }}</span>
       </el-dialog>
       <div class="controls-post">
         <el-form-item label prop="status">
-          <el-checkbox
-            v-model="controls.status"
-            label="Опубликовать"
-            border
-          ></el-checkbox>
+          <el-checkbox v-model="controls.status" label="Опубликовать" border></el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button type="info" @click="previewDialog = true"
-            >Предпросмотр</el-button
-          >
+          <el-button type="info" @click="openPreview">Предпросмотр</el-button>
           <el-button type="warning" @click="clearForm">Очистить</el-button>
-          <el-button type="primary" native-type="submit" :loading="loading"
-            >Создать</el-button
-          >
+          <el-button type="primary" native-type="submit" :loading="loading">Создать</el-button>
         </el-form-item>
       </div>
     </el-form>
@@ -153,6 +145,10 @@ export default {
     };
   },
   methods: {
+    openPreview() {
+      this.previewDialog = true;
+      console.log(this.controls.text);
+    },
     addImagePreview(res, file, event) {
       this.imagePreview = URL.createObjectURL(file.raw);
       this.image = file.raw;
@@ -161,16 +157,27 @@ export default {
         `<img class="img" src="${this.imagePreview}">`
       );
     },
+    addSubtitlePreview() {
+      insertTextAtCursor(
+        this.$refs.ta,
+        `<h2 class='sub-title'>Подзаголовок</h2>`
+      );
+    },
     addParagraphPreview() {
       insertTextAtCursor(
         this.$refs.ta,
-        `<p class="paragraph">Введите текст</p>`
+        `<div class="paragraph">Введите текст</div>`
       );
     },
     addTemplatePreview(col) {
+      let template = "";
+      for (let i = 0; i < col; i++) {
+        template += "<div class='grid-col-1'>Контент</div>";
+      }
+
       insertTextAtCursor(
         this.$refs.ta,
-        `<div class="grid-row">${col}</div>`
+        `<div class="grid-row">${template}</div>`
       );
     },
     beforeImageUpload(file) {
@@ -220,9 +227,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.left {
-  border: 5px solid red;
-}
 
 .create-container {
   display: block;
@@ -310,7 +314,8 @@ export default {
 
   &__add-image,
   &__add-paragraph,
-  &__add-template {
+  &__add-template,
+  &__add-subtitle {
     border: 1px solid $color-primary;
     border-radius: 5px;
     outline: none;
