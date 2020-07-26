@@ -87,12 +87,22 @@
           <font-awesome-icon class="icon" slot="prefix" icon="user" size="1x" />
         </el-input>
       </el-form-item>
+      <el-form-item prop="department">
+        <el-select v-model="controls.department" placeholder="Подразделение">
+          <el-option
+            v-for="item in departments"
+            :key="item._id"
+            :label="item.title"
+            :value="item.title"
+          ></el-option>
+        </el-select>
+      </el-form-item>
       <el-dialog class="post-preview" :visible.sync="previewDialog">
         <h2 class="post-preview__title">{{ controls.title }}</h2>
         <div class="post-preview__text" :key="controls.text">
           <vue-markdown :breaks="false" :key="controls.text">{{ controls.text }}</vue-markdown>
         </div>
-        <span class="post-preview__department">Отдел воспитательной работы</span>
+        <span class="post-preview__department">{{ controls.department }}</span>
         <span class="post-preview__date">{{ $moment().format("LL") }}</span>
       </el-dialog>
       <div class="controls-post">
@@ -115,8 +125,29 @@ export default {
   layout: "admin",
   middleware: ["adminAuth"],
   components: {},
+  // Запрос всех подразделений из store/department.js в Action fetchAdmin()
+  async asyncData({ store }) {
+    const departments = await store.dispatch("department/fetchAdmin");
+    return { departments };
+  },
   data() {
     return {
+      options: [{
+          value: 'Option1',
+          label: 'Option1'
+        }, {
+          value: 'Option2',
+          label: 'Option2'
+        }, {
+          value: 'Option3',
+          label: 'Option3'
+        }, {
+          value: 'Option4',
+          label: 'Option4'
+        }, {
+          value: 'Option5',
+          label: 'Option5'
+        },],
       loading: false,
       previewDialog: false,
       image: null,
@@ -124,7 +155,8 @@ export default {
       controls: {
         title: "",
         text: "",
-        status: false
+        status: false,
+        department: ""
       },
       rules: {
         title: [
@@ -140,6 +172,13 @@ export default {
             message: "Текст не должен быть пустым",
             trigger: "blur"
           }
+        ],
+        department: [
+          {
+            required: true,
+            message: "Выберете подразделение",
+            trigger: "blur"
+          }
         ]
       }
     };
@@ -147,7 +186,6 @@ export default {
   methods: {
     openPreview() {
       this.previewDialog = true;
-      console.log(this.controls.text);
     },
     addImagePreview(res, file, event) {
       this.imagePreview = URL.createObjectURL(file.raw);
@@ -201,16 +239,18 @@ export default {
           const formData = {
             title: this.controls.title,
             text: this.controls.text,
+            department: this.controls.department,
             status: this.controls.status
           };
+          console.log(formData);
           // Отправка объекта с данными формы в store/post.js и вызов Action create()
-          try {
-            await this.$store.dispatch("post/create", formData);
-          } catch (e) {
-          } finally {
-            this.$message.success("Объявление создано");
-            this.clearForm();
-          }
+          // try {
+          //   await this.$store.dispatch("post/create", formData);
+          // } catch (e) {
+          // } finally {
+          //   this.$message.success("Объявление создано");
+          //   this.clearForm();
+          // }
         } else {
           this.$message.warning("Форма не валидна");
         }
@@ -220,6 +260,7 @@ export default {
       this.controls.title = "";
       this.controls.text = "";
       this.controls.status = false;
+      this.controls.department = "";
       this.loading = false;
     }
   }
@@ -227,7 +268,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .create-container {
   display: block;
   min-height: 100%;
