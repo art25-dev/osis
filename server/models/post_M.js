@@ -20,6 +20,9 @@ const postSchema = new Schema({
   department: {
     type: Schema.Types.ObjectId,
     ref: "departments"
+  },
+  imageList: {
+    type: Array
   }
 })
 

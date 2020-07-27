@@ -2,11 +2,16 @@ const Post = require("../models/post_M")
 
 // Функция создания объявления
 module.exports.create = async (req, res) => {
+  let images = []
+  for (let i = 0; i < req.files.length; i++) {
+    images.push(`/${req.files[i].filename}`)
+  }
   const post = new Post({
     title: req.body.title,
     text: req.body.text,
     department: req.body.department,
-    status: req.body.status
+    status: req.body.status,
+    imageList: images
   })
 
   try {

@@ -4,27 +4,51 @@
       <el-breadcrumb-item to="/admin/post/">Все объявления</el-breadcrumb-item>
       <el-breadcrumb-item></el-breadcrumb-item>
     </el-breadcrumb>
-    <el-form :model="controls" :rules="rules" ref="form" @submit.native.prevent="onSubmit">
+    <el-form
+      :model="controls"
+      :rules="rules"
+      ref="form"
+      @submit.native.prevent="onSubmit"
+    >
       <h2>Создать объявление</h2>
       <el-form-item prop="title">
-        <el-input placeholder="Заголовок" v-model="controls.title" maxlength="60" show-word-limit></el-input>
+        <el-input
+          placeholder="Заголовок"
+          v-model="controls.title"
+          maxlength="60"
+          show-word-limit
+        ></el-input>
       </el-form-item>
       <div class="controls-text">
         <el-dropdown trigger="click" class="el-upload">
-          <el-tooltip class="item" effect="dark" content="Добавить шаблон" placement="bottom-start">
-            <el-button type="primary" class="el-upload controls-text__add-template">
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content="Добавить шаблон"
+            placement="bottom-start"
+          >
+            <el-button
+              type="primary"
+              class="el-upload controls-text__add-template"
+            >
               <font-awesome-icon icon="code" />
             </el-button>
           </el-tooltip>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>
-              <el-button type="text" @click="addTemplatePreview(1)">1 элемент</el-button>
+              <el-button type="text" @click="addTemplatePreview(1)"
+                >1 элемент</el-button
+              >
             </el-dropdown-item>
             <el-dropdown-item>
-              <el-button type="text" @click="addTemplatePreview(2)">2 элемента</el-button>
+              <el-button type="text" @click="addTemplatePreview(2)"
+                >2 элемента</el-button
+              >
             </el-dropdown-item>
             <el-dropdown-item>
-              <el-button type="text" @click="addTemplatePreview(3)">3 элемента</el-button>
+              <el-button type="text" @click="addTemplatePreview(3)"
+                >3 элемента</el-button
+              >
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
@@ -45,7 +69,12 @@
           </el-tooltip>
         </div>
         <div class="el-upload">
-          <el-tooltip class="item" effect="dark" content="Добавить абзац" placement="bottom-start">
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content="Добавить абзац"
+            placement="bottom-start"
+          >
             <el-button
               @click="addParagraphPreview"
               type="primary"
@@ -61,6 +90,7 @@
           :show-file-list="false"
           :on-success="addImagePreview"
           :before-upload="beforeImageUpload"
+          multiple
         >
           <el-tooltip
             class="item"
@@ -88,8 +118,13 @@
         </el-input>
       </el-form-item>
       <el-form-item prop="departmentId">
-        <el-select @change="getNameDepartment()" ref="select1" v-model="controls.departmentId" placeholder="Подразделение">
-          <el-option 
+        <el-select
+          @change="getNameDepartment()"
+          ref="select1"
+          v-model="controls.departmentId"
+          placeholder="Подразделение"
+        >
+          <el-option
             v-for="item in departments"
             :key="item._id"
             :label="item.title"
@@ -100,19 +135,29 @@
       <el-dialog class="post-preview" :visible.sync="previewDialog">
         <h2 class="post-preview__title">{{ controls.title }}</h2>
         <div class="post-preview__text" :key="controls.text">
-          <vue-markdown :breaks="false" :key="controls.text">{{ controls.text }}</vue-markdown>
+          <vue-markdown :breaks="false" :key="controls.text">{{
+            controls.text
+          }}</vue-markdown>
         </div>
-        <span class="post-preview__department">{{ controls.departmentName }}</span>
+        <span class="post-preview__department">{{
+          controls.departmentName
+        }}</span>
         <span class="post-preview__date">{{ $moment().format("LL") }}</span>
       </el-dialog>
       <div class="controls-post">
         <el-form-item label prop="status">
-          <el-checkbox v-model="controls.status" label="Опубликовать" border></el-checkbox>
+          <el-checkbox
+            v-model="controls.status"
+            label="Опубликовать"
+            border
+          ></el-checkbox>
         </el-form-item>
         <el-form-item>
           <el-button type="info" @click="openPreview">Предпросмотр</el-button>
           <el-button type="warning" @click="clearForm">Очистить</el-button>
-          <el-button type="primary" native-type="submit" :loading="loading">Создать</el-button>
+          <el-button type="primary" native-type="submit" :loading="loading"
+            >Создать</el-button
+          >
         </el-form-item>
       </div>
     </el-form>
@@ -134,6 +179,7 @@ export default {
     return {
       loading: false,
       previewDialog: false,
+      imageList: [],
       image: null,
       imagePreview: null,
       controls: {
@@ -141,7 +187,7 @@ export default {
         text: "",
         status: false,
         departmentId: "",
-        departmentName: "",
+        departmentName: ""
       },
       rules: {
         title: [
@@ -175,14 +221,6 @@ export default {
     openPreview() {
       this.previewDialog = true;
     },
-    addImagePreview(res, file, event) {
-      this.imagePreview = URL.createObjectURL(file.raw);
-      this.image = file.raw;
-      insertTextAtCursor(
-        this.$refs.ta,
-        `<img class="img" src="${this.imagePreview}">`
-      );
-    },
     addSubtitlePreview() {
       insertTextAtCursor(
         this.$refs.ta,
@@ -204,6 +242,15 @@ export default {
       insertTextAtCursor(
         this.$refs.ta,
         `<div class="grid-row">${template}</div>`
+      );
+    },
+    addImagePreview(res, file, fileList, event) {
+      this.imagePreview = URL.createObjectURL(file.raw);
+      this.image = file.raw;
+      this.imageList.push(file.raw)
+      insertTextAtCursor(
+        this.$refs.ta,
+        `<img class="img" src="${this.imagePreview}">`
       );
     },
     beforeImageUpload(file) {
@@ -228,9 +275,10 @@ export default {
             title: this.controls.title,
             text: this.controls.text,
             department: this.controls.departmentId,
-            status: this.controls.status
+            status: this.controls.status,
+            imageList: this.imageList
           };
-          
+          console.log(formData);
           // Отправка объекта с данными формы в store/post.js и вызов Action create()
           try {
             await this.$store.dispatch("post/create", formData);
@@ -250,6 +298,8 @@ export default {
       this.controls.status = false;
       this.controls.departmentId = "";
       this.controls.departmentName = "";
+      this.image = null;
+      this.imageList = null;
       this.loading = false;
     }
   }

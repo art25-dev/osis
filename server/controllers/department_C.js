@@ -2,7 +2,7 @@ const Department = require("../models/department_M")
 const path = require('path')
 const fs = require('fs')
 
-// Функция создания объявления
+// Функция создания подразделения
 module.exports.create = async (req, res) => {
   const department = new Department({
     title: req.body.title,
@@ -39,7 +39,6 @@ module.exports.update = async (req, res) => {
     fs.unlink(pathFile, (err) => {
       if (err) throw err;
       console.log("file deleted");
-
     })
   } else {
     const $set = {

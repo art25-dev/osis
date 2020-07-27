@@ -67,8 +67,6 @@ export default {
     handleAvatarSuccess(res, file) {
       this.imagePreview = URL.createObjectURL(file.raw);
       this.image = file.raw;
-      console.log(this.imagePreview);
-      console.log(this.image);
     },
     beforeAvatarUpload(file) {
       const format = file.type === "image/jpeg" || file.type === "image/png";
