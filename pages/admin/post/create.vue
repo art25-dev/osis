@@ -87,13 +87,13 @@
           <font-awesome-icon class="icon" slot="prefix" icon="user" size="1x" />
         </el-input>
       </el-form-item>
-      <el-form-item prop="department">
-        <el-select v-model="controls.department" placeholder="Подразделение">
-          <el-option
+      <el-form-item prop="departmentId">
+        <el-select @change="getNameDepartment()" ref="select1" v-model="controls.departmentId" placeholder="Подразделение">
+          <el-option 
             v-for="item in departments"
             :key="item._id"
             :label="item.title"
-            :value="item.title"
+            :value="item._id"
           ></el-option>
         </el-select>
       </el-form-item>
@@ -102,7 +102,7 @@
         <div class="post-preview__text" :key="controls.text">
           <vue-markdown :breaks="false" :key="controls.text">{{ controls.text }}</vue-markdown>
         </div>
-        <span class="post-preview__department">{{ controls.department }}</span>
+        <span class="post-preview__department">{{ controls.departmentName }}</span>
         <span class="post-preview__date">{{ $moment().format("LL") }}</span>
       </el-dialog>
       <div class="controls-post">
@@ -132,22 +132,6 @@ export default {
   },
   data() {
     return {
-      options: [{
-          value: 'Option1',
-          label: 'Option1'
-        }, {
-          value: 'Option2',
-          label: 'Option2'
-        }, {
-          value: 'Option3',
-          label: 'Option3'
-        }, {
-          value: 'Option4',
-          label: 'Option4'
-        }, {
-          value: 'Option5',
-          label: 'Option5'
-        },],
       loading: false,
       previewDialog: false,
       image: null,
@@ -156,7 +140,8 @@ export default {
         title: "",
         text: "",
         status: false,
-        department: ""
+        departmentId: "",
+        departmentName: "",
       },
       rules: {
         title: [
@@ -173,7 +158,7 @@ export default {
             trigger: "blur"
           }
         ],
-        department: [
+        departmentId: [
           {
             required: true,
             message: "Выберете подразделение",
@@ -184,6 +169,9 @@ export default {
     };
   },
   methods: {
+    getNameDepartment() {
+      this.controls.departmentName = event.target.innerText;
+    },
     openPreview() {
       this.previewDialog = true;
     },
@@ -239,18 +227,18 @@ export default {
           const formData = {
             title: this.controls.title,
             text: this.controls.text,
-            department: this.controls.department,
+            department: this.controls.departmentId,
             status: this.controls.status
           };
-          console.log(formData);
+          
           // Отправка объекта с данными формы в store/post.js и вызов Action create()
-          // try {
-          //   await this.$store.dispatch("post/create", formData);
-          // } catch (e) {
-          // } finally {
-          //   this.$message.success("Объявление создано");
-          //   this.clearForm();
-          // }
+          try {
+            await this.$store.dispatch("post/create", formData);
+          } catch (e) {
+          } finally {
+            this.$message.success("Объявление создано");
+            this.clearForm();
+          }
         } else {
           this.$message.warning("Форма не валидна");
         }
@@ -260,7 +248,8 @@ export default {
       this.controls.title = "";
       this.controls.text = "";
       this.controls.status = false;
-      this.controls.department = "";
+      this.controls.departmentId = "";
+      this.controls.departmentName = "";
       this.loading = false;
     }
   }

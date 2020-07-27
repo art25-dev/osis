@@ -17,6 +17,10 @@ const postSchema = new Schema({
     type: Boolean,
     require: true
   },
+  department: {
+    type: Schema.Types.ObjectId,
+    ref: "departments"
+  }
 })
 
 module.exports = model('posts', postSchema)

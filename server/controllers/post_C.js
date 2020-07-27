@@ -5,6 +5,7 @@ module.exports.create = async (req, res) => {
   const post = new Post({
     title: req.body.title,
     text: req.body.text,
+    department: req.body.department,
     status: req.body.status
   })
 
