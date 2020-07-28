@@ -32,7 +32,7 @@ export default {
       loading: false,
       controls: {
         login: "root",
-        password: "root"
+        password: "artgavr25"
       },
       rules: {
         login: [

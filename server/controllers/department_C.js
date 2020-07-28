@@ -9,6 +9,7 @@ module.exports.create = async (req, res) => {
     imageUrl: `/${req.file.filename}`
   })
 
+
   try {
     await department.save()
     res.status(201).json(department)
@@ -35,10 +36,9 @@ module.exports.update = async (req, res) => {
     }
 
     // Удаление старого файла
-    const pathFile = path.resolve(`static/images/departments${req.body['pathOldImage']}`)
+    const pathFile = path.resolve(`static/departments${req.body['pathOldImage']}`)
     fs.unlink(pathFile, (err) => {
       if (err) throw err;
-      console.log("file deleted");
     })
   } else {
     const $set = {
@@ -86,10 +86,8 @@ module.exports.remove = async (req, res) => {
     res.status(500).json(e)
   }
 
-  const pathFile = path.resolve(`static/images/departments${req.query['pathFile']}`)
+  const pathFile = path.resolve(`static/departments${req.query['pathFile']}`)
   fs.unlink(pathFile, (err) => {
     if (err) throw err;
-    console.log("file deleted");
-
   })
 }

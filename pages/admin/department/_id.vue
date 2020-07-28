@@ -27,7 +27,7 @@
         >
           <img
             v-if="currentImagePreview"
-            :src="require(`../../../static/images/departments${currentImagePreview}`)"
+            :src="require(`../../../static/departments${currentImagePreview}`)"
             class="avatar"
           />
           <img v-else-if="newImagePreview" :src="newImagePreview" class="avatar" />

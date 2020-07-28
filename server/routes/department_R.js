@@ -1,5 +1,5 @@
 const { Router } = require("express")
-const upload = require("../middleware/upload")
+const uploadAvatar = require("../middleware/uploadAvatar")
 const department_C = require("../controllers/department_C")
 const router = Router()
 
@@ -9,7 +9,7 @@ const router = Router()
 // Admin
 router.post(
   "/admin/",
-  upload.single("image"),
+  uploadAvatar.single("image"),
   department_C.create
 )
 
@@ -25,7 +25,7 @@ router.get(
 
 router.put(
   "/admin/:id",
-  upload.single("newImageFile"),
+  uploadAvatar.single("newImageFile"),
   department_C.update
 )
 
