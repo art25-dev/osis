@@ -77,7 +77,6 @@ module.exports.remove = async (req, res) => {
   } catch (e) {
     res.status(500).json(e)
   }
-  console.log(req.query);
 
   for (let i = 0; i < req.query.pathFiles.length; i++) {
     let pathFile = path.resolve(`static/posts${req.query['pathFiles'][i]}`)
