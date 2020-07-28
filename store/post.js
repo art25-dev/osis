@@ -18,9 +18,9 @@ export const actions = {
   },
 
   // Запрос на удаление объявления
-  async remove({ commit }, id) {
+  async remove({ commit }, {id, imageList}) {
     try {
-      return await this.$axios.$delete(`/api/post/admin/${id}`)
+      return await this.$axios.$delete(`/api/post/admin/${id}`, { params: { pathFiles: imageList } })
     } catch (e) {
       commit('setError', e, { root: true })
       throw e
@@ -37,17 +37,6 @@ export const actions = {
     }
   },
 
-  // Запрос на создание объявления 1
-  // async create({ commit }, formData) {
-  //   try {
-  //     console.log(formData);
-  //     return await this.$axios.$post('/api/post/admin', formData)
-  //   } catch (e) {
-  //     commit('setError', e, { root: true })
-  //     throw e
-  //   }
-  // },
-
     // Запрос на создание объявления 2
     async create({ commit }, { title, text, department, status, imageList}) {
       try {
@@ -57,12 +46,12 @@ export const actions = {
         fd.append("text", text)
         fd.append("department", department)
         fd.append("status", status)
-      
+
         for (let i = 0; i < imageList.length; i++) {
           fd.append("imageList", imageList[i], imageList[i].name)
         }
         return await this.$axios.$post('/api/post/admin', fd)
-       
+
       } catch (e) {
         commit('setError', e, { root: true })
         throw e

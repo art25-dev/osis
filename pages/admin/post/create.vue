@@ -278,7 +278,7 @@ export default {
             status: this.controls.status,
             imageList: this.imageList
           };
-          console.log(formData);
+
           // Отправка объекта с данными формы в store/post.js и вызов Action create()
           try {
             await this.$store.dispatch("post/create", formData);
@@ -373,7 +373,7 @@ export default {
     font-size: 1rem;
     position: absolute;
     right: 2rem;
-    bottom: 1.5rem;
+    bottom: 2rem;
     color: $color-info;
     font-weight: bold;
   }

@@ -9,15 +9,15 @@
     }
 
     @include hd-plus {
-      
+
     }
-  
+
     @include wsx {
       font-size: 12px !important;
     }
-  
+
     @include hd {
-     
+
     }
   }
 
@@ -43,11 +43,11 @@
     @include hd-plus {
       padding: 10px 0 !important;
     }
-  
+
     @include wsx {
       padding: 7px 0 !important;
     }
-  
+
     @include hd {
       padding: 5px 0 !important;
     }
@@ -57,11 +57,11 @@
     @include hd-plus {
       padding: 10px 0 !important;
     }
-  
+
     @include wsx {
       padding: 7px 0 !important;
     }
-  
+
     @include hd {
       padding: 5px 0 !important;
     }
@@ -116,17 +116,27 @@
       line-height: 25px !important;
       font-size: 10px !important;
     }
-  
+
     @include wsx {
       height: 22px !important;
       padding: 0 10px !important;
       line-height: 20px !important;
       font-size: 10px !important;
     }
-  
+
     @include hd {
-     
+
     }
 
-    
+
   }
+
+  .el-table .cell {
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    word-break: normal !important;
+    line-height: 23px;
+    padding-right: 10px;
+}
