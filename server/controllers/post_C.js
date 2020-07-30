@@ -80,7 +80,7 @@ module.exports.remove = async (req, res) => {
 
   for (let i = 0; i < req.query.pathFiles.length; i++) {
     let pathFile = path.resolve(`static/posts${req.query['pathFiles'][i]}`)
-    console.log(pathFile);
+    
     fs.unlink(pathFile, (err) => {
       if (err) throw err;
     })
