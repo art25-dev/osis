@@ -87,7 +87,6 @@ module.exports.remove = async (req, res) => {
   }
   console.log(req.query);
   const pathFile = path.resolve(`static/departments${req.query['pathFile']}`)
-  console.log(pathFile);
   fs.unlink(pathFile, (err) => {
     if (err) throw err;
   })
