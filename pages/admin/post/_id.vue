@@ -2,51 +2,82 @@
   <div class="create-container">
     <el-breadcrumb separator="/" class="mb">
       <el-breadcrumb-item to="/admin/post/">Все объявления</el-breadcrumb-item>
-      <el-breadcrumb-item>Объявление ID-{{ post._id }} от {{ $moment(post.date).format("LL") }}</el-breadcrumb-item>
-    </el-breadcrumb>
-    <div class="post-setting">
-      <el-form
-        :model="controls"
-        :rules="rules"
-        ref="form"
-        @submit.native.prevent="onSubmit"
-        class="post-form"
+      <el-breadcrumb-item
+        >Объявление ID-{{ post._id }} от
+        {{ $moment(post.date).format("LL") }}</el-breadcrumb-item
       >
-        <h2>Редактор объявления</h2>
-        <el-form-item prop="title">
-          <el-input placeholder="Заголовок" v-model="controls.title" maxlength="60" show-word-limit></el-input>
+    </el-breadcrumb>
+    <el-form
+      :model="controls"
+      :rules="rules"
+      ref="form"
+      @submit.native.prevent="onSubmit"
+    >
+      <h2>Редактор объявления</h2>
+      <el-form-item prop="title">
+        <el-input
+          placeholder="Заголовок"
+          v-model="controls.title"
+          maxlength="60"
+          show-word-limit
+        ></el-input>
+      </el-form-item>
+      
+      <el-form-item prop="text">
+        <el-input
+          type="textarea"
+          resize="none"
+          :rows="15"
+          placeholder="Текст объявления"
+          v-model="controls.text"
+        >
+          <font-awesome-icon class="icon" slot="prefix" icon="user" size="1x" />
+        </el-input>
+      </el-form-item>
+            <el-form-item prop="departmentId">
+        <el-select
+          @change="getNameDepartment()"
+          ref="select1"
+          v-model="controls.departmentId"
+          placeholder="Подразделение"
+        >
+          <el-option
+            v-for="item in departments"
+            :key="item._id"
+            :label="item.title"
+            :value="item._id"
+          ></el-option>
+        </el-select>
+      </el-form-item>
+      <el-dialog class="post-preview" :visible.sync="previewDialog">
+        <h2 class="post-preview__title">{{ controls.title }}</h2>
+        <div class="post-preview__text" :key="controls.text">
+          <vue-markdown :breaks="false" :key="controls.text">{{
+            controls.text
+          }}</vue-markdown>
+        </div>
+        <span class="post-preview__department">{{
+          controls.departmentName
+        }}</span>
+        <span class="post-preview__date">{{ $moment().format("LL") }}</span>
+      </el-dialog>
+      <div class="controls-post">
+        <el-form-item label prop="status">
+          <el-checkbox
+            v-model="controls.status"
+            label="Опубликовать"
+            border
+          ></el-checkbox>
         </el-form-item>
-
-        <el-form-item prop="text">
-          <el-input
-            type="textarea"
-            resize="none"
-            :rows="15"
-            placeholder="Текст объявления"
-            v-model="controls.text"
+        <el-form-item>
+          <el-button type="info" @click="openPreview">Предпросмотр</el-button>
+          <el-button type="warning" @click="clearForm">Очистить</el-button>
+          <el-button type="primary" native-type="submit" :loading="loading"
+            >Сохранить</el-button
           >
-            <font-awesome-icon class="icon" slot="prefix" icon="user" size="1x" />
-          </el-input>
         </el-form-item>
-        <div class="controls">
-          <el-form-item label prop="status">
-            <el-checkbox v-model="controls.status" label="Опубликовать" border></el-checkbox>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="warning" @click="clearForm">Очистить</el-button>
-            <el-button type="primary" native-type="submit" :loading="loading">Сохранить</el-button>
-          </el-form-item>
-        </div>
-      </el-form>
-      <div class="post-preview">
-        <div class="post">
-          <h3>{{ controls.title }}</h3>
-          <p>{{ controls.text }}</p>
-          <span class="department"></span>
-          <span class="date">{{ $moment(post.date).format("LL") }}</span>
-        </div>
       </div>
-    </div>
+    </el-form>
   </div>
 </template>
 
@@ -56,15 +87,19 @@ export default {
   middleware: ["adminAuth"],
   async asyncData({ store, params }) {
     const post = await store.dispatch("post/fetchAdminById", params.id);
-    return { post };
+     const departments = await store.dispatch("department/fetchAdmin");
+    return { post, departments };
   },
   data() {
     return {
       loading: false,
+      previewDialog: false,
       controls: {
         title: "",
         text: "",
-        status: false
+        status: false,
+        departmentId: "",
+        departmentName: ""
       },
       rules: {
         title: [
@@ -85,6 +120,12 @@ export default {
     };
   },
   methods: {
+    getNameDepartment() {
+      this.controls.departmentName = event.target.innerText;
+    },
+    openPreview() {
+      this.previewDialog = true;
+    },
     onSubmit() {
       this.$refs.form.validate(async valid => {
         if (valid) {
@@ -117,9 +158,9 @@ export default {
   },
   mounted() {
     // Подгрузка данных объявления в поля формы
-    this.controls.title = this.post.title
-    this.controls.text = this.post.text
-    this.controls.status = this.post.status
+    this.controls.title = this.post.title;
+    this.controls.text = this.post.text;
+    this.controls.status = this.post.status;
   }
 };
 </script>
@@ -131,53 +172,8 @@ export default {
   max-width: 50%;
 }
 
-.post-setting {
-  display: grid;
-  grid-template-columns: 35% 65%;
-  grid-template-rows: 1fr;
-
-  @include hd-plus {
-    grid-template-columns: 40% 60% !important;
-  }
-
-  @include wsx {
-    grid-template-columns: 45% 55% !important;
-  }
-
-  @include hd {
-    grid-template-columns: 50% 50% !important;
-  }
-}
-
-.post-form {
-  padding-right: 2rem;
-  position: relative;
-
-  &::after {
-    position: absolute;
-    content: "";
-    display: block;
-    height: 100%;
-    width: 1px;
-    right: 0;
-    top: 0;
-    background: $color-primary;
-  }
-}
-
 .post-preview {
-  margin-left: 2rem;
-  position: relative;
-}
-
-.post {
-  background: $color-second;
-  border-radius: 5px;
-  padding: 2rem 2rem 4rem 2rem;
-  min-height: 100%;
-  overflow: hidden;
-
-  h3 {
+  &__title {
     display: block;
     padding-bottom: 0.3rem;
     margin-bottom: 1rem;
@@ -197,38 +193,78 @@ export default {
     }
   }
 
-  p {
+  &__text {
     text-align: justify;
     font-size: 1.5rem;
     overflow-y: scroll;
-    max-height: 500px;
-    padding-right: 1rem;
+    max-height: 450px;
+    padding: 0rem 1rem 0rem 0rem;
+    margin-bottom: 2rem;
+    white-space: pre-line;
+    word-break: keep-all;
+
+    p {
+      text-align: justify;
+      font-size: 1.5rem;
+      overflow-y: scroll;
+      max-height: 450px;
+      padding-right: 1rem;
+    }
+  }
+
+  &__markdown {
+    p {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  &__department {
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    font-size: 1rem;
+    color: $color-info;
+    font-weight: bold;
+  }
+
+  &__date {
+    font-size: 1rem;
+    position: absolute;
+    right: 2rem;
+    bottom: 2rem;
+    color: $color-info;
+    font-weight: bold;
   }
 }
 
-.department {
-  position: absolute;
-  bottom: 1.5rem;
-  left: 2rem;
-  font-size: 1rem;
-  color: $color-info;
-  font-weight: bold;
-}
-
-.date {
-  position: absolute;
-  right: 2rem;
-  bottom: 1.5rem;
-  color: $color-info;
-  font-weight: bold;
-}
-
-.controls {
+.controls-post {
   display: flex;
   justify-content: space-between;
 
   .el-form-item {
     margin-bottom: 0;
+  }
+}
+
+.controls-text {
+  margin-bottom: 5px;
+
+  &__add-image,
+  &__add-paragraph,
+  &__add-template,
+  &__add-subtitle {
+    border: 1px solid $color-primary;
+    border-radius: 5px;
+    outline: none;
+    color: $color-second;
+    background: $color-primary;
+    padding: 8px !important;
+  }
+
+  div {
+    display: inline-block !important;
+    width: auto;
   }
 }
 

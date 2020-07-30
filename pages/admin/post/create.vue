@@ -247,7 +247,7 @@ export default {
     addImagePreview(res, file, fileList, event) {
       this.imagePreview = URL.createObjectURL(file.raw);
       this.image = file.raw;
-      this.imageList.push(file.raw)
+      this.imageList.push(file.raw);
       insertTextAtCursor(
         this.$refs.ta,
         `<img class="img" src="${this.imagePreview}">`
