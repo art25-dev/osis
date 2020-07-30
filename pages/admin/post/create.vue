@@ -379,7 +379,7 @@ export default {
   }
 }
 
-.controls-post {
+.controls {
   display: flex;
   justify-content: space-between;
 
