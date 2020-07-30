@@ -1,0 +1,41 @@
+// .grid-container {
+//   display: block;
+//   max-width: 1140px;
+//   margin-right: auto;
+//   margin-left: auto;
+//   box-sizing: border-box;
+// }
+
+.grid-row {
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  margin-bottom: 10px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.grid-col {
+  margin-right: 10px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &-1 {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  &-2 {
+    max-width: calc(100% / 2);
+    width: calc(100% / 2);
+  }
+
+  &-3 {
+    max-width: calc(100% / 3);
+    width: calc(100% / 3);
+  }
+}

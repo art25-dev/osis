@@ -1,18 +1,17 @@
 const path = require('path')
 const multer = require('multer')
-const moment = require('moment')
 const cyrillicToTranslit = require("cyrillic-to-translit-js")
+
 
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, path.resolve(__dirname, '../..', 'static/posts'))
+    cb(null, path.resolve(__dirname, '../..', 'static/departments'))
   },
   filename(req, file, cb) {
     const fileName = cyrillicToTranslit().transform(req.body.title, "_")
     const fileFormat = file.mimetype.split("/")[1]
-    const fileDate = moment().format('HHmmss_SSS')
-    cb(null, `${fileName}-${fileDate}.${fileFormat}`)
+    cb(null, `${fileName}.${fileFormat}`)
   }
 })
 

@@ -21,12 +21,14 @@
     "element-ui": "^2.4.11",
     "express": "^4.16.4",
     "fs": "0.0.1-security",
+    "insert-text-at-cursor": "^0.3.0",
     "moment": "^2.25.3",
     "mongoose": "^5.9.6",
     "multer": "^1.4.2",
     "nuxt": "^2.0.0",
     "nuxt-moment": "^1.0.4",
-    "vue-custom-scrollbar": "^1.1.0"
+    "vue-custom-scrollbar": "^1.1.0",
+    "vue-markdown": "^2.2.4"
   },
   "devDependencies": {
     "@nuxtjs/style-resources": "^1.0.0",

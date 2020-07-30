@@ -17,6 +17,13 @@ const postSchema = new Schema({
     type: Boolean,
     require: true
   },
+  department: {
+    type: Schema.Types.ObjectId,
+    ref: "departments"
+  },
+  imageList: {
+    type: Array
+  }
 })
 
 module.exports = model('posts', postSchema)

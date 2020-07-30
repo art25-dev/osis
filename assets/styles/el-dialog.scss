@@ -1,0 +1,9 @@
+.el-dialog {
+  border-radius: 5px !important;
+  background: $color-second !important;
+  padding: 15px !important;
+
+  &__body {
+    padding: 5px 20px;
+  }
+}

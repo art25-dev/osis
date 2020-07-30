@@ -34,7 +34,7 @@
               size="mini"
               type="danger"
               icon="el-icon-delete"
-              @click="remove(scope.row._id)"
+              @click="remove(scope.row._id, scope.row.imageList)"
             ></el-button>
           </template>
         </el-table-column>
@@ -66,7 +66,8 @@ export default {
       this.$router.push(`/admin/post/${id}`);
     },
     // Удаление объявления
-    async remove(id) {
+    async remove(id, imageList) {
+
       // Вызов диалогового окна
       try {
         await this.$confirm("Удалить объявление?", "Внимание!", {
@@ -76,8 +77,12 @@ export default {
           showClose: false,
           type: "warning"
         });
+        const images = {
+          id: id,
+          imageList: imageList
+        }
         // Вызов Action remove() из store/post.js с передачей id выбранного объявления
-        await this.$store.dispatch("post/remove", id);
+        await this.$store.dispatch("post/remove", images);
         this.posts = this.posts.filter(p => p._id !== id);
         this.$message({
           message: "Объявление удалено",
@@ -120,16 +125,16 @@ h1 {
   bottom: 2rem;
 
    @include hd-plus {
-      
+
     }
-  
+
     @include wsx {
       width: 40px;
       height: 40px;
     }
-  
+
     @include hd {
-      
+
     }
 }
 

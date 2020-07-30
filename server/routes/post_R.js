@@ -1,4 +1,5 @@
 const { Router } = require("express")
+const upload = require("../middleware/upload")
 const post_C = require("../controllers/post_C")
 const router = Router()
 
@@ -6,6 +7,7 @@ const router = Router()
 // Admin
 router.post(
   "/admin/",
+  upload.array("imageList"),
   post_C.create
 )
 

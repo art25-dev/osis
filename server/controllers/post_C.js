@@ -1,11 +1,22 @@
 const Post = require("../models/post_M")
+const path = require('path')
+const fs = require("fs")
+
 
 // Функция создания объявления
 module.exports.create = async (req, res) => {
+  let images = []
+
+  for (let i = 0; i < req.files.length; i++) {
+    images.push(`/${req.files[i].filename}`)
+  }
+
   const post = new Post({
     title: req.body.title,
     text: req.body.text,
-    status: req.body.status
+    department: req.body.department,
+    status: req.body.status,
+    imageList: images
   })
 
   try {
@@ -65,5 +76,13 @@ module.exports.remove = async (req, res) => {
     res.json({ message: "Объявление удалено" })
   } catch (e) {
     res.status(500).json(e)
+  }
+
+  for (let i = 0; i < req.query.pathFiles.length; i++) {
+    let pathFile = path.resolve(`static/posts${req.query['pathFiles'][i]}`)
+    
+    fs.unlink(pathFile, (err) => {
+      if (err) throw err;
+    })
   }
 }

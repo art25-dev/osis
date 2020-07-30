@@ -128,6 +128,7 @@ export default {
 .create-container {
   display: block;
   min-height: 100%;
+  max-width: 50%;
 }
 
 .post-setting {
