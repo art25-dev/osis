@@ -5,6 +5,8 @@
       <el-table :data="posts" style="width: 100%" height="calc(100vh - 120px)">
         <el-table-column prop="title" label="Заголовок" />
 
+        <el-table-column prop="department" label="Подразделение" />
+
         <el-table-column label="Дата публикации">
           <template slot-scope="scope">
             <span>{{ $moment(scope.row.date).format("LLL") }}</span>
@@ -16,7 +18,8 @@
             <el-tag
               :type="scope.row.status === true ? 'primary' : 'danger'"
               disable-transitions
-            >{{ scope.row.status }}</el-tag>
+              >{{ scope.row.status }}</el-tag
+            >
           </template>
         </el-table-column>
 
@@ -67,7 +70,6 @@ export default {
     },
     // Удаление объявления
     async remove(id, imageList) {
-
       // Вызов диалогового окна
       try {
         await this.$confirm("Удалить объявление?", "Внимание!", {
@@ -80,7 +82,7 @@ export default {
         const images = {
           id: id,
           imageList: imageList
-        }
+        };
         // Вызов Action remove() из store/post.js с передачей id выбранного объявления
         await this.$store.dispatch("post/remove", images);
         this.posts = this.posts.filter(p => p._id !== id);
@@ -124,22 +126,19 @@ h1 {
   right: 2rem;
   bottom: 2rem;
 
-   @include hd-plus {
+  @include hd-plus {
+  }
 
-    }
+  @include wsx {
+    width: 40px;
+    height: 40px;
+  }
 
-    @include wsx {
-      width: 40px;
-      height: 40px;
-    }
-
-    @include hd {
-
-    }
+  @include hd {
+  }
 }
 
 .table {
   position: relative !important;
 }
 </style>
-
