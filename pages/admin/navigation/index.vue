@@ -3,7 +3,7 @@
     <h1>Навигация</h1>
     <div class="table">
       <el-table style="width: 100%" height="calc(100vh - 120px)">
-        
+
       </el-table>
 
       <el-button type="success" circle class="btnCreate" @click="create()">
@@ -21,6 +21,7 @@ export default {
   // Запрос всех пунктов меню из store/navigation.js в Action fetchAdmin()
   async asyncData({ store }) {
     const navigation = await store.dispatch("navigation/fetchAdmin");
+      console.log(navigation);
     return { navigation };
   },
   data() {
