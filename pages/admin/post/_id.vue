@@ -25,6 +25,7 @@
       
       <el-form-item prop="text">
         <el-input
+          disabled=""
           type="textarea"
           resize="none"
           :rows="15"
@@ -70,8 +71,7 @@
           ></el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button type="info" @click="test">тест</el-button>
-          <el-button type="info" @click="openPreview">Предпросмотр</el-button>
+          <el-button type="info" disabled="" @click="openPreview">Предпросмотр</el-button>
           <el-button type="warning" @click="clearForm">Очистить</el-button>
           <el-button type="primary" native-type="submit" :loading="loading"
             >Сохранить</el-button
@@ -121,19 +121,6 @@ export default {
     };
   },
   methods: {
-    test() {
-      let str = this.post.text
-      let arrImg = this.post.imageList
-    
-      let result = str.match(/blob.*"/g);
-      
-
-      for(let i = 0; i < result.length; i++) {
-        result[i].slice(0, -1);
-      }
-
-
-    },
     getNameDepartment() {
       this.controls.departmentName = event.target.innerText;
     },
