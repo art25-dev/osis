@@ -8,8 +8,6 @@ module.exports.create = async (req, res) => {
     title: req.body.title,
     imageUrl: `/${req.file.filename}`
   })
-
-
   try {
     await department.save()
     res.status(201).json(department)
@@ -85,7 +83,6 @@ module.exports.remove = async (req, res) => {
   } catch (e) {
     res.status(500).json(e)
   }
-  console.log(req.query);
   const pathFile = path.resolve(`static/departments${req.query['pathFile']}`)
   fs.unlink(pathFile, (err) => {
     if (err) throw err;

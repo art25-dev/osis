@@ -3,7 +3,6 @@ const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
 
 const authRoutes = require("./routes/auth_R")
-const postRoutes = require("./routes/post_R")
 const departmentRoutes = require("./routes/department_R")
 
 const keys = require("./keys")
@@ -22,7 +21,6 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 app.use("/api/auth", authRoutes)
-app.use("/api/post", postRoutes)
 app.use("/api/department", departmentRoutes)
 
 module.exports = app
