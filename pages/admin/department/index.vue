@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Все подразделения</h1>
+    <h1>Подразделения</h1>
     <div class="table">
       <el-table :data="departments" style="width: 100%" height="calc(100vh - 120px)">
         <el-table-column label="Изображение подразделения">

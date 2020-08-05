@@ -20,8 +20,9 @@ export default {
   middleware: ["adminAuth"],
   // Запрос всех пунктов меню из store/navigation.js в Action fetchAdmin()
   async asyncData({ store }) {
-    const navigation = await store.dispatch("navigation/fetchAdmin");
-    return { navigation };
+    const navigations = await store.dispatch("navigation/fetchAdmin");
+    console.log(navigations);
+    return { navigations };
   },
   data() {
     return {};
