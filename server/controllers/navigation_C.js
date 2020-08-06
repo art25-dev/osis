@@ -13,19 +13,20 @@ module.exports.getAll = async (req, res) => {
 
 }
 
-// Функция создания подразделения
-// module.exports.create = async (req, res) => {
-//   const department = new Department({
-//     title: req.body.title,
-//     imageUrl: `/${req.file.filename}`
-//   })
-//   try {
-//     await department.save()
-//     res.status(201).json(department)
-//   } catch (e) {
-//     res.status(500).json(e)
-//   }
-// }
+// Функция создания пункта меню
+module.exports.create = async (req, res) => {
+  const navigation = new Navigation({
+    _id: req.body.link,
+    title: req.body.title,
+    link: req.body.link
+  })
+  try {
+    await navigation.save()
+    res.status(201).json(navigation)
+  } catch (e) {
+    res.status(500).json(e)
+  }
+}
 
 // module.exports.update = async (req, res) => {
 

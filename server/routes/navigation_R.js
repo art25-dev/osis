@@ -4,12 +4,12 @@ const router = Router()
 
 
 
-// /api/department/admin
+// /api/navigation/admin
 // Admin
-// router.post(
-//   "/admin/",
-//   department_C.create
-// )
+router.post(
+  "/admin/",
+  navigation_C.create
+)
 
 router.get(
   "/admin/",
