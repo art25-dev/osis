@@ -2,8 +2,45 @@
   <div>
     <h1>Навигация</h1>
     <div class="table">
-      <el-table style="width: 100%" height="calc(100vh - 120px)">
-
+      <el-table
+        :data="navigations"
+        style="width: 100%"
+        height="calc(100vh - 120px)"
+      >
+        <!-- <el-table-column
+          prop="title"
+          label="Название пункта меню"
+        ></el-table-column>
+        <el-table-column
+          prop="link"
+          label="Ссылка пункта меню"
+        ></el-table-column>
+        <el-table-column
+          label="Подменю"
+        >
+        <template slot-scope="scope">
+          <div>
+            {{scope.row.children}}
+         </div>
+        </template></el-table-column>
+        <el-table-column label="Действия">
+          <template slot-scope="scope">
+            <el-button
+              circle
+              size="mini"
+              type="primary"
+              icon="el-icon-edit"
+              @click="edit(scope.row._id)"
+            ></el-button>
+            <el-button
+              circle
+              size="mini"
+              type="danger"
+              icon="el-icon-delete"
+              @click="remove(scope.row._id)"
+            ></el-button>
+          </template>
+        </el-table-column> -->
       </el-table>
 
       <el-button type="success" circle class="btnCreate" @click="create()">
@@ -20,16 +57,41 @@ export default {
   middleware: ["adminAuth"],
   // Запрос всех пунктов меню из store/navigation.js в Action fetchAdmin()
   async asyncData({ store }) {
-    const navigation = await store.dispatch("navigation/fetchAdmin");
-      console.log(navigation);
-    return { navigation };
+    const navigations = await store.dispatch("navigation/fetchAdmin");
+    console.log(navigations);
+    return { navigations };
   },
   data() {
     return {};
   },
   methods: {
     create() {
-      console.log("create navItem");
+      this.$router.push(`/admin/navigation/create`);
+    },
+    edit(id) {
+      console.log("edit navItem");
+    },
+    async remove(id) {
+      // Вызов диалогового окна
+      try {
+        await this.$confirm("Удалить пункт меню?", "Внимание!", {
+          confirmButtonText: "Удалить",
+          cancelButtonText: "Отмена",
+          cancelButtonClass: "el-button--danger",
+          showClose: false,
+          type: "warning"
+        });
+        // Вызов Action remove() из store/navigation.js с передачей id выбранного пункта меню
+        const navigationItem = {
+          id
+        };
+        // await this.$store.dispatch("navigation/remove", navigationItem);
+        this.navigations = this.navigations.filter(d => d._id !== id);
+        this.$message({
+          message: "Пункт меню удален",
+          type: "success"
+        });
+      } catch (e) {}
     }
   }
 };

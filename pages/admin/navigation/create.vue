@@ -1,7 +1,7 @@
 <template>
   <div class="create-container">
     <el-breadcrumb separator="/" class="mb">
-      <el-breadcrumb-item to="/admin/department/">Все подразделения</el-breadcrumb-item>
+      <el-breadcrumb-item to="/admin/navigation/">Навигация</el-breadcrumb-item>
       <el-breadcrumb-item></el-breadcrumb-item>
     </el-breadcrumb>
     <el-form
@@ -9,25 +9,12 @@
       :rules="rules"
       ref="form"
       @submit.native.prevent="onSubmit"
-      class="department-form"
+      class="navigation-form"
       enctype="multipart/form-data"
     >
-      <h2>Создать подразделение</h2>
+      <h2>Создать пункт меню</h2>
       <el-form-item prop="title">
         <el-input placeholder="Название" v-model="controls.title" maxlength="60" show-word-limit></el-input>
-      </el-form-item>
-
-      <el-form-item class="mb-0">
-        <el-upload
-          class="avatar-uploader"
-          action="http://localhost:3000/admin"
-          :show-file-list="false"
-          :on-success="handleAvatarSuccess"
-          :before-upload="beforeAvatarUpload"
-        >
-          <img v-if="imagePreview" :src="imagePreview" class="avatar" />
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
       </el-form-item>
 
       <div class="controls">
@@ -41,13 +28,12 @@
 </template>
 
 <script>
+const cyrillicToTranslit = require("cyrillic-to-translit-js")
 export default {
   layout: "admin",
   middleware: ["adminAuth"],
   data() {
     return {
-      image: null,
-      imagePreview: null,
       loading: false,
       controls: {
         title: ""
@@ -64,40 +50,23 @@ export default {
     };
   },
   methods: {
-    handleAvatarSuccess(res, file) {
-      this.imagePreview = URL.createObjectURL(file.raw);
-      this.image = file.raw;
-    },
-    beforeAvatarUpload(file) {
-      const format = file.type === "image/jpeg" || file.type === "image/png";
-      const size = file.size / 1024 / 1024 < 2;
-
-      if (!format) {
-        this.$message.error("Формат изображения должен быть JPEG или PNG");
-      }
-      if (!size) {
-        this.$message.error("Размер изображения должен быть не более 2 МБ");
-      }
-      return format && size;
-    },
-    /////////////////////////////////////////////////
     onSubmit() {
       this.$refs.form.validate(async valid => {
-        if (valid && this.image) {
+        if (valid) {
           this.loading = true;
 
           // Формирование объекта для отправки в store
           const formData = {
             title: this.controls.title.toLowerCase(),
-            image: this.image
+            link: cyrillicToTranslit().transform(this.controls.title, "_").toLowerCase()
           };
 
           // Отправка объекта с данными формы в store/department.js и вызов Action create()
           try {
-            await this.$store.dispatch("department/create", formData);
+            await this.$store.dispatch("navigation/create", formData);
           } catch (e) {
           } finally {
-            this.$message.success("Подразделение создано");
+            this.$message.success("Пункт меню создан");
             this.clearForm();
           }
         } else {
@@ -108,8 +77,6 @@ export default {
     clearForm() {
       this.controls.title = "";
       this.loading = false;
-      this.image = null;
-      this.imagePreview = null;
     }
   }
 };
@@ -121,7 +88,7 @@ export default {
   min-height: 100%;
 }
 
-.department-form {
+.navigation-form {
   padding-right: 2rem;
   position: relative;
   width: 40%;

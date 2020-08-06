@@ -13,12 +13,10 @@ export default {
 <style lang="scss" scoped>
 h1 {
   display: inline-block;
-  position: relative;
   padding-bottom: 0.3rem;
-  font-size: 1.4rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  font-weight: bold;
+  margin-bottom: 1rem;
+  color: $color-primary;
+  position: relative;
 
   &::after {
     content: "";
