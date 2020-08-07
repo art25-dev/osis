@@ -7,22 +7,10 @@
         style="width: 100%"
         height="calc(100vh - 120px)"
       >
-        <!-- <el-table-column
+        <el-table-column
           prop="title"
           label="Название пункта меню"
         ></el-table-column>
-        <el-table-column
-          prop="link"
-          label="Ссылка пункта меню"
-        ></el-table-column>
-        <el-table-column
-          label="Подменю"
-        >
-        <template slot-scope="scope">
-          <div>
-            {{scope.row.children}}
-         </div>
-        </template></el-table-column>
         <el-table-column label="Действия">
           <template slot-scope="scope">
             <el-button
@@ -40,7 +28,7 @@
               @click="remove(scope.row._id)"
             ></el-button>
           </template>
-        </el-table-column> -->
+        </el-table-column>
       </el-table>
 
       <el-button type="success" circle class="btnCreate" @click="create()">
@@ -82,10 +70,7 @@ export default {
           type: "warning"
         });
         // Вызов Action remove() из store/navigation.js с передачей id выбранного пункта меню
-        const navigationItem = {
-          id
-        };
-        // await this.$store.dispatch("navigation/remove", navigationItem);
+        await this.$store.dispatch("navigation/remove", id);
         this.navigations = this.navigations.filter(d => d._id !== id);
         this.$message({
           message: "Пункт меню удален",

@@ -16,13 +16,23 @@ module.exports.getAll = async (req, res) => {
 // Функция создания пункта меню
 module.exports.create = async (req, res) => {
   const navigation = new Navigation({
-    _id: req.body.link,
+    _id: req.body._id,
     title: req.body.title,
-    link: req.body.link
+    parent: req.body.parent
   })
   try {
     await navigation.save()
     res.status(201).json(navigation)
+  } catch (e) {
+    res.status(500).json(e)
+  }
+}
+
+// Функция удаления пункта меню
+module.exports.remove = async (req, res) => {
+  try {
+    await Navigation.deleteOne({ _id: req.params.id })
+    res.json({ message: "Пункт меню удален" })
   } catch (e) {
     res.status(500).json(e)
   }
@@ -79,15 +89,4 @@ module.exports.create = async (req, res) => {
 
 
 
-// module.exports.remove = async (req, res) => {
-//   try {
-//     await Department.deleteOne({ _id: req.params.id })
-//     res.json({ message: "Подразделение удалено" })
-//   } catch (e) {
-//     res.status(500).json(e)
-//   }
-//   const pathFile = path.resolve(`static/departments${req.query['pathFile']}`)
-//   fs.unlink(pathFile, (err) => {
-//     if (err) throw err;
-//   })
-// }
+

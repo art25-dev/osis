@@ -14,13 +14,30 @@
     >
       <h2>Создать пункт меню</h2>
       <el-form-item prop="title">
-        <el-input placeholder="Название" v-model="controls.title" maxlength="60" show-word-limit></el-input>
+        <el-input
+          placeholder="Название"
+          v-model="controls.title"
+          maxlength="60"
+          show-word-limit
+        ></el-input>
       </el-form-item>
-
+      <el-form-item>
+        <el-select prop="parent" v-model="controls.parent" clearable placeholder="Родительское меню (по умолчанию - Главное меню)">
+          <el-option
+            v-for="item in navigations"
+            :key="item.value"
+            :label="item.title"
+            :value="item._id"
+          >
+          </el-option>
+        </el-select>
+      </el-form-item>
       <div class="controls">
         <el-form-item>
           <el-button type="warning" @click="clearForm">Очистить</el-button>
-          <el-button type="primary" native-type="submit" :loading="loading">Создать</el-button>
+          <el-button type="primary" native-type="submit" :loading="loading"
+            >Создать</el-button
+          >
         </el-form-item>
       </div>
     </el-form>
@@ -28,15 +45,22 @@
 </template>
 
 <script>
-const cyrillicToTranslit = require("cyrillic-to-translit-js")
+const cyrillicToTranslit = require("cyrillic-to-translit-js");
 export default {
   layout: "admin",
   middleware: ["adminAuth"],
+  // Запрос всех пунктов меню из store/navigation.js в Action fetchAdmin()
+  async asyncData({ store }) {
+    const navigations = await store.dispatch("navigation/fetchAdmin");
+    console.log(navigations);
+    return { navigations };
+  },
   data() {
     return {
       loading: false,
       controls: {
-        title: ""
+        title: "",
+        parent: null
       },
       rules: {
         title: [
@@ -57,11 +81,14 @@ export default {
 
           // Формирование объекта для отправки в store
           const formData = {
+             _id: cyrillicToTranslit()
+              .transform(this.controls.title, "_")
+              .toLowerCase(),
             title: this.controls.title.toLowerCase(),
-            link: cyrillicToTranslit().transform(this.controls.title, "_").toLowerCase()
+            parent: this.controls.parent
           };
 
-          // Отправка объекта с данными формы в store/department.js и вызов Action create()
+          // Отправка объекта с данными формы в store/navigation.js и вызов Action create()
           try {
             await this.$store.dispatch("navigation/create", formData);
           } catch (e) {
@@ -76,6 +103,7 @@ export default {
     },
     clearForm() {
       this.controls.title = "";
+      this.controls.parent = null
       this.loading = false;
     }
   }

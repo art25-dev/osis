@@ -20,9 +20,6 @@ export const actions = {
   // Запрос на создание подразделения
   async create({ commit }, formData) {
     try {
-      // const fd = new FormData()
-      // fd.append("title", title)
-      // fd.append("link", link)
       return await this.$axios.$post('/api/navigation/admin', formData)
     } catch (e) {
       commit('setError', e, { root: true })
@@ -31,15 +28,14 @@ export const actions = {
   },
 
   // Запрос на удаление подразделения
-  // async remove({ commit }, { id, imageUrl }) {
-
-  //   try {
-  //     return await this.$axios.$delete(`/api/department/admin/${id}`, { params: { pathFile: imageUrl } })
-  //   } catch (e) {
-  //     commit('setError', e, { root: true })
-  //     throw e
-  //   }
-  // },
+  async remove({ commit }, id) {
+    try {
+      return await this.$axios.$delete(`/api/navigation/admin/${id}`)
+    } catch (e) {
+      commit('setError', e, { root: true })
+      throw e
+    }
+  },
 
   // Запрос на редактирование подразделения
   // async update({ commit }, { id, title, newImageFile, pathOldImage }) {

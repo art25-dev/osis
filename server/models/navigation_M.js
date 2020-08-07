@@ -9,10 +9,6 @@ const navigationSchema = new Schema({
     type: String,
     required: true
   },
-  link: {
-    type: String,
-    required: true
-  },
   parent: {
     type: String,
     default: null

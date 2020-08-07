@@ -16,6 +16,8 @@ router.get(
   navigation_C.getAll
 )
 
+router.delete("/admin/:id", navigation_C.remove)
+
 // router.get(
 //   "/admin/:id",
 //   department_C.getById
@@ -26,7 +28,7 @@ router.get(
 //   department_C.update
 // )
 
-// router.delete("/admin/:id", department_C.remove)
+
 
 
 module.exports = router
