@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Администратор</h1>
+    <h1>Навигация</h1>
     <el-menu default-active="1" class="el-menu-vertical-demo" router>
       <el-menu-item index="/admin">
         <font-awesome-icon icon="chart-bar" size="xs" fixed-width />
