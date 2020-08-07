@@ -2,29 +2,17 @@
   <div>
     <h1>Навигация</h1>
     <el-menu default-active="1" class="el-menu-vertical-demo" router>
-      <el-menu-item index="/admin">
-        <font-awesome-icon icon="chart-bar" size="xs" fixed-width />
-        <span>Статистика</span>
-      </el-menu-item>
-      <el-menu-item index="/admin/navigation">
-        <font-awesome-icon icon="bars" size="xs" fixed-width />
-        <span>Навигация</span>
-      </el-menu-item>
-      <el-menu-item index="/admin/department">
-        <font-awesome-icon icon="university" size="xs" fixed-width />
-        <span>Подразделения</span>
-      </el-menu-item>
-      <el-menu-item index="/admin/logout">
-        <font-awesome-icon icon="sign-out-alt" size="xs" fixed-width />
-        <span>Выход</span>
-      </el-menu-item>
+        <el-menu-item v-for="item in navigations" :key="item._id" index="/admin">
+          <span> {{ item.title }} </span>
+        </el-menu-item>
     </el-menu>
   </div>
 </template>
 
 <script>
 export default {
-  methods: {}
+  props: ["navigations"],
+  methods: {},
 };
 </script>
 
@@ -87,11 +75,7 @@ export default {
 }
 
 span {
-  margin-left: 1rem;
-
-  @include hd-plus {
-    margin-left: 0.5rem;
-  }
+  text-transform: uppercase;
 }
 
 h1 {

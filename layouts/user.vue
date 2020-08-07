@@ -7,7 +7,7 @@
       </el-main>
       <el-aside>
         <app-calendar></app-calendar>
-        <app-navigation></app-navigation>
+        <app-navigation :navigations="navigations" v-if="navigations"></app-navigation>
       </el-aside>
     </el-container>
   </div>
@@ -19,19 +19,32 @@ import AppNavigation from "@/components/user/Navigation";
 export default {
   components: {
     AppCalendar,
-    AppNavigation
+    AppNavigation,
+  },
+  data() {
+    return {
+      navigations: null
+    }
   },
   computed: {
     error() {
       return this.$store.getters.error;
-    }
+    },
   },
   watch: {
     error(value) {
       this.$message.error(value.response.data.message);
+    },
+  },
+  created() {
+    this.getNavigations()
+  },
+  methods: {
+    async getNavigations() {
+      const navigations = await this.$store.dispatch("navigation/fetch");
+      this.navigations = navigations
     }
   },
-  methods: {}
 };
 </script>
 

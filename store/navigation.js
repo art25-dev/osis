@@ -7,10 +7,20 @@ export const mutations = {
 }
 
 export const actions = {
-  // Запрос на сервер всех пунктов меню
+  // Запрос на сервер всех пунктов меню (панель администратора)
   async fetchAdmin({ commit }) {
     try {
       return await this.$axios.$get("/api/navigation/admin")
+    } catch (e) {
+      commit('setError', e, { root: true })
+      throw e
+    }
+  },
+
+  // Запрос на сервер всех пунктов меню
+  async fetch({ commit }) {
+    try {
+      return await this.$axios.$get("/api/navigation")
     } catch (e) {
       commit('setError', e, { root: true })
       throw e
@@ -55,7 +65,7 @@ export const actions = {
 
   // },
 
- 
+
 
   // Запрос на сервер одного подразделения
   // async fetchAdminById({ commit }, id) {

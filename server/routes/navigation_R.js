@@ -3,9 +3,9 @@ const navigation_C = require("../controllers/navigation_C")
 const router = Router()
 
 
-
-// /api/navigation/admin
 // Admin
+// /api/navigation/admin
+
 router.post(
   "/admin/",
   navigation_C.create
@@ -28,6 +28,10 @@ router.delete("/admin/:id", navigation_C.remove)
 //   department_C.update
 // )
 
+
+// Admin
+// /api/navigation/
+router.get("/", navigation_C.getAll)
 
 
 
