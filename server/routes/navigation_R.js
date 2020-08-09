@@ -13,7 +13,7 @@ router.post(
 
 router.get(
   "/admin/",
-  navigation_C.getAll
+  navigation_C.getAllMenu
 )
 
 router.delete("/admin/:id", navigation_C.remove)
@@ -31,7 +31,7 @@ router.delete("/admin/:id", navigation_C.remove)
 
 // Admin
 // /api/navigation/
-router.get("/", navigation_C.getAll)
+router.get("/", navigation_C.getMenu)
 
 
 

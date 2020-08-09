@@ -3,14 +3,23 @@ const path = require('path')
 const fs = require('fs')
 
 // Функция получения всех пунктов меню из БД
-module.exports.getAll = async (req, res) => {
+module.exports.getAllMenu = async (req, res) => {
   try {
     const navigations = await Navigation.find()
     res.json(navigations)
   } catch (e) {
     res.status(500).json(e)
   }
+}
 
+// Функция получения всех пунктов меню из БД
+module.exports.getMenu = async (req, res) => {
+  try {
+    const navigations = await Navigation.find({ parent: "main"})
+    res.json(navigations)
+  } catch (e) {
+    res.status(500).json(e)
+  }
 }
 
 // Функция создания пункта меню

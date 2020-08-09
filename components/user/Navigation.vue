@@ -74,9 +74,6 @@ export default {
   background: none !important;
 }
 
-span {
-  text-transform: uppercase;
-}
 
 h1 {
   padding-bottom: 1rem;

@@ -46,7 +46,6 @@ export default {
   // Запрос всех пунктов меню из store/navigation.js в Action fetchAdmin()
   async asyncData({ store }) {
     const navigations = await store.dispatch("navigation/fetchAdmin");
-    console.log(navigations);
     return { navigations };
   },
   data() {

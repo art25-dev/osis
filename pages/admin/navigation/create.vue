@@ -52,7 +52,6 @@ export default {
   // Запрос всех пунктов меню из store/navigation.js в Action fetchAdmin()
   async asyncData({ store }) {
     const navigations = await store.dispatch("navigation/fetchAdmin");
-    console.log(navigations);
     return { navigations };
   },
   data() {
@@ -78,6 +77,10 @@ export default {
       this.$refs.form.validate(async valid => {
         if (valid) {
           this.loading = true;
+
+          if(this.controls.parent === null) {
+            this.controls.parent = "main"
+          }
 
           // Формирование объекта для отправки в store
           const formData = {
