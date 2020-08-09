@@ -31,7 +31,7 @@ router.delete("/admin/:id", navigation_C.remove)
 
 // Admin
 // /api/navigation/
-router.get("/", navigation_C.getMenu)
+router.get("/", navigation_C.getAllMenu)
 
 
 

@@ -1,8 +1,8 @@
 <template>
   <div>
     <h1>Навигация</h1>
-    <el-menu default-active="1" class="el-menu-vertical-demo" router>
-        <el-menu-item v-for="item in navigations" :key="item._id" index="/admin">
+    <el-menu class="el-menu-vertical-demo" router>
+        <el-menu-item v-for="item in navigations" :key="item._id" :data-link="item._id">
           <span> {{ item.title }} </span>
         </el-menu-item>
     </el-menu>
@@ -12,6 +12,9 @@
 <script>
 export default {
   props: ["navigations"],
+  mounted() {
+    this.$store.getters.GET_MENU
+  },
   methods: {},
 };
 </script>
@@ -39,6 +42,8 @@ export default {
   user-select: none;
   font-size: 1.3rem;
   letter-spacing: 1px !important;
+  opacity: 0;
+  animation: show 1s forwards;
 
   @include hd-plus {
     font-size: 1.2rem;
@@ -96,5 +101,14 @@ h1 {
     font-size: 1rem;
     padding-bottom: 0.5rem;
   }
+
+  @keyframes show {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 }
 </style>

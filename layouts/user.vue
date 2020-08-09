@@ -40,8 +40,8 @@ export default {
     this.getNavigations()
   },
   methods: {
-    async getNavigations(parent = "main") {
-      const navigations = await this.$store.dispatch("navigation/menu", parent);
+    async getNavigations() {
+      const navigations = await this.$store.dispatch("navigation/getMenu");
       this.navigations = navigations
     }
   },

@@ -12,16 +12,6 @@ module.exports.getAllMenu = async (req, res) => {
   }
 }
 
-// Функция получения всех пунктов меню из БД
-module.exports.getMenu = async (req, res) => {
-  try {
-    const navigations = await Navigation.find({ parent: "main"})
-    res.json(navigations)
-  } catch (e) {
-    res.status(500).json(e)
-  }
-}
-
 // Функция создания пункта меню
 module.exports.create = async (req, res) => {
   const navigation = new Navigation({

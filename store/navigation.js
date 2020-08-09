@@ -17,25 +17,15 @@ export const actions = {
     }
   },
 
-  // Запрос на сервер всех пунктов меню
-  // async fetch({ commit }, parent) {
-  //   try {
-  //     return await this.$axios.$get("/api/navigation")
-  //   } catch (e) {
-  //     commit('setError', e, { root: true })
-  //     throw e
-  //   }
-  // },
-
-    // Запрос на сервер пунктов меню
-    async menu({ commit }, parent) {
-      try {
-        return await this.$axios.$get("/api/navigation", { params: { parent: parent } })
-      } catch (e) {
-        commit('setError', e, { root: true })
-        throw e
-      }
-    },
+  // Запрос на сервер пунктов меню
+  async getMenu({ commit }) {
+    try {
+      return await this.$axios.$get("/api/navigation")
+    } catch (e) {
+      commit('setError', e, { root: true })
+      throw e
+    }
+  },
 
   // Запрос на создание подразделения
   async create({ commit }, formData) {
@@ -89,5 +79,8 @@ export const actions = {
 }
 
 export const getters = {
+  GET_MENU() {
+    console.log(state);
+  }
 
 }
