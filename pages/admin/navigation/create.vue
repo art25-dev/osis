@@ -84,7 +84,7 @@ export default {
              _id: cyrillicToTranslit()
               .transform(this.controls.title, "_")
               .toLowerCase(),
-            title: this.controls.title.toLowerCase(),
+            title: this.firstLetter(this.controls.title),
             parent: this.controls.parent
           };
 
@@ -105,6 +105,13 @@ export default {
       this.controls.title = "";
       this.controls.parent = null
       this.loading = false;
+    },
+    firstLetter(str) {
+      if(!str) {
+        return str
+      }
+      str = str.toLowerCase()
+      return str[0].toUpperCase() + str.slice(1);
     }
   }
 };

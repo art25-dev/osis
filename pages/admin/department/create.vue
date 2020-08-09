@@ -50,17 +50,17 @@ export default {
       imagePreview: null,
       loading: false,
       controls: {
-        title: ""
+        title: "",
       },
       rules: {
         title: [
           {
             required: true,
             message: "Название не должно быть пустым",
-            trigger: "blur"
-          }
-        ]
-      }
+            trigger: "blur",
+          },
+        ],
+      },
     };
   },
   methods: {
@@ -82,14 +82,14 @@ export default {
     },
     /////////////////////////////////////////////////
     onSubmit() {
-      this.$refs.form.validate(async valid => {
+      this.$refs.form.validate(async (valid) => {
         if (valid && this.image) {
           this.loading = true;
 
           // Формирование объекта для отправки в store
           const formData = {
-            title: this.controls.title.toLowerCase(),
-            image: this.image
+            title: this.firstLetter(this.controls.title),
+            image: this.image,
           };
 
           // Отправка объекта с данными формы в store/department.js и вызов Action create()
@@ -110,8 +110,15 @@ export default {
       this.loading = false;
       this.image = null;
       this.imagePreview = null;
-    }
-  }
+    },
+    firstLetter(str) {
+      if (!str) {
+        return str;
+      }
+      str = str.toLowerCase();
+      return str[0].toUpperCase() + str.slice(1);
+    },
+  },
 };
 </script>
 

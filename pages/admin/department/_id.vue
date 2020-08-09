@@ -64,17 +64,17 @@ export default {
       newImagePreview: null,
       loading: false,
       controls: {
-        title: ""
+        title: "",
       },
       rules: {
         title: [
           {
             required: true,
             message: "Заголовок не должен быть пустым",
-            trigger: "blur"
-          }
-        ]
-      }
+            trigger: "blur",
+          },
+        ],
+      },
     };
   },
   methods: {
@@ -96,16 +96,16 @@ export default {
       return format && size;
     },
     onSubmit() {
-      this.$refs.form.validate(async valid => {
+      this.$refs.form.validate(async (valid) => {
         if (valid) {
           this.loading = true;
 
           // Формирование объекта для отправки в store
           const formData = {
             id: this.department._id,
-            title: this.controls.title,
+            title: this.firstLetter(this.controls.title),
             newImageFile: this.newImageFile,
-            pathOldImage: this.currentImageFile
+            pathOldImage: this.currentImageFile,
           };
 
           // Отправка объекта с данными формы в store/department.js и вызов Action update()
@@ -129,14 +129,21 @@ export default {
       this.newImageFile = null;
       this.currentImagePreview = null;
       this.newImagePreview = null;
-    }
+    },
+    firstLetter(str) {
+      if (!str) {
+        return str;
+      }
+      str = str.toLowerCase();
+      return str[0].toUpperCase() + str.slice(1);
+    },
   },
   mounted() {
     // Подгрузка данных объявления в поля формы
     this.controls.title = this.department.title;
     this.currentImagePreview = this.department.imageUrl;
     this.currentImageFile = this.department.imageUrl;
-  }
+  },
 };
 </script>
 
