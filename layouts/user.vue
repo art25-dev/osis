@@ -7,7 +7,7 @@
       </el-main>
       <el-aside>
         <app-calendar></app-calendar>
-        <app-navigation :navigations="navigations" v-if="navigations"></app-navigation>
+        <app-navigation @getNavigation="getNavigation($event)" :navigation="navigation" v-if="navigation"></app-navigation>
       </el-aside>
     </el-container>
   </div>
@@ -23,7 +23,7 @@ export default {
   },
   data() {
     return {
-      navigations: null
+      navigation: null
     }
   },
   computed: {
@@ -37,12 +37,12 @@ export default {
     },
   },
   created() {
-    this.getNavigations()
+    this.getNavigation()
   },
   methods: {
-    async getNavigations() {
-      const navigations = await this.$store.dispatch("navigation/getMenu");
-      this.navigations = navigations
+    async getNavigation(parent = "main") {
+      const navigation = await this.$store.dispatch("navigation/getMenu");
+      this.navigation = navigation.filter(item => item.parent === parent)
     }
   },
 };

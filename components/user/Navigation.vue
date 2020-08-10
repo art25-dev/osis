@@ -2,7 +2,7 @@
   <div>
     <h1>Навигация</h1>
     <el-menu class="el-menu-vertical-demo" router>
-        <el-menu-item v-for="item in navigations" :key="item._id" :data-link="item._id">
+        <el-menu-item @click="getChildren(item._id)" v-for="item in this.navigation" :key="item._id" :data-link="item._id">
           <span> {{ item.title }} </span>
         </el-menu-item>
     </el-menu>
@@ -11,11 +11,17 @@
 
 <script>
 export default {
-  props: ["navigations"],
-  mounted() {
-    this.$store.getters.GET_MENU
+  props: {
+    navigation: {
+      type: Array,
+      default: []
+    }
   },
-  methods: {},
+  methods: {
+    getChildren(id) {
+      this.$emit("getNavigation", id)
+    }
+  }
 };
 </script>
 

@@ -1,9 +1,7 @@
 export const state = () => ({
-
 })
 
 export const mutations = {
-
 }
 
 export const actions = {
@@ -18,14 +16,26 @@ export const actions = {
   },
 
   // Запрос на сервер пунктов меню
-  async getMenu({ commit }) {
+  // async getMenu({ commit }) {
+  //   try {
+  //     return await this.$axios.$get("/api/navigation")
+  //   } catch (e) {
+  //     commit('setError', e, { root: true })
+  //     throw e
+  //   }
+  // },
+
+  // Запрос на сервер пунктов меню
+  async getMenu({ commit, dispatch }) {
     try {
-      return await this.$axios.$get("/api/navigation")
+      const navigation = await this.$axios.$get("/api/navigation")
+      return navigation
     } catch (e) {
       commit('setError', e, { root: true })
       throw e
     }
   },
+
 
   // Запрос на создание подразделения
   async create({ commit }, formData) {
@@ -79,8 +89,5 @@ export const actions = {
 }
 
 export const getters = {
-  GET_MENU() {
-    console.log(state);
-  }
-
+  
 }
