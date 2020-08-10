@@ -23,7 +23,8 @@ export default {
   },
   data() {
     return {
-      navigation: null
+      navigation: null,
+      history: []
     }
   },
   computed: {
