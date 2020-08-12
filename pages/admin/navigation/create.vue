@@ -78,10 +78,6 @@ export default {
         if (valid) {
           this.loading = true;
 
-          if(this.controls.parent === null) {
-            this.controls.parent = "main"
-          }
-
           // Формирование объекта для отправки в store
           const formData = {
              _id: cyrillicToTranslit()

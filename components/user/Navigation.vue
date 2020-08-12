@@ -12,9 +12,7 @@
 <script>
 export default {
   props: ["navigations"],
-  mounted() {
-    this.$store.getters.GET_MENU
-  },
+  mounted() {},
   methods: {},
 };
 </script>
