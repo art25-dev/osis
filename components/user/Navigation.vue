@@ -2,7 +2,7 @@
   <div>
     <h1>Навигация</h1>
     <el-menu class="el-menu-vertical-demo" router>
-        <el-menu-item v-for="item in navigations" :key="item._id" :data-link="item._id">
+        <el-menu-item v-for="item in navigation" :key="item._id" :data-link="item._id">
           <span> {{ item.title }} </span>
         </el-menu-item>
     </el-menu>
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  props: ["navigations"],
+  props: ["navigation"],
   mounted() {},
   methods: {},
 };
