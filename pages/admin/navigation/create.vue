@@ -24,7 +24,7 @@
       <el-form-item>
         <el-select prop="parent" v-model="controls.parent" clearable placeholder="Родительское меню (по умолчанию - Главное меню)">
           <el-option
-            v-for="item in navigations"
+            v-for="item in this.$route.params.navigation"
             :key="item.value"
             :label="item.title"
             :value="item._id"
@@ -49,11 +49,6 @@ const cyrillicToTranslit = require("cyrillic-to-translit-js");
 export default {
   layout: "admin",
   middleware: ["adminAuth"],
-  // Запрос всех пунктов меню из store/navigation.js в Action fetchAdmin()
-  async asyncData({ store }) {
-    const navigations = await store.dispatch("navigation/fetchAdmin");
-    return { navigations };
-  },
   data() {
     return {
       loading: false,
@@ -94,6 +89,7 @@ export default {
           } finally {
             this.$message.success("Пункт меню создан");
             this.clearForm();
+            this.$route.params.navigation.push(formData)
           }
         } else {
           this.$message.warning("Форма не валидна");
