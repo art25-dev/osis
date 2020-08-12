@@ -16,16 +16,6 @@ export const actions = {
   },
 
   // Запрос на сервер пунктов меню
-  // async getMenu({ commit }) {
-  //   try {
-  //     return await this.$axios.$get("/api/navigation")
-  //   } catch (e) {
-  //     commit('setError', e, { root: true })
-  //     throw e
-  //   }
-  // },
-
-  // Запрос на сервер пунктов меню
   async getMenu({ commit, dispatch }) {
     try {
       const navigation = await this.$axios.$get("/api/navigation")
@@ -89,5 +79,5 @@ export const actions = {
 }
 
 export const getters = {
-  
+
 }
