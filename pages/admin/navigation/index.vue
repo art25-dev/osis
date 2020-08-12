@@ -3,7 +3,7 @@
     <h1>Навигация</h1>
     <div class="table">
       <el-table
-        :data="navigations"
+        :data="navigation"
         style="width: 100%"
         height="calc(100vh - 120px)"
       >
@@ -45,15 +45,15 @@ export default {
   middleware: ["adminAuth"],
   // Запрос всех пунктов меню из store/navigation.js в Action fetchAdmin()
   async asyncData({ store }) {
-    const navigations = await store.dispatch("navigation/fetchAdmin");
-    return { navigations };
+    const navigation = await store.dispatch("navigation/fetchAdmin");
+    return { navigation };
   },
   data() {
     return {};
   },
   methods: {
     create() {
-      this.$router.push(`/admin/navigation/create`);
+      this.$router.push({ name: 'admin-navigation-create', params: { navigation: this.navigation } })
     },
     edit(id) {
       console.log("edit navItem");
@@ -70,7 +70,7 @@ export default {
         });
         // Вызов Action remove() из store/navigation.js с передачей id выбранного пункта меню
         await this.$store.dispatch("navigation/remove", id);
-        this.navigations = this.navigations.filter(d => d._id !== id);
+        this.navigation = this.navigation.filter(d => d._id !== id);
         this.$message({
           message: "Пункт меню удален",
           type: "success"
