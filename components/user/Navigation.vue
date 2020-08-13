@@ -1,20 +1,21 @@
 <template>
   <div class="menu">
-    <h1 class="menu__title">Главное меню</h1>
+    <h1 class="menu__title">Навигация</h1>
     <div class=" menu-container__list">
       <el-menu class="el-menu-vertical-demo" router>
         <el-menu-item
-          v-for="item in buildTree"
+          v-for="item in currentNav"
           :key="item._id"
           :data-link="item._id"
+          @click="getSubMenu(item._id)"
         >
           <p class="menu__item-text">{{ item.title }}</p>
         </el-menu-item>
       </el-menu>
     </div>
     <div class="menu__controls">
-      <svg-icon class="menu__controls-btn" name="arrow" />
-      <svg-icon class="menu__controls-btn" name="home" />
+      <svg-icon @click="getPrevMenu()" class="menu__controls-btn" name="arrow" />
+      <svg-icon @click="getMainMenu()" class="menu__controls-btn" name="home" />
     </div>
   </div>
 </template>
@@ -22,29 +23,58 @@
 <script>
 export default {
   props: ["navigation"],
-  mounted() {},
-  methods: {},
-  computed: {
-    buildTree() {
-      const map = new Map(this.navigation.map(item => [item._id, item]));
-      // Обход в цикле по значениям, хранящимся в мапе
-      for (let item of map.values()) {
-        // Проверка, является ли нода дочерней (при parent === null вернет undefined)
-        if (!map.has(item.parent)) {
-          continue;
-        }
-
-        // Сохраняем прямую ссылку на родительскую ноду, чтобы дважды не доставать из мапа
-        const parent = map.get(item.parent);
-
-        // Добавляем поточную ноду в список дочерних нод родительчкого узла.
-        // Здесь сокращено записана проверка на то, есть ли у ноды свойство children.
-        parent.children = [...(parent.children || []), item];
+  data() {
+    return {
+      fullNav: null,
+      currentNav: null,
+      history: []
+    };
+  },
+  async mounted() {
+    // this.navItem = Object.fromEntries(this.navigation.map(n => [ n._id, n ]))
+    this.fullNav = await this.navigation;
+    this.currentNav = this.fullNav.filter(nav => !nav.parent)
+  },
+  computed: {},
+  methods: {
+    getSubMenu(link) {
+      this.currentNav = this.fullNav.filter(nav => nav.parent === link)
+      this.history.push(link)
+      console.log(this.history);
+    },
+    getPrevMenu() {
+      this.history.pop()
+      let prevMenu = this.history[this.history.length - 1];
+      if (this.history.length <= 0) {
+        this.getMainMenu()
+      } else {
+        this.currentNav = this.fullNav.filter(nav => nav.parent === prevMenu)
       }
-
-      // Возвращаем верхний уровень дерева. Все дочерние узлы уже есть в нужных родительских нодах
-      return [...map.values()].filter(item => !item.parent);
+    },
+    getMainMenu() {
+      this.currentNav = this.fullNav.filter(nav => !nav.parent)
+      this.history = []
     }
+    // buildTree() {
+    //   const map = new Map(this.navigation.map(item => [item._id, item]));
+    //   // Обход в цикле по значениям, хранящимся в мапе
+    //   for (let item of map.values()) {
+    //     // Проверка, является ли нода дочерней (при parent === null вернет undefined)
+    //     if (!map.has(item.parent)) {
+    //       continue;
+    //     }
+
+    //     // Сохраняем прямую ссылку на родительскую ноду, чтобы дважды не доставать из мапа
+    //     const parent = map.get(item.parent);
+
+    //     // Добавляем поточную ноду в список дочерних нод родительчкого узла.
+    //     // Здесь сокращено записана проверка на то, есть ли у ноды свойство children.
+    //     parent.children = [...(parent.children || []), item];
+    //   }
+
+    //   // Возвращаем верхний уровень дерева. Все дочерние узлы уже есть в нужных родительских нодах
+    //   return [...map.values()].filter(item => !item.parent);
+    // }
   }
 };
 </script>
@@ -153,32 +183,23 @@ export default {
 
 .el-menu-item {
   position: relative;
-  // height: 55px !important;
-  // line-height: 55px !important;
   color: $color-second;
   padding: 0 !important;
   user-select: none;
   font-size: 1.3rem;
   letter-spacing: 1px !important;
   opacity: 0;
-  animation: show 1s forwards;
+  animation: .5s show ease-in-out forwards;
 
   @include hd-plus {
     font-size: 1rem;
-    // height: 48px !important;
-    // line-height: 48px !important;
   }
 
   @include wsx {
-    font-size: .9rem;
-    // height: 45px !important;
-    // line-height: 45px !important;
+    font-size: 0.9rem;
   }
 
   @include hd {
-    font-size: .9rem;
-    // height: 45px !important;
-    // line-height: 45px !important;
   }
 
   &::after {
@@ -189,17 +210,24 @@ export default {
     height: 1px;
     background: $color-second;
     bottom: 0;
+  
   }
 }
+
+// @for $i from 1 through 10 {
+//   .el-menu-item:nth-child(#{$i}) {
+//     animation-delay: 0s + $i/10;
+//     &::after {
+//       animation-delay: 0s + $i/10;
+//     }
+//   }
+// }
 
 .el-menu-item:hover,
 .el-menu-item:active,
 .el-menu-item:visited,
 .el-menu-item:focus {
   background: none !important;
-}
-
-.menu__item-text {
 }
 
 @keyframes show {
@@ -210,4 +238,5 @@ export default {
     opacity: 1;
   }
 }
+
 </style>
