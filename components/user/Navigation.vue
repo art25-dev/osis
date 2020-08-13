@@ -132,7 +132,7 @@ export default {
   }
 
   @include hd {
-    max-height: calc(100vh - 306px);
+    max-height: calc(100vh - 308px);
   }
 }
 
@@ -153,8 +153,8 @@ export default {
 
 .el-menu-item {
   position: relative;
-  height: 55px !important;
-  line-height: 55px !important;
+  // height: 55px !important;
+  // line-height: 55px !important;
   color: $color-second;
   padding: 0 !important;
   user-select: none;
@@ -165,20 +165,20 @@ export default {
 
   @include hd-plus {
     font-size: 1rem;
-    height: 48px !important;
-    line-height: 48px !important;
+    // height: 48px !important;
+    // line-height: 48px !important;
   }
 
   @include wsx {
     font-size: .9rem;
-    height: 45px !important;
-    line-height: 45px !important;
+    // height: 45px !important;
+    // line-height: 45px !important;
   }
 
   @include hd {
     font-size: .9rem;
-    height: 45px !important;
-    line-height: 45px !important;
+    // height: 45px !important;
+    // line-height: 45px !important;
   }
 
   &::after {

@@ -1,0 +1,27 @@
+.el-menu-item,
+.el-submenu__title {
+  white-space: normal !important;
+  padding: 1rem 0rem !important;
+  height: auto !important;
+
+  p {
+    display: block !important;
+    word-wrap: break-word;
+    width: 100% !important;
+    line-height: normal !important;
+    padding: 1rem 0rem !important;
+
+    @include hd-plus {
+        padding: .8rem 0rem !important;
+    }
+
+    @include wsx {
+        padding: .8rem 0rem !important;
+    }
+
+    @include hd {
+        font-size: .8rem;
+        padding: .7rem 0rem !important;
+    }
+  }
+}
