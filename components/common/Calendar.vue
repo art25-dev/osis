@@ -55,7 +55,7 @@ export default {
 
 .clock {
   font-size: 5rem;
-  font-weight: bold;
+  font-weight: 800;
   display: block;
   letter-spacing: 0;
 
