@@ -1,11 +1,21 @@
 <template>
-  <div>
-    <h1>Навигация</h1>
-    <el-menu class="el-menu-vertical-demo" router>
-      <el-menu-item v-for="item in buildTree" :key="item._id" :data-link="item._id">
-        <span>{{ item.title }}</span>
-      </el-menu-item>
-    </el-menu>
+  <div class="menu">
+    <h1 class="menu__title">Главное меню</h1>
+    <div class=" menu-container__list">
+      <el-menu class="el-menu-vertical-demo" router>
+        <el-menu-item
+          v-for="item in buildTree"
+          :key="item._id"
+          :data-link="item._id"
+        >
+          <p class="menu__item-text">{{ item.title }}</p>
+        </el-menu-item>
+      </el-menu>
+    </div>
+    <div class="menu__controls">
+      <svg-icon class="menu__controls-btn" name="arrow" />
+      <svg-icon class="menu__controls-btn" name="home" />
+    </div>
   </div>
 </template>
 
@@ -16,7 +26,7 @@ export default {
   methods: {},
   computed: {
     buildTree() {
-      const map = new Map(this.navigation.map((item) => [item._id, item]));
+      const map = new Map(this.navigation.map(item => [item._id, item]));
       // Обход в цикле по значениям, хранящимся в мапе
       for (let item of map.values()) {
         // Проверка, является ли нода дочерней (при parent === null вернет undefined)
@@ -33,13 +43,99 @@ export default {
       }
 
       // Возвращаем верхний уровень дерева. Все дочерние узлы уже есть в нужных родительских нодах
-      return [...map.values()].filter((item) => !item.parent);
-    },
-  },
+      return [...map.values()].filter(item => !item.parent);
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
+.menu {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+
+  &__title {
+    padding-bottom: 1rem;
+    font-size: 1.5rem;
+    position: relative;
+    letter-spacing: 2px !important;
+    font-weight: bold;
+    text-transform: uppercase !important;
+    color: $color-second;
+
+    @include hd-plus {
+      font-size: 1.4rem;
+      padding-bottom: 0.6rem;
+    }
+
+    @include wsx {
+      font-size: 1.3rem;
+      padding-bottom: 0.6rem;
+    }
+
+    @include hd {
+      font-size: 1.1rem;
+      padding-bottom: 0.6rem;
+    }
+  }
+
+  &__controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-content: center;
+  }
+
+  &__controls-btn {
+    width: 50px;
+    height: 50px;
+    transform: scaleX(-1);
+    cursor: pointer;
+
+    @include hd-plus {
+      width: 45px;
+      height: 45px;
+    }
+
+    @include wsx {
+      width: 40px;
+      height: 40px;
+    }
+
+    @include hd {
+      width: 35px;
+      height: 35px;
+    }
+  }
+}
+
+.menu-container__list {
+  max-height: calc(100vh - 410px);
+  margin-bottom: 2rem;
+  flex: 1;
+  overflow: hidden;
+  overflow-y: scroll;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+
+  @include hd-plus {
+    max-height: calc(100vh - 364px);
+  }
+
+  @include wsx {
+    max-height: calc(100vh - 327px);
+  }
+
+  @include hd {
+    max-height: calc(100vh - 306px);
+  }
+}
+
 .el-menu {
   border: none;
   background: none;
@@ -57,6 +153,8 @@ export default {
 
 .el-menu-item {
   position: relative;
+  height: 55px !important;
+  line-height: 55px !important;
   color: $color-second;
   padding: 0 !important;
   user-select: none;
@@ -66,19 +164,21 @@ export default {
   animation: show 1s forwards;
 
   @include hd-plus {
-    font-size: 1.2rem;
-    height: 45px;
-    line-height: 45px;
+    font-size: 1rem;
+    height: 48px !important;
+    line-height: 48px !important;
   }
 
   @include wsx {
-    font-size: 1.1rem;
+    font-size: .9rem;
+    height: 45px !important;
+    line-height: 45px !important;
   }
 
   @include hd {
-    font-size: 1rem;
-    height: 40px;
-    line-height: 40px;
+    font-size: .9rem;
+    height: 45px !important;
+    line-height: 45px !important;
   }
 
   &::after {
@@ -99,35 +199,15 @@ export default {
   background: none !important;
 }
 
-h1 {
-  padding-bottom: 1rem;
-  font-size: 1.5rem;
-  position: relative;
-  letter-spacing: 2px !important;
-  font-weight: bold;
-  text-transform: uppercase !important;
-  color: $color-second;
+.menu__item-text {
+}
 
-  @include hd-plus {
-    font-size: 1.3rem;
+@keyframes show {
+  0% {
+    opacity: 0;
   }
-
-  @include wsx {
-    font-size: 1.2rem;
-  }
-
-  @include hd {
-    font-size: 1rem;
-    padding-bottom: 0.5rem;
-  }
-
-  @keyframes show {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
+  100% {
+    opacity: 1;
   }
 }
 </style>

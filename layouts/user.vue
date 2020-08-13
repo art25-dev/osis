@@ -6,8 +6,14 @@
         <nuxt></nuxt>
       </el-main>
       <el-aside>
-        <app-calendar></app-calendar>
-        <app-navigation :navigation="navigation" v-if="navigation"></app-navigation>
+        <div class="el-aside__navigation">
+          <app-calendar></app-calendar>
+          <app-navigation
+            :navigation="navigation"
+            v-if="navigation"
+          ></app-navigation>
+        </div>
+        <div class="el-aside__tray">Антивирусные базы от 20.07.2020</div>
       </el-aside>
     </el-container>
   </div>
@@ -19,32 +25,32 @@ import AppNavigation from "@/components/user/Navigation";
 export default {
   components: {
     AppCalendar,
-    AppNavigation,
+    AppNavigation
   },
   data() {
     return {
       navigation: null
-    }
+    };
   },
   computed: {
     error() {
       return this.$store.getters.error;
-    },
+    }
   },
   watch: {
     error(value) {
       this.$message.error(value.response.data.message);
-    },
+    }
   },
   created() {
-    this.getNavigations()
+    this.getNavigations();
   },
   methods: {
     async getNavigations() {
       const navigation = await this.$store.dispatch("navigation/getMenu");
-      this.navigation = navigation
+      this.navigation = navigation;
     }
-  },
+  }
 };
 </script>
 
@@ -57,21 +63,73 @@ export default {
 }
 
 .el-main {
-  padding: 2rem;
+  margin: 3rem 2rem;
   background: rgba($color-second, 0.8);
   color: $color-primary;
-}
-.el-aside {
-  padding: 2rem;
-  width: 28% !important;
-  background: rgba($color-primary, 0.8);
+  border-radius: 5px;
 
   @include hd-plus {
-    width: 29% !important;
   }
 
   @include wsx {
-    width: 30% !important;
+    margin: 2.2rem 1.5rem;
+  }
+
+  @include hd {
+    margin: 2.2rem 1.5rem;
+  }
+}
+.el-aside {
+  width: 30% !important;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+
+  &__navigation {
+    padding: 2rem;
+    background: rgba($color-primary, 0.8);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    @include hd-plus {
+    }
+
+    @include hd {
+      padding: 1.5rem;
+    }
+
+    @include wsx {
+      padding: 1.5rem;
+    }
+  }
+
+  &__tray {
+    background: rgba($color-second, 0.8);
+    padding: 1rem 2rem;
+    text-align: right;
+    color: $color-primary;
+    font-family: "Roboto-Bold", "Arial", sans-serif;
+    font-size: 1rem;
+
+    @include hd-plus {
+    }
+
+    @include wsx {
+      padding: 0.7rem 1.5rem;
+      font-size: 0.8rem;
+    }
+
+    @include hd {
+      padding: 0.7rem 1.5rem;
+      font-size: 0.8rem;
+    }
+  }
+
+  @include hd-plus {
+  }
+
+  @include wsx {
   }
 
   @include hd {
