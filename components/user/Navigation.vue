@@ -1,7 +1,7 @@
 <template>
   <div class="menu">
     <h1 class="menu__title">Навигация</h1>
-    <div class=" menu-container__list">
+    <div class="menu-container__list">
       <el-menu class="el-menu-vertical-demo" router>
         <el-menu-item
           v-for="item in currentNav"
@@ -27,34 +27,38 @@ export default {
     return {
       fullNav: null,
       currentNav: null,
-      history: []
+      history: [],
     };
   },
   async mounted() {
     // this.navItem = Object.fromEntries(this.navigation.map(n => [ n._id, n ]))
     this.fullNav = await this.navigation;
-    this.currentNav = this.fullNav.filter(nav => !nav.parent)
+    this.currentNav = this.fullNav.filter((nav) => !nav.parent);
   },
-  computed: {},
+  computed: {
+
+  },
+  filters: {
+
+  },
   methods: {
     getSubMenu(link) {
-      this.currentNav = this.fullNav.filter(nav => nav.parent === link)
-      this.history.push(link)
-      console.log(this.history);
+      this.currentNav = this.fullNav.filter((nav) => nav.parent === link);
+      this.history.push(link);
     },
     getPrevMenu() {
-      this.history.pop()
+      this.history.pop();
       let prevMenu = this.history[this.history.length - 1];
       if (this.history.length <= 0) {
-        this.getMainMenu()
+        this.getMainMenu();
       } else {
-        this.currentNav = this.fullNav.filter(nav => nav.parent === prevMenu)
+        this.currentNav = this.fullNav.filter((nav) => nav.parent === prevMenu);
       }
     },
     getMainMenu() {
-      this.currentNav = this.fullNav.filter(nav => !nav.parent)
-      this.history = []
-    }
+      this.currentNav = this.fullNav.filter((nav) => !nav.parent);
+      this.history = [];
+    },
     // buildTree() {
     //   const map = new Map(this.navigation.map(item => [item._id, item]));
     //   // Обход в цикле по значениям, хранящимся в мапе
@@ -75,7 +79,7 @@ export default {
     //   // Возвращаем верхний уровень дерева. Все дочерние узлы уже есть в нужных родительских нодах
     //   return [...map.values()].filter(item => !item.parent);
     // }
-  }
+  },
 };
 </script>
 
@@ -189,7 +193,7 @@ export default {
   font-size: 1.3rem;
   letter-spacing: 1px !important;
   opacity: 0;
-  animation: .5s show ease-in-out forwards;
+  animation: 0.5s show ease-in-out forwards;
 
   @include hd-plus {
     font-size: 1rem;
@@ -210,7 +214,6 @@ export default {
     height: 1px;
     background: $color-second;
     bottom: 0;
-  
   }
 }
 
@@ -238,5 +241,4 @@ export default {
     opacity: 1;
   }
 }
-
 </style>
