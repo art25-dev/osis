@@ -171,6 +171,7 @@ export default {
 
   @include hd {
     max-height: calc(100vh - 308px);
+    margin-bottom: 1.8rem;
   }
 }
 

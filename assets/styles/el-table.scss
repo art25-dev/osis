@@ -4,9 +4,7 @@
     background-color: rgba($color-second, 1) !important;
     border-radius: 5px !important;
     height: calc(100vh - 170px);
-    &::before {
-      display: none !important;
-    }
+    overflow-y: scroll;
 
     @include hd-plus {
 
@@ -139,4 +137,15 @@
     word-break: normal !important;
     line-height: 23px;
     padding-right: 10px;
+}
+
+.el-table th>.cell {
+  display: flex !important;
+  align-items: center !important;
+  box-sizing: border-box;
+  position: relative;
+  vertical-align: middle;
+  padding-left: 10px;
+  padding-right: 10px !important;
+  width: 100%;
 }

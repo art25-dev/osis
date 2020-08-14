@@ -1,16 +1,17 @@
 <template>
   <div>
     <h1>Навигация</h1>
+
     <div class="table">
       <el-table
-        :data="navigation"
+        :data="navigation.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))"
         style="width: 100%"
         height="calc(100vh - 120px)"
       >
-        <el-table-column
-          prop="title"
-          label="Название пункта меню"
-        ></el-table-column>
+        <el-table-column prop="title" label="Название пункта меню">
+        </el-table-column>
+        <el-table-column prop="parent" label="Родительское меню">
+        </el-table-column>
         <el-table-column label="Действия">
           <template slot-scope="scope">
             <el-button
@@ -49,10 +50,12 @@ export default {
     return { navigation };
   },
   data() {
-    return {};
+    return {
+      search: ""
+    };
   },
   mounted() {
-    this.sortArray(this.navigation)
+    this.sortArray(this.navigation);
   },
   methods: {
     // Сортировка пунктов меню по алфавиту
@@ -120,5 +123,9 @@ h1 {
 
 .table {
   position: relative !important;
+}
+
+.label {
+  margin-right: 30%;
 }
 </style>
