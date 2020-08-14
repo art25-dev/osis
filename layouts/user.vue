@@ -9,7 +9,6 @@
         <div class="el-aside__navigation">
           <app-calendar></app-calendar>
           <app-navigation
-            @getChildren="setMenu($event)"
             :navigation="navigation"
             v-if="navigation"
           ></app-navigation>
@@ -31,7 +30,6 @@ export default {
   data() {
     return {
       navigation: null,
-      // subNav: null
     };
   },
   computed: {
@@ -52,11 +50,7 @@ export default {
     async getNavigation() {
       const navigation = await this.$store.dispatch("navigation/getMenu");
       this.navigation = navigation;
-      // this.subNav = navigation;
-    },
-    // setMenu(link) {
-    //   this.subNav = this.navigation.filter(nav => nav.parent === link)
-    // }
+    }
   }
 };
 </script>

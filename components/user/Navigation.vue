@@ -33,30 +33,34 @@ export default {
   async mounted() {
     // this.navItem = Object.fromEntries(this.navigation.map(n => [ n._id, n ]))
     this.fullNav = await this.navigation;
-    this.currentNav = this.fullNav.filter((nav) => !nav.parent);
+    this.currentNav = this.sortArray(this.fullNav.filter((nav) => !nav.parent));
   },
-  computed: {
-
-  },
-  filters: {
-
-  },
+  computed: {},
+  filters: {},
   methods: {
+    // Сортировка пунктов меню по алфавиту
+    sortArray(arr) {
+      return arr.sort((a, b) => a.title > b.title ? 1 : -1);
+    },
+    // Получение дочерних пунктов меню
     getSubMenu(link) {
       this.currentNav = this.fullNav.filter((nav) => nav.parent === link);
+      this.sortArray(this.currentNav)
       this.history.push(link);
     },
+    // Получение предыдущих пунктов меню
     getPrevMenu() {
       this.history.pop();
       let prevMenu = this.history[this.history.length - 1];
       if (this.history.length <= 0) {
         this.getMainMenu();
       } else {
-        this.currentNav = this.fullNav.filter((nav) => nav.parent === prevMenu);
+        this.currentNav = this.sortArray(this.fullNav.filter((nav) => nav.parent === prevMenu));
       }
     },
+    // Получение главного меню
     getMainMenu() {
-      this.currentNav = this.fullNav.filter((nav) => !nav.parent);
+      this.currentNav = this.sortArray(this.fullNav.filter((nav) => !nav.parent));
       this.history = [];
     },
     // buildTree() {

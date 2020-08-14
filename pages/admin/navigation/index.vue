@@ -2,8 +2,15 @@
   <div>
     <h1>Навигация</h1>
     <div class="table">
-      <el-table :data="navigation" style="width: 100%" height="calc(100vh - 120px)">
-        <el-table-column prop="title" label="Название пункта меню"></el-table-column>
+      <el-table
+        :data="navigation"
+        style="width: 100%"
+        height="calc(100vh - 120px)"
+      >
+        <el-table-column
+          prop="title"
+          label="Название пункта меню"
+        ></el-table-column>
         <el-table-column label="Действия">
           <template slot-scope="scope">
             <el-button
@@ -44,11 +51,18 @@ export default {
   data() {
     return {};
   },
+  mounted() {
+    this.sortArray(this.navigation)
+  },
   methods: {
+    // Сортировка пунктов меню по алфавиту
+    sortArray(arr) {
+      return arr.sort((a, b) => (a.title > b.title ? 1 : -1));
+    },
     create() {
       this.$router.push({
         name: "admin-navigation-create",
-        params: { navigation: this.navigation },
+        params: { navigation: this.navigation }
       });
     },
     edit(id) {
@@ -62,18 +76,18 @@ export default {
           cancelButtonText: "Отмена",
           cancelButtonClass: "el-button--danger",
           showClose: false,
-          type: "warning",
+          type: "warning"
         });
         // Вызов Action remove() из store/navigation.js с передачей id выбранного пункта меню
         await this.$store.dispatch("navigation/remove", id);
-        this.navigation = this.navigation.filter((d) => d._id !== id);
+        this.navigation = this.navigation.filter(d => d._id !== id);
         this.$message({
           message: "Пункт меню удален",
-          type: "success",
+          type: "success"
         });
       } catch (e) {}
-    },
-  },
+    }
+  }
 };
 </script>
 
