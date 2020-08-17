@@ -92,7 +92,7 @@ export default {
           const formData = {
             _id: this.navigation._id,
             title: this.firstLetter(this.controls.title),
-            parent: this.controls.parent
+            parent: this.controls.parent === "" ? null : this.controls.parent
           };
           // Отправка объекта с данными формы в store/navigation.js и вызов Action update()
           try {

@@ -5,6 +5,11 @@
     overflow: hidden;
 }
 
+.el-upload:focus {
+  border-color: $color-primary !important; 
+  color: $color-primary !important;
+}
+
 .avatar-uploader .el-upload {
     border: 1px dashed $color-primary;
     border-radius: 5px !important; 
@@ -38,4 +43,60 @@
     margin: 0 auto;
   }
 
+  .el-upload-dragger {
+    background-color: rgba($color-second, 0) !important;
+    border: none !important;
+    border-radius: 5px !important;
+    box-sizing: border-box;
+    width: 100% !important;
 
+    &:active {
+      border: none !important;
+    }
+}
+
+.el-upload-dragger .el-icon-upload {
+  font-size: 67px;
+  color: $color-primary !important;
+  margin: 40px 0 16px;
+  line-height: 50px;
+}
+
+.el-upload-dragger .el-upload__text em {
+  color: $color-primary !important;
+  text-decoration: underline;
+}
+
+.el-upload-dragger:hover {
+  border-color: $color-primary !important;
+}
+
+.el-upload-dragger .el-upload__text {
+  color: $color-primary !important;
+}
+
+.el-upload-list__item-name {
+  color: $color-primary !important;
+  margin-right: 0px !important; 
+  padding-left: 0px !important;
+}
+
+.el-upload-list__item-name [class^=el-icon] {
+  color: $color-primary !important;
+}
+
+.el-upload-list__item:first-child {
+  margin-top: 0px !important;
+}
+
+.el-upload-list__item .el-icon-close {
+  color: $color-primary !important;
+}
+
+.el-upload-list__item:hover {
+  background-color: rgba($color-second, 0) !important;
+}
+
+.el-upload-list__item .is-ready {
+  border: none !important;
+}

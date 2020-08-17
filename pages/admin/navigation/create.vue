@@ -22,7 +22,12 @@
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-select prop="parent" v-model="controls.parent" clearable placeholder="Родительское меню (по умолчанию - Главное меню)">
+        <el-select
+          prop="parent"
+          v-model="controls.parent"
+          clearable
+          placeholder="Родительское меню (по умолчанию - Главное меню)"
+        >
           <el-option
             v-for="item in this.$route.params.navigation"
             :key="item.value"
@@ -31,6 +36,34 @@
           >
           </el-option>
         </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-select
+          v-model="controls.typeLink"
+          clearable
+          placeholder="Тип пункта меню (по умолчанию - Ссылка)"
+        >
+          <el-option label="Ссылка" value="link"></el-option>
+          <el-option label="Pdf-файл" value="pdf"></el-option>
+          <el-option label="Изображение" value="img"></el-option>
+          <el-option label="Видео" value="video"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-upload
+          class="avatar-uploader"
+          drag
+          action="http://localhost:3000/admin"
+          :on-change="pdfUpload"
+          :auto-upload="false"
+          :limit="1"
+          :show-file-list="true"
+        >
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">
+            Перенесите файл .pdf <em>или нажмите</em>
+          </div>
+        </el-upload>
       </el-form-item>
       <div class="controls">
         <el-form-item>
@@ -54,7 +87,8 @@ export default {
       loading: false,
       controls: {
         title: "",
-        parent: null
+        parent: null,
+        typeLink: null
       },
       rules: {
         title: [
@@ -75,7 +109,7 @@ export default {
 
           // Формирование объекта для отправки в store
           const formData = {
-             _id: cyrillicToTranslit()
+            _id: cyrillicToTranslit()
               .transform(this.controls.title, "_")
               .toLowerCase(),
             title: this.firstLetter(this.controls.title),
@@ -89,23 +123,27 @@ export default {
           } finally {
             this.$message.success("Пункт меню создан");
             this.clearForm();
-            this.$route.params.navigation.push(formData)
+            this.$route.params.navigation.push(formData);
           }
         } else {
           this.$message.warning("Форма не валидна");
         }
       });
     },
+    pdfUpload(file, fileList) {
+      console.log(file);
+    },
     clearForm() {
       this.controls.title = "";
-      this.controls.parent = null
+      this.controls.parent = null;
+      this.controls.typeLink = null;
       this.loading = false;
     },
     firstLetter(str) {
-      if(!str) {
-        return str
+      if (!str) {
+        return str;
       }
-      str = str.toLowerCase()
+      str = str.toLowerCase();
       return str[0].toUpperCase() + str.slice(1);
     }
   }
@@ -122,6 +160,12 @@ export default {
   padding-right: 2rem;
   position: relative;
   width: 40%;
+}
+
+.radio-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .controls {
