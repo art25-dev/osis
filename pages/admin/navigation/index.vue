@@ -68,8 +68,12 @@ export default {
         params: { navigation: this.navigation }
       });
     },
+    // Переход на страницу редактирования пункта навигации
     edit(id) {
-      console.log("edit navItem");
+      this.$router.push({
+        name: `admin-navigation-id`,
+        params: {id: id, navigation: this.navigation}
+      });
     },
     async remove(id) {
       // Вызов диалогового окна

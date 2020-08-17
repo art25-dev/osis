@@ -1,8 +1,12 @@
 <template>
   <div class="create-container">
     <el-breadcrumb separator="/" class="mb">
-      <el-breadcrumb-item to="/admin/department/">Все подразделения</el-breadcrumb-item>
-      <el-breadcrumb-item>Подразделение ID-{{ department._id }}</el-breadcrumb-item>
+      <el-breadcrumb-item to="/admin/department/"
+        >Все подразделения</el-breadcrumb-item
+      >
+      <el-breadcrumb-item
+        >Подразделение ID-{{ department._id }}</el-breadcrumb-item
+      >
     </el-breadcrumb>
     <el-form
       :model="controls"
@@ -14,7 +18,12 @@
     >
       <h2>Редактор подразделения</h2>
       <el-form-item prop="title">
-        <el-input placeholder="Заголовок" v-model="controls.title" maxlength="60" show-word-limit></el-input>
+        <el-input
+          placeholder="Заголовок"
+          v-model="controls.title"
+          maxlength="60"
+          show-word-limit
+        ></el-input>
       </el-form-item>
 
       <el-form-item class="mb-0">
@@ -30,14 +39,20 @@
             :src="require(`../../../static/departments${currentImagePreview}`)"
             class="avatar"
           />
-          <img v-else-if="newImagePreview" :src="newImagePreview" class="avatar" />
+          <img
+            v-else-if="newImagePreview"
+            :src="newImagePreview"
+            class="avatar"
+          />
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
       <div class="controls">
         <el-form-item>
           <el-button type="warning" @click="clearForm">Очистить</el-button>
-          <el-button type="primary" native-type="submit" :loading="loading">Обновить</el-button>
+          <el-button type="primary" native-type="submit" :loading="loading"
+            >Обновить</el-button
+          >
         </el-form-item>
       </div>
     </el-form>
@@ -64,17 +79,17 @@ export default {
       newImagePreview: null,
       loading: false,
       controls: {
-        title: "",
+        title: ""
       },
       rules: {
         title: [
           {
             required: true,
             message: "Заголовок не должен быть пустым",
-            trigger: "blur",
-          },
-        ],
-      },
+            trigger: "blur"
+          }
+        ]
+      }
     };
   },
   methods: {
@@ -96,7 +111,7 @@ export default {
       return format && size;
     },
     onSubmit() {
-      this.$refs.form.validate(async (valid) => {
+      this.$refs.form.validate(async valid => {
         if (valid) {
           this.loading = true;
 
@@ -105,7 +120,7 @@ export default {
             id: this.department._id,
             title: this.firstLetter(this.controls.title),
             newImageFile: this.newImageFile,
-            pathOldImage: this.currentImageFile,
+            pathOldImage: this.currentImageFile
           };
 
           // Отправка объекта с данными формы в store/department.js и вызов Action update()
@@ -136,14 +151,14 @@ export default {
       }
       str = str.toLowerCase();
       return str[0].toUpperCase() + str.slice(1);
-    },
+    }
   },
   mounted() {
     // Подгрузка данных объявления в поля формы
     this.controls.title = this.department.title;
     this.currentImagePreview = this.department.imageUrl;
     this.currentImageFile = this.department.imageUrl;
-  },
+  }
 };
 </script>
 

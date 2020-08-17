@@ -2,11 +2,21 @@ const Navigation = require("../models/navigation_M")
 const path = require('path')
 const fs = require('fs')
 
+// Функция получения 1 пункта меню из БД
+module.exports.getById = async (req, res) => {
+  try {
+    const navigation = await Navigation.findById(req.params.id)
+    res.json(navigation)
+  } catch (e) {
+    res.status(500).json(e)
+  }
+}
+
 // Функция получения всех пунктов меню из БД
 module.exports.getAllMenu = async (req, res) => {
   try {
-    const navigations = await Navigation.find()
-    res.json(navigations)
+    const navigation = await Navigation.find()
+    res.json(navigation)
   } catch (e) {
     res.status(500).json(e)
   }
@@ -37,55 +47,18 @@ module.exports.remove = async (req, res) => {
   }
 }
 
-// module.exports.update = async (req, res) => {
-
-//   if (req.file) {
-//     const $set = {
-//       title: req.body.title,
-//       imageUrl: `/${req.file.filename}`
-//     }
-//     // Отправка запроса на изменение записи в БД
-//     try {
-//       const department = await Department.findOneAndUpdate({
-//         _id: req.params.id,
-//       }, { $set }, { new: true })
-//       res.json(department)
-//     } catch (e) {
-//       res.status(500).json(e)
-//     }
-
-//     // Удаление старого файла
-//     const pathFile = path.resolve(`static/departments${req.body['pathOldImage']}`)
-//     fs.unlink(pathFile, (err) => {
-//       if (err) throw err;
-//     })
-//   } else {
-//     const $set = {
-//       title: req.body.title
-//     }
-//     // Отправка запроса на изменение записи в БД
-//     try {
-//       const department = await Department.findOneAndUpdate({
-//         _id: req.params.id,
-//       }, { $set }, { new: true })
-//       res.json(department)
-//     } catch (e) {
-//       res.status(500).json(e)
-//     }
-//   }
-
-// }
-
-
-// module.exports.getById = async (req, res) => {
-//   try {
-//     const department = await Department.findById(req.params.id)
-//     res.json(department)
-//   } catch (e) {
-//     res.status(500).json(e)
-//   }
-// }
-
-
-
-
+module.exports.update = async (req, res) => {
+    const $set = {
+      title: req.body.title,
+      parent: req.body.parent
+    }
+    // Отправка запроса на изменение записи в БД
+    try {
+      const navigation = await Navigation.findOneAndUpdate({
+        _id: req.params.id,
+      }, { $set }, { new: true })
+      res.json(navigation)
+    } catch (e) {
+      res.status(500).json(e)
+    }
+}

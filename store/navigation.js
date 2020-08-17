@@ -48,34 +48,27 @@ export const actions = {
   },
 
   // Запрос на редактирование подразделения
-  // async update({ commit }, { id, title, newImageFile, pathOldImage }) {
-  //   try {
-  //     const fd = new FormData()
-  //     fd.append("title", title)
-  //     if (newImageFile) {
-  //       fd.append("newImageFile", newImageFile, newImageFile.name)
-  //     }
-  //     fd.append("pathOldImage", pathOldImage)
+  async update({ commit }, formData) {
+    try {
+      return await this.$axios.$put(`/api/navigation/admin/${formData._id}`, formData)
+    } catch (e) {
+      commit('setError', e, { root: true })
+      throw e
+    }
 
-  //     return await this.$axios.$put(`/api/department/admin/${id}`, fd)
-  //   } catch (e) {
-  //     commit('setError', e, { root: true })
-  //     throw e
-  //   }
-
-  // },
+  },
 
 
 
   // Запрос на сервер одного подразделения
-  // async fetchAdminById({ commit }, id) {
-  //   try {
-  //     return await this.$axios.$get(`/api/department/admin/${id}`)
-  //   } catch (e) {
-  //     commit('setError', e, { root: true })
-  //     throw e
-  //   }
-  // }
+  async fetchAdminById({ commit }, id) {
+    try {
+      return await this.$axios.$get(`/api/navigation/admin/${id}`)
+    } catch (e) {
+      commit('setError', e, { root: true })
+      throw e
+    }
+  }
 }
 
 export const getters = {

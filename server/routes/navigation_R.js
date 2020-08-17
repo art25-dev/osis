@@ -18,15 +18,15 @@ router.get(
 
 router.delete("/admin/:id", navigation_C.remove)
 
-// router.get(
-//   "/admin/:id",
-//   department_C.getById
-// )
+router.get(
+  "/admin/:id",
+  navigation_C.getById
+)
 
-// router.put(
-//   "/admin/:id",
-//   department_C.update
-// )
+router.put(
+  "/admin/:id",
+  navigation_C.update
+)
 
 
 // Admin
