@@ -12,6 +12,10 @@ const navigationSchema = new Schema({
   parent: {
     type: String,
     default: null
+  },
+  typeLink: {
+    type: String,
+    default: "link"
   }
 })
 

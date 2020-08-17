@@ -6,13 +6,13 @@
 }
 
 .el-upload:focus {
-  border-color: $color-primary !important; 
+  border-color: $color-primary !important;
   color: $color-primary !important;
 }
 
 .avatar-uploader .el-upload {
     border: 1px dashed $color-primary;
-    border-radius: 5px !important; 
+    border-radius: 5px !important;
     cursor: pointer;
     position: relative;
     overflow: hidden;
@@ -77,7 +77,7 @@
 
 .el-upload-list__item-name {
   color: $color-primary !important;
-  margin-right: 0px !important; 
+  margin-right: 0px !important;
   padding-left: 0px !important;
 }
 
@@ -98,5 +98,9 @@
 }
 
 .el-upload-list__item .is-ready {
+  border: none !important;
+}
+
+.is-ready {
   border: none !important;
 }

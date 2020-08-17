@@ -1,5 +1,6 @@
 .el-form-item.is-error .el-input__inner, .el-form-item.is-error .el-input__inner:focus, .el-form-item.is-error .el-textarea__inner, .el-form-item.is-error .el-textarea__inner:focus, .el-message-box__input input.invalid, .el-message-box__input input.invalid:focus {
     border-color: $color-danger !important;
+    margin-bottom: 0px !important;
   }
 
   .el-form-item__label {
@@ -51,4 +52,8 @@
   }
   .el-checkbox__input.is-focus .el-checkbox__inner {
     border-color: $color-primary !important;
+  }
+
+  .el-form-item:last-child {
+    margin-bottom: 0px !important;
   }
