@@ -1,4 +1,5 @@
 const { Router } = require("express")
+const uploadFile = require("../middleware/uploadFile")
 const navigation_C = require("../controllers/navigation_C")
 const router = Router()
 
@@ -8,6 +9,7 @@ const router = Router()
 
 router.post(
   "/admin/",
+  uploadFile.single("file"),
   navigation_C.create
 )
 

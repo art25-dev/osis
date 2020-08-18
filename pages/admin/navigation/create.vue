@@ -15,7 +15,12 @@
     >
       <div class="form-row">
         <el-form-item prop="title">
-          <el-input placeholder="Название" v-model="controls.title" maxlength="60" show-word-limit></el-input>
+          <el-input
+            placeholder="Название"
+            v-model="controls.title"
+            maxlength="60"
+            show-word-limit
+          ></el-input>
         </el-form-item>
         <el-form-item>
           <el-select
@@ -47,7 +52,9 @@
         <div class="controls">
           <el-form-item>
             <el-button type="warning" @click="clearForm">Очистить</el-button>
-            <el-button type="primary" native-type="submit" :loading="loading">Создать</el-button>
+            <el-button type="primary" native-type="submit" :loading="loading"
+              >Создать</el-button
+            >
           </el-form-item>
         </div>
       </div>
@@ -59,7 +66,7 @@
               class="avatar-uploader"
               drag
               action="http://localhost:3000/admin"
-              :on-change="pdfUpload"
+              :on-change="fileUpload"
               :auto-upload="false"
               :limit="1"
               :show-file-list="true"
@@ -89,26 +96,23 @@ export default {
         title: "",
         parent: null,
         typeLink: null,
-        file: null,
+        file: null
       },
       rules: {
         title: [
           {
             required: true,
             message: "Название не должно быть пустым",
-            trigger: "blur",
-          },
-        ],
-      },
+            trigger: "blur"
+          }
+        ]
+      }
     };
   },
   methods: {
     onSubmit() {
-      this.$refs.form.validate(async (valid) => {
-        if (
-          (valid && this.controls.typeLink === "link") ||
-          this.controls.typeLink === null
-        ) {
+      this.$refs.form.validate(async valid => {
+        if (valid) {
           this.loading = true;
 
           // Формирование объекта для отправки в store
@@ -119,8 +123,9 @@ export default {
             title: this.firstLetter(this.controls.title),
             parent: this.controls.parent,
             typeLink: this.controls.typeLink,
+            file: this.controls.file
           };
-
+          console.log(formData);
           // Отправка объекта с данными формы в store/navigation.js и вызов Action create()
           try {
             await this.$store.dispatch("navigation/create", formData);
@@ -135,7 +140,7 @@ export default {
         }
       });
     },
-    pdfUpload(file, fileList) {
+    fileUpload(file) {
       this.controls.file = file.raw;
     },
     clearForm() {
@@ -151,8 +156,8 @@ export default {
       }
       str = str.toLowerCase();
       return str[0].toUpperCase() + str.slice(1);
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -171,26 +176,10 @@ export default {
 .form-row {
   margin-right: 2rem;
   position: relative;
-  padding-right: 2rem;
-
-  &::after {
-    display: block;
-    content: "";
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 2px;
-    height: 100%;
-    background-color: $color-primary;
-  }
 
   &:last-child {
     margin-right: 0;
     padding-right: 0;
-
-    &::after {
-      display: none;
-    }
   }
 }
 

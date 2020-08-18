@@ -28,9 +28,16 @@ export const actions = {
 
 
   // Запрос на создание подразделения
-  async create({ commit }, formData) {
+  async create({ commit }, {title, parent, typeLink, file}) {
     try {
-      return await this.$axios.$post('/api/navigation/admin', formData)
+      const fd = new FormData()
+
+      fd.append("title", title)
+      fd.append("parent", parent)
+      fd.append("typeLink", typeLink)
+      fd.append("file", file, file.name)
+      
+      // return await this.$axios.$post('/api/navigation/admin', formData)
     } catch (e) {
       commit('setError', e, { root: true })
       throw e
