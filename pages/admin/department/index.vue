@@ -2,7 +2,7 @@
   <div>
     <h1>Подразделения</h1>
     <div class="table">
-      <el-table :data="departments" style="width: 100%" height="calc(100vh - 120px)">
+      <el-table :data="department" style="width: 100%" height="calc(100vh - 120px)">
         <el-table-column label="Изображение подразделения">
           <template slot-scope="scope">
             <div>
@@ -52,8 +52,8 @@ export default {
   middleware: ["adminAuth"],
   // Запрос всех подразделений из store/department.js в Action fetchAdmin()
   async asyncData({ store }) {
-    const departments = await store.dispatch("department/fetchAdmin");
-    return { departments };
+    const department = await store.dispatch("department/fetchAdmin");
+    return { department };
   },
   data() {
     return {};
@@ -80,7 +80,7 @@ export default {
           imageUrl: imageUrl
         };
         await this.$store.dispatch("department/remove", img);
-        this.departments = this.departments.filter(d => d._id !== id);
+        this.department = this.department.filter(d => d._id !== id);
         this.$message({
           message: "Подразделение удалено",
           type: "success"

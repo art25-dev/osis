@@ -26,7 +26,7 @@
               size="mini"
               type="danger"
               icon="el-icon-delete"
-              @click="remove(scope.row._id)"
+              @click="remove(scope.row._id, scope.row.pathFile)"
             ></el-button>
           </template>
         </el-table-column>
@@ -75,7 +75,7 @@ export default {
         params: {id: id, navigation: this.navigation}
       });
     },
-    async remove(id) {
+    async remove(id, pathFile) {
       // Вызов диалогового окна
       try {
         await this.$confirm("Удалить пункт меню?", "Внимание!", {
@@ -86,7 +86,11 @@ export default {
           type: "warning"
         });
         // Вызов Action remove() из store/navigation.js с передачей id выбранного пункта меню
-        await this.$store.dispatch("navigation/remove", id);
+        const file = {
+          id: id,
+          pathFile: pathFile
+        };
+        await this.$store.dispatch("navigation/remove", file);
         this.navigation = this.navigation.filter(d => d._id !== id);
         this.$message({
           message: "Пункт меню удален",

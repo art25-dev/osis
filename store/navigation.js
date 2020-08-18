@@ -28,16 +28,22 @@ export const actions = {
 
 
   // Запрос на создание подразделения
-  async create({ commit }, {title, parent, typeLink, file}) {
+  async create({ commit }, {_id, title, parent, typeLink, file}) {
     try {
       const fd = new FormData()
 
+      fd.append("_id", _id)
       fd.append("title", title)
-      fd.append("parent", parent)
+      fd.append("parent", null)
       fd.append("typeLink", typeLink)
-      fd.append("file", file, file.name)
-      
-      // return await this.$axios.$post('/api/navigation/admin', formData)
+      if(file) {
+        fd.append("file", file, file.name)
+      } else {
+        fd.append("file", null)
+      }
+
+
+      return await this.$axios.$post('/api/navigation/admin', fd)
     } catch (e) {
       commit('setError', e, { root: true })
       throw e
@@ -45,9 +51,9 @@ export const actions = {
   },
 
   // Запрос на удаление подразделения
-  async remove({ commit }, id) {
+  async remove({ commit }, {id, pathFile}) {
     try {
-      return await this.$axios.$delete(`/api/navigation/admin/${id}`)
+      return await this.$axios.$delete(`/api/navigation/admin/${id}`, { params: { pathFile: pathFile } })
     } catch (e) {
       commit('setError', e, { root: true })
       throw e

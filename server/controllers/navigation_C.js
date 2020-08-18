@@ -27,8 +27,9 @@ module.exports.create = async (req, res) => {
   const navigation = new Navigation({
     _id: req.body._id,
     title: req.body.title,
-    parent: req.body.parent,
-    typeLink: req.body.typeLink === null ? "link" : req.body.typeLink
+    parent: req.body.parent == "null" ? null : req.body.title,
+    typeLink: req.body.typeLink == "null" ? "link" : req.body.typeLink,
+    pathFile: req.file === undefined ? null : `/${req.file.filename}`
   })
   try {
     await navigation.save()
@@ -45,6 +46,12 @@ module.exports.remove = async (req, res) => {
     res.json({ message: "Пункт меню удален" })
   } catch (e) {
     res.status(500).json(e)
+  }
+  if (req.query["pathFile"]) {
+    const pathFile = path.resolve(`static/documents${req.query['pathFile']}`)
+    fs.unlink(pathFile, (err) => {
+      if (err) throw err;
+    })
   }
 }
 

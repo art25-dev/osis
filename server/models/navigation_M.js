@@ -16,6 +16,10 @@ const navigationSchema = new Schema({
   typeLink: {
     type: String,
     default: "link"
+  },
+  pathFile: {
+    type: String,
+    default: null
   }
 })
 
