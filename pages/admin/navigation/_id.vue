@@ -6,6 +6,7 @@
         >Пункт навигации ID-{{ navigation._id }}</el-breadcrumb-item
       >
     </el-breadcrumb>
+    <h2>Редактор пункта меню</h2>
     <el-form
       :model="controls"
       :rules="rules"
@@ -14,37 +15,60 @@
       class="navigation-form"
       enctype="multipart/form-data"
     >
-      <h2>Редактор пункта меню</h2>
-      <el-form-item prop="title">
-        <el-input
-          placeholder="Название"
-          v-model="controls.title"
-          maxlength="60"
-          show-word-limit
-        ></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-select
-          prop="parent"
-          v-model="controls.parent"
-          clearable
-          placeholder="Родительское меню (по умолчанию - Главное меню)"
-        >
-          <el-option
-            v-for="item in this.$route.params.navigation"
-            :key="item.value"
-            :label="item.title"
-            :value="item._id"
-          >
-          </el-option>
-        </el-select>
-      </el-form-item>
-      <div class="controls">
+      <div class="form-row">
+        <el-form-item prop="title">
+          <el-input
+            placeholder="Название"
+            v-model="controls.title"
+            maxlength="60"
+            show-word-limit
+          ></el-input>
+        </el-form-item>
         <el-form-item>
-          <el-button type="warning" @click="clearForm">Очистить</el-button>
-          <el-button type="primary" native-type="submit" :loading="loading"
-            >Обновить</el-button
+          <el-select
+            prop="parent"
+            v-model="controls.parent"
+            clearable
+            placeholder="Родительское меню (по умолчанию - Главное меню)"
           >
+            <el-option
+              v-for="item in this.$route.params.navigation"
+              :key="item.value"
+              :label="item.title"
+              :value="item._id"
+            >
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <div class="controls">
+          <el-form-item>
+            <el-button type="warning" @click="clearForm">Очистить</el-button>
+            <el-button type="primary" native-type="submit" :loading="loading"
+              >Обновить</el-button
+            >
+          </el-form-item>
+        </div>
+      </div>
+      <div class="form-row">
+        <el-form-item>
+          <transition name="fade" mode="out-in">
+            <el-upload
+              v-if="controls.typeLink === 'pdf'"
+              class="avatar-uploader"
+              drag
+              action="http://localhost:3000/admin"
+              :on-change="fileUpload"
+              :auto-upload="false"
+              :limit="1"
+              :show-file-list="true"
+            >
+              <i class="el-icon-upload"></i>
+              <div class="el-upload__text">
+                Перенесите файл .pdf
+                <em>или нажмите</em>
+              </div>
+            </el-upload>
+          </transition>
         </el-form-item>
       </div>
     </el-form>
@@ -69,7 +93,9 @@ export default {
       loading: false,
       controls: {
         title: "",
-        parent: null
+        parent: null,
+        typeLink: null,
+        file: null
       },
       rules: {
         title: [
@@ -107,6 +133,9 @@ export default {
         }
       });
     },
+    fileUpload(file) {
+      this.controls.file = file.raw;
+    },
     firstLetter(str) {
       if (!str) {
         return str;
@@ -125,6 +154,8 @@ export default {
     // Подгрузка данных объявления в поля формы
     this.controls.title = this.navigation.title;
     this.controls.parent = this.navigation.parent;
+    this.controls.typeLink = this.navigation.typeLink;
+    this.controls.file = this.navigation.pathFile;
   }
 };
 </script>
@@ -136,9 +167,19 @@ export default {
 }
 
 .navigation-form {
-  padding-right: 2rem;
   position: relative;
-  width: 40%;
+  display: grid;
+  grid-template-columns: 53% 47%;
+}
+
+.form-row {
+  margin-right: 2rem;
+  position: relative;
+
+  &:last-child {
+    margin-right: 0;
+    padding-right: 0;
+  }
 }
 
 .controls {

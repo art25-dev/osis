@@ -125,7 +125,7 @@ export default {
             typeLink: this.controls.typeLink,
             file: this.controls.file
           };
-
+          console.log(formData);
           // Отправка объекта с данными формы в store/navigation.js и вызов Action create()
           try {
             await this.$store.dispatch("navigation/create", formData);

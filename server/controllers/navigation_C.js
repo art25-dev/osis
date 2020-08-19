@@ -27,7 +27,7 @@ module.exports.create = async (req, res) => {
   const navigation = new Navigation({
     _id: req.body._id,
     title: req.body.title,
-    parent: req.body.parent == "null" ? null : req.body.title,
+    parent: req.body.parent == "null" ? null : req.body.parent,
     typeLink: req.body.typeLink == "null" ? "link" : req.body.typeLink,
     pathFile: req.file === undefined ? null : `/${req.file.filename}`
   })

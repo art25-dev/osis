@@ -32,9 +32,15 @@ export const actions = {
     try {
       const fd = new FormData()
 
+      console.log(_id);
+      console.log(title);
+      console.log(parent);
+      console.log(typeLink);
+      console.log(file);
+      
       fd.append("_id", _id)
       fd.append("title", title)
-      fd.append("parent", null)
+      fd.append("parent", parent)
       fd.append("typeLink", typeLink)
       if(file) {
         fd.append("file", file, file.name)
