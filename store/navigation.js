@@ -32,12 +32,6 @@ export const actions = {
     try {
       const fd = new FormData()
 
-      console.log(_id);
-      console.log(title);
-      console.log(parent);
-      console.log(typeLink);
-      console.log(file);
-      
       fd.append("_id", _id)
       fd.append("title", title)
       fd.append("parent", parent)
@@ -67,9 +61,23 @@ export const actions = {
   },
 
   // Запрос на редактирование подразделения
-  async update({ commit }, formData) {
+  async update({ commit }, {id, title, parent, typeLink, newFile, oldFile}) {
+    console.log(id);
+    console.log(title);
+    console.log(typeLink);
+    console.log(newFile);
+    console.log(oldFile);
+
     try {
-      return await this.$axios.$put(`/api/navigation/admin/${formData._id}`, formData)
+      const fd = new FormData()
+      fd.append("title", title)
+      fd.append("parent", parent)
+      fd.append("typeLink", typeLink)
+      if(newFile) {
+        fd.append("newFile", newFile, newFile.name)
+      }
+      fd.append("oldFile", oldFile)
+      return await this.$axios.$put(`/api/navigation/admin/${id}`, fd)
     } catch (e) {
       commit('setError', e, { root: true })
       throw e

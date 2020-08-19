@@ -55,7 +55,32 @@ module.exports.remove = async (req, res) => {
   }
 }
 
+// Функция редактирования пункта меню
 module.exports.update = async (req, res) => {
+
+  if (req.file) {
+    console.log(req.file);
+    const $set = {
+      title: req.body.title,
+      parent: req.body.parent,
+      typeLink: req.body.typeLink == "null" ? "link" : req.body.typeLink,
+      pathFile: `/${req.file.filename}`
+    }
+    // Отправка запроса на изменение записи в БД
+    try {
+      const navigation = await Navigation.findOneAndUpdate({
+        _id: req.params.id,
+      }, { $set }, { new: true })
+      res.json(navigation)
+    } catch (e) {
+      res.status(500).json(e)
+    }
+    // Удаление старого файла
+    const pathFile = path.resolve(`static/documents${req.body['oldFile']}`)
+    fs.unlink(pathFile, (err) => {
+      if (err) throw err;
+    })
+  } else {
     const $set = {
       title: req.body.title,
       parent: req.body.parent
@@ -69,4 +94,8 @@ module.exports.update = async (req, res) => {
     } catch (e) {
       res.status(500).json(e)
     }
+  }
+
+
+
 }

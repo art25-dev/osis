@@ -27,6 +27,7 @@ router.get(
 
 router.put(
   "/admin/:id",
+  uploadFile.single("newFile"),
   navigation_C.update
 )
 

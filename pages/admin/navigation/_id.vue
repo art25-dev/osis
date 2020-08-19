@@ -2,9 +2,7 @@
   <div class="create-container">
     <el-breadcrumb separator="/" class="mb">
       <el-breadcrumb-item to="/admin/navigation/">Навигация</el-breadcrumb-item>
-      <el-breadcrumb-item
-        >Пункт навигации ID-{{ navigation._id }}</el-breadcrumb-item
-      >
+      <el-breadcrumb-item>Пункт навигации ID-{{ navigation._id }}</el-breadcrumb-item>
     </el-breadcrumb>
     <h2>Редактор пункта меню</h2>
     <el-form
@@ -17,12 +15,7 @@
     >
       <div class="form-row">
         <el-form-item prop="title">
-          <el-input
-            placeholder="Название"
-            v-model="controls.title"
-            maxlength="60"
-            show-word-limit
-          ></el-input>
+          <el-input placeholder="Название" v-model="controls.title" maxlength="60" show-word-limit></el-input>
         </el-form-item>
         <el-form-item>
           <el-select
@@ -36,16 +29,23 @@
               :key="item.value"
               :label="item.title"
               :value="item._id"
-            >
-            </el-option>
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item>
+          <el-select
+            v-model="controls.typeLink"
+            clearable
+            placeholder="Тип пункта меню (по умолчанию - Ссылка)"
+          >
+            <el-option label="Ссылка" value="link"></el-option>
+            <el-option label="Pdf-файл" value="pdf"></el-option>
           </el-select>
         </el-form-item>
         <div class="controls">
           <el-form-item>
             <el-button type="warning" @click="clearForm">Очистить</el-button>
-            <el-button type="primary" native-type="submit" :loading="loading"
-              >Обновить</el-button
-            >
+            <el-button type="primary" native-type="submit" :loading="loading">Обновить</el-button>
           </el-form-item>
         </div>
       </div>
@@ -95,31 +95,36 @@ export default {
         title: "",
         parent: null,
         typeLink: null,
-        file: null
+        currentFile: null,
+        newFile: null
       },
       rules: {
         title: [
           {
             required: true,
             message: "Название не должно быть пустым",
-            trigger: "blur"
-          }
-        ]
-      }
+            trigger: "blur",
+          },
+        ],
+      },
     };
   },
   methods: {
     onSubmit() {
-      this.$refs.form.validate(async valid => {
+      this.$refs.form.validate(async (valid) => {
         if (valid) {
           this.loading = true;
 
           // Формирование объекта для отправки в store
           const formData = {
-            _id: this.navigation._id,
+            id: this.navigation._id,
             title: this.firstLetter(this.controls.title),
-            parent: this.controls.parent === "" ? null : this.controls.parent
+            parent: this.controls.parent === "" ? null : this.controls.parent,
+            typeLink: this.controls.typeLink,
+            oldFile: this.controls.currentFile,
+            newFile: this.controls.newFile
           };
+          console.log(formData);
           // Отправка объекта с данными формы в store/navigation.js и вызов Action update()
           try {
             await this.$store.dispatch("navigation/update", formData);
@@ -134,7 +139,8 @@ export default {
       });
     },
     fileUpload(file) {
-      this.controls.file = file.raw;
+      // this.controls.currentFile = null
+      this.controls.newFile = file.raw;
     },
     firstLetter(str) {
       if (!str) {
@@ -148,15 +154,17 @@ export default {
       this.controls.title = "";
       this.controls.parent = null;
       this.loading = false;
-    }
+      this.controls.currentFile = null;
+      this.controls.newFile = null;
+    },
   },
   mounted() {
     // Подгрузка данных объявления в поля формы
     this.controls.title = this.navigation.title;
     this.controls.parent = this.navigation.parent;
     this.controls.typeLink = this.navigation.typeLink;
-    this.controls.file = this.navigation.pathFile;
-  }
+    this.controls.currentFile = this.navigation.pathFile;
+  },
 };
 </script>
 

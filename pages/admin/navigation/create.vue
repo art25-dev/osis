@@ -45,8 +45,6 @@
           >
             <el-option label="Ссылка" value="link"></el-option>
             <el-option label="Pdf-файл" value="pdf"></el-option>
-            <el-option label="Изображение" value="img"></el-option>
-            <el-option label="Видео" value="video"></el-option>
           </el-select>
         </el-form-item>
         <div class="controls">
