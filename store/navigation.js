@@ -31,7 +31,6 @@ export const actions = {
   async create({ commit }, {_id, title, parent, typeLink, file}) {
     try {
       const fd = new FormData()
-
       fd.append("_id", _id)
       fd.append("title", title)
       fd.append("parent", parent)
@@ -62,11 +61,6 @@ export const actions = {
 
   // Запрос на редактирование подразделения
   async update({ commit }, {id, title, parent, typeLink, newFile, oldFile}) {
-    console.log(id);
-    console.log(title);
-    console.log(typeLink);
-    console.log(newFile);
-    console.log(oldFile);
 
     try {
       const fd = new FormData()

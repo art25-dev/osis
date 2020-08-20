@@ -124,7 +124,6 @@ export default {
             oldFile: this.controls.currentFile,
             newFile: this.controls.newFile
           };
-          console.log(formData);
           // Отправка объекта с данными формы в store/navigation.js и вызов Action update()
           try {
             await this.$store.dispatch("navigation/update", formData);
@@ -139,7 +138,6 @@ export default {
       });
     },
     fileUpload(file) {
-      // this.controls.currentFile = null
       this.controls.newFile = file.raw;
     },
     firstLetter(str) {
