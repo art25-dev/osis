@@ -7,7 +7,9 @@
           v-for="item in currentNav"
           :key="item._id"
           :data-link="item._id"
-          @click="getSubMenu(item._id)"
+          :data-type="item.typeLink"
+          :data-pathFile="item.pathFile"
+          @click="getSubMenu(item._id, $event)"
         >
           <p class="menu__item-text">{{ item.title }}</p>
         </el-menu-item>
@@ -31,7 +33,6 @@ export default {
     };
   },
   async mounted() {
-    // this.navItem = Object.fromEntries(this.navigation.map(n => [ n._id, n ]))
     this.fullNav = await this.navigation;
     this.currentNav = this.sortArray(this.fullNav.filter((nav) => !nav.parent));
   },
@@ -43,10 +44,29 @@ export default {
       return arr.sort((a, b) => a.title > b.title ? 1 : -1);
     },
     // Получение дочерних пунктов меню
-    getSubMenu(link) {
-      this.currentNav = this.fullNav.filter((nav) => nav.parent === link);
-      this.sortArray(this.currentNav)
-      this.history.push(link);
+    getSubMenu(link, $event) {
+      let title = $event.$el.innerText
+      let typeLink = $event.$attrs["data-type"]
+      let pathFile = $event.$attrs["data-pathFile"] 
+      
+      switch (typeLink) {
+        case "link":
+          this.currentNav = this.fullNav.filter((nav) => nav.parent === link);
+          this.sortArray(this.currentNav)
+          this.history.push(link);
+          break
+        case "pdf":
+          this.$router.push({
+            name: "pdf",
+            params: {
+              title: title,
+              pathFile: pathFile
+            }
+          })
+          console.log(pathFile);
+          break  
+      }
+      
     },
     // Получение предыдущих пунктов меню
     getPrevMenu() {
@@ -63,26 +83,6 @@ export default {
       this.currentNav = this.sortArray(this.fullNav.filter((nav) => !nav.parent));
       this.history = [];
     },
-    // buildTree() {
-    //   const map = new Map(this.navigation.map(item => [item._id, item]));
-    //   // Обход в цикле по значениям, хранящимся в мапе
-    //   for (let item of map.values()) {
-    //     // Проверка, является ли нода дочерней (при parent === null вернет undefined)
-    //     if (!map.has(item.parent)) {
-    //       continue;
-    //     }
-
-    //     // Сохраняем прямую ссылку на родительскую ноду, чтобы дважды не доставать из мапа
-    //     const parent = map.get(item.parent);
-
-    //     // Добавляем поточную ноду в список дочерних нод родительчкого узла.
-    //     // Здесь сокращено записана проверка на то, есть ли у ноды свойство children.
-    //     parent.children = [...(parent.children || []), item];
-    //   }
-
-    //   // Возвращаем верхний уровень дерева. Все дочерние узлы уже есть в нужных родительских нодах
-    //   return [...map.values()].filter(item => !item.parent);
-    // }
   },
 };
 </script>
