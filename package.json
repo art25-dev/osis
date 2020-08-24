@@ -29,7 +29,8 @@
     "nuxt": "^2.0.0",
     "nuxt-moment": "^1.0.4",
     "vue-custom-scrollbar": "^1.1.0",
-    "vue-markdown": "^2.2.4"
+    "vue-markdown": "^2.2.4",
+    "vue-pdf": "^4.1.0"
   },
   "devDependencies": {
     "@nuxtjs/style-resources": "^1.0.0",

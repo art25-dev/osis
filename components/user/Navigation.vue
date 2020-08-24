@@ -8,7 +8,6 @@
           :key="item._id"
           :data-link="item._id"
           :data-type="item.typeLink"
-          :data-pathFile="item.pathFile"
           @click="getSubMenu(item._id, $event)"
         >
           <p class="menu__item-text">{{ item.title }}</p>
@@ -47,7 +46,6 @@ export default {
     getSubMenu(link, $event) {
       let title = $event.$el.innerText
       let typeLink = $event.$attrs["data-type"]
-      let pathFile = $event.$attrs["data-pathFile"] 
       
       switch (typeLink) {
         case "link":
@@ -57,13 +55,9 @@ export default {
           break
         case "pdf":
           this.$router.push({
-            name: "pdf",
-            params: {
-              title: title,
-              pathFile: pathFile
-            }
+            name: "pdf-id",
+            params: { id: link }
           })
-          console.log(pathFile);
           break  
       }
       

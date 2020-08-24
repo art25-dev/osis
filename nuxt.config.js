@@ -64,12 +64,17 @@ module.exports = {
   ** Build configuration
   */
   build: {
+
     transpile: [/^element-ui/],
     /*
     ** You can extend webpack config here
     */
     extend(config, ctx) {
+      // Добавление обработки pdf
+      const assetsLoader = config.module.rules.find (rule => rule.test.test ('.svg'));
+      assetsLoader.test = /\.(png|jpe?g|gif|svg|webp|pdf)$/i;
 
+      return config;
     }
   },
 
