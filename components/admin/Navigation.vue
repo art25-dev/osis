@@ -6,10 +6,6 @@
       <font-awesome-icon icon="chart-bar" size="xs" fixed-width />
       <span>Статистика</span>
     </el-menu-item>
-    <el-menu-item index="/admin/post">
-      <font-awesome-icon icon="newspaper" size="xs" fixed-width />
-      <span>Объявления</span>
-    </el-menu-item>
     <el-menu-item index="/admin/navigation">
       <font-awesome-icon icon="bars" size="xs" fixed-width />
       <span>Навигация</span>

@@ -6,7 +6,6 @@
         <nuxt></nuxt>
       </el-main>
       <el-aside>
-        <app-calendar></app-calendar>
         <app-navigation></app-navigation>
       </el-aside>
     </el-container>
@@ -14,12 +13,10 @@
 </template>
 
 <script>
-import AppCalendar from "@/components/common/Calendar";
 import AppNavigation from "@/components/admin/Navigation";
 export default {
   middleware: ["adminAuth"],
   components: {
-    AppCalendar,
     AppNavigation
   },
   computed: {
