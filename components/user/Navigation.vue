@@ -46,7 +46,7 @@ export default {
     getSubMenu(link, $event) {
       let title = $event.$el.innerText
       let typeLink = $event.$attrs["data-type"]
-      
+
       switch (typeLink) {
         case "link":
           this.currentNav = this.fullNav.filter((nav) => nav.parent === link);
@@ -58,9 +58,9 @@ export default {
             name: "pdf-id",
             params: { id: link }
           })
-          break  
+          break
       }
-      
+
     },
     // Получение предыдущих пунктов меню
     getPrevMenu() {
@@ -216,15 +216,6 @@ export default {
     bottom: 0;
   }
 }
-
-// @for $i from 1 through 10 {
-//   .el-menu-item:nth-child(#{$i}) {
-//     animation-delay: 0s + $i/10;
-//     &::after {
-//       animation-delay: 0s + $i/10;
-//     }
-//   }
-// }
 
 .el-menu-item:hover,
 .el-menu-item:active,

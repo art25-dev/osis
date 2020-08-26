@@ -93,7 +93,6 @@ export const actions = {
 
   // Запрос на сервер одного подразделения
   async getPdfFile({ commit }, id) {
-    console.log(id);
     try {
       return await this.$axios.$get(`/api/navigation/${id}`)
     } catch (e) {
