@@ -51,7 +51,7 @@ export default {
         case "link":
           this.currentNav = this.fullNav.filter((nav) => nav.parent === link);
           this.sortArray(this.currentNav)
-          this.history.push(link);
+          this.history.push(link)
           break
         case "pdf":
           this.$router.push({
@@ -76,6 +76,7 @@ export default {
     getMainMenu() {
       this.currentNav = this.sortArray(this.fullNav.filter((nav) => !nav.parent));
       this.history = [];
+      this.$router.push('/')
     },
   },
 };

@@ -12,6 +12,15 @@ module.exports.getById = async (req, res) => {
   }
 }
 
+module.exports.getPdfFile = async (req, res) => {
+  try {
+    const navigation = await Navigation.findById(req.params.id)
+    res.json(navigation)
+  } catch (e) {
+    res.status(500).json(e)
+  }
+}
+
 // Функция получения всех пунктов меню из БД
 module.exports.getAllMenu = async (req, res) => {
   try {

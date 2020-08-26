@@ -32,9 +32,10 @@ router.put(
 )
 
 
-// Admin
+// User
 // /api/navigation/
 router.get("/", navigation_C.getAllMenu)
+router.get("/:id", navigation_C.getPdfFile)
 
 
 

@@ -28,14 +28,14 @@ export const actions = {
 
 
   // Запрос на создание подразделения
-  async create({ commit }, {_id, title, parent, typeLink, file}) {
+  async create({ commit }, { _id, title, parent, typeLink, file }) {
     try {
       const fd = new FormData()
       fd.append("_id", _id)
       fd.append("title", title)
       fd.append("parent", parent)
       fd.append("typeLink", typeLink)
-      if(file) {
+      if (file) {
         fd.append("file", file, file.name)
       } else {
         fd.append("file", null)
@@ -50,7 +50,7 @@ export const actions = {
   },
 
   // Запрос на удаление подразделения
-  async remove({ commit }, {id, pathFile}) {
+  async remove({ commit }, { id, pathFile }) {
     try {
       return await this.$axios.$delete(`/api/navigation/admin/${id}`, { params: { pathFile: pathFile } })
     } catch (e) {
@@ -60,14 +60,14 @@ export const actions = {
   },
 
   // Запрос на редактирование подразделения
-  async update({ commit }, {id, title, parent, typeLink, newFile, oldFile}) {
+  async update({ commit }, { id, title, parent, typeLink, newFile, oldFile }) {
 
     try {
       const fd = new FormData()
       fd.append("title", title)
       fd.append("parent", parent)
       fd.append("typeLink", typeLink)
-      if(newFile) {
+      if (newFile) {
         fd.append("newFile", newFile, newFile.name)
       }
       fd.append("oldFile", oldFile)
@@ -89,7 +89,20 @@ export const actions = {
       commit('setError', e, { root: true })
       throw e
     }
+  },
+
+  // Запрос на сервер одного подразделения
+  async getPdfFile({ commit }, id) {
+    console.log(id);
+    try {
+      return await this.$axios.$get(`/api/navigation/${id}`)
+    } catch (e) {
+      commit('setError', e, { root: true })
+      throw e
+    }
   }
+
+
 }
 
 export const getters = {

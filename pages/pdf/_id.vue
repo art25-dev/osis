@@ -1,8 +1,8 @@
 <template>
   <div class="pdf-wrapper">
-    <h1>{{ file.title }}</h1>
+    <h1>{{  file.title  }}</h1>
     <div class="pdf">
-      <embed class="pdf-container" :src="require(`../../static/documents${file.pathFile}`)" type="application/pdf">
+      <embed class="pdf-container" :src="require(`../../static/documents${file.pathFile}`)+'#view=FitH&toolbar=0'" type="application/pdf">
     </div>
   </div>
 </template>
@@ -11,8 +11,7 @@
 export default {
   layout: "user",
   async asyncData({ store, params }) {
-    const file = await store.dispatch("navigation/fetchAdminById", params.id);
-
+    const file = await store.dispatch("navigation/getPdfFile", params.id);
     return { file };
   },
   data() {
