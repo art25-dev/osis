@@ -109,7 +109,6 @@ h1 {
   margin-bottom: 1rem;
   color: $color-primary;
   position: relative;
-
   &::after {
     content: "";
     position: absolute;
@@ -120,7 +119,6 @@ h1 {
     display: block;
   }
 }
-
 .btnCreate {
   position: absolute;
   width: 45px;
@@ -128,11 +126,9 @@ h1 {
   right: 2rem;
   bottom: 2rem;
 }
-
 .table {
   position: relative !important;
 }
-
 .label {
   margin-right: 30%;
 }

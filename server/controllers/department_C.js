@@ -35,13 +35,13 @@ module.exports.update = async (req, res) => {
 
     // Удаление старого файла
     const pathFile = path.resolve(`static/departments${req.body['pathOldImage']}`)
-    
+
     if(req.body['pathOldImage'] !== $set.imageUrl) {
       fs.unlink(pathFile, (err) => {
         if (err) throw err;
       })
     }
-   
+
   } else {
     const $set = {
       title: req.body.title
