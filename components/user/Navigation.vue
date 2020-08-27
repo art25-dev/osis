@@ -35,11 +35,22 @@ export default {
   async mounted() {
     this.fullNav = await this.navigation;
     this.currentNav = this.sortArray(this.fullNav.filter((nav) => !nav.parent));
-    console.log(this.fullNav);
+    this.initStatistic()
+
   },
   computed: {},
   filters: {},
   methods: {
+    // Инициализация статистики
+    initStatistic() {
+      for (let i = 0; i < this.fullNav.length; i++) {
+      this.statistic[`${this.fullNav[i]._id}`] = 0
+    }
+    },
+    // Добавить просмотр
+    addView(id) {
+      this.statistic[id] += 1
+    },
     // Сортировка пунктов меню по алфавиту
     sortArray(arr) {
       return arr.sort((a, b) => a.title > b.title ? 1 : -1);
@@ -54,12 +65,15 @@ export default {
           this.currentNav = this.fullNav.filter((nav) => nav.parent === link);
           this.sortArray(this.currentNav)
           this.history.push(link)
+          this.addView(link)
           break
         case "pdf":
+
           this.$router.push({
             name: "pdf-id",
             params: { id: link }
           })
+          this.addView(link)
           break
       }
 
