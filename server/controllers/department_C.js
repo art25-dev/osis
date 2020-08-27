@@ -2,6 +2,26 @@ const Department = require("../models/department_M")
 const path = require('path')
 const fs = require('fs')
 
+// Функция получения всех подразделений из БД
+module.exports.getDepartment = async (req, res) => {
+  try {
+    const department = await Department.find()
+    res.json(department)
+  } catch (e) {
+    res.status(500).json(e)
+  }
+}
+
+// Функция получения одного подразделения из БД
+module.exports.getDepartmentItem = async (req, res) => {
+  try {
+    const department = await Department.findById(req.params.id)
+    res.json(department)
+  } catch (e) {
+    res.status(500).json(e)
+  }
+}
+
 // Функция создания подразделения
 module.exports.create = async (req, res) => {
   const department = new Department({
@@ -16,8 +36,8 @@ module.exports.create = async (req, res) => {
   }
 }
 
+// Функция редактирования подразделения
 module.exports.update = async (req, res) => {
-
   if (req.file) {
     const $set = {
       title: req.body.title,
@@ -32,7 +52,7 @@ module.exports.update = async (req, res) => {
     } catch (e) {
       res.status(500).json(e)
     }
-
+    
     // Удаление старого файла
     const pathFile = path.resolve(`static/departments${req.body['pathOldImage']}`)
 
@@ -59,27 +79,7 @@ module.exports.update = async (req, res) => {
 
 }
 
-module.exports.getAll = async (req, res) => {
-  try {
-    const departments = await Department.find()
-    res.json(departments)
-  } catch (e) {
-    res.status(500).json(e)
-  }
-
-}
-
-module.exports.getById = async (req, res) => {
-  try {
-    const department = await Department.findById(req.params.id)
-    res.json(department)
-  } catch (e) {
-    res.status(500).json(e)
-  }
-}
-
-
-
+// Функция удаления подразделения
 module.exports.remove = async (req, res) => {
   try {
     await Department.deleteOne({ _id: req.params.id })

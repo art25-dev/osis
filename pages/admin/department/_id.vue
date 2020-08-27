@@ -65,7 +65,7 @@ export default {
   middleware: ["adminAuth"],
   async asyncData({ store, params }) {
     const department = await store.dispatch(
-      "department/fetchAdminById",
+      "department/getDepartmentItem",
       params.id
     );
 

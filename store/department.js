@@ -8,7 +8,7 @@ export const mutations = {
 
 export const actions = {
   // Запрос на сервер всех подразделений
-  async fetchAdmin({ commit }) {
+  async getDepartment({ commit }) {
     try {
       return await this.$axios.$get("/api/department/admin")
     } catch (e) {
@@ -17,19 +17,31 @@ export const actions = {
     }
   },
 
-  // Запрос на удаление подразделения
-  async remove({ commit }, { id, imageUrl }) {
-
+  // Запрос на сервер одного подразделения
+  async getDepartmentItem({ commit }, id) {
     try {
-      return await this.$axios.$delete(`/api/department/admin/${id}`, { params: { pathFile: imageUrl } })
+      return await this.$axios.$get(`/api/department/admin/${id}`)
     } catch (e) {
       commit('setError', e, { root: true })
       throw e
     }
   },
 
-  // Запрос на редактирование подразделения
-  async update({ commit }, { id, title, newImageFile, pathOldImage }) {
+  // Запрос на создание подразделения
+  async create({ commit }, { title, image }) {
+    try {
+      const fd = new FormData()
+      fd.append("title", title)
+      fd.append("image", image, image.name)
+      return await this.$axios.$post('/api/department/admin', fd)
+    } catch (e) {
+      commit('setError', e, { root: true })
+      throw e
+    }
+  },
+
+   // Запрос на редактирование подразделения
+   async update({ commit }, { id, title, newImageFile, pathOldImage }) {
     try {
       const fd = new FormData()
       fd.append("title", title)
@@ -46,23 +58,11 @@ export const actions = {
 
   },
 
-  // Запрос на создание подразделения
-  async create({ commit }, { title, image }) {
-    try {
-      const fd = new FormData()
-      fd.append("title", title)
-      fd.append("image", image, image.name)
-      return await this.$axios.$post('/api/department/admin', fd)
-    } catch (e) {
-      commit('setError', e, { root: true })
-      throw e
-    }
-  },
+  // Запрос на удаление подразделения
+  async remove({ commit }, { id, imageUrl }) {
 
-  // Запрос на сервер одного подразделения
-  async fetchAdminById({ commit }, id) {
     try {
-      return await this.$axios.$get(`/api/department/admin/${id}`)
+      return await this.$axios.$delete(`/api/department/admin/${id}`, { params: { pathFile: imageUrl } })
     } catch (e) {
       commit('setError', e, { root: true })
       throw e

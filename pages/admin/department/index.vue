@@ -32,7 +32,7 @@
               size="mini"
               type="danger"
               icon="el-icon-delete"
-              @click="remove(scope.row._id, scope.row.imageUrl)"
+              @click="remove(scope.row._id, scope.row.title, scope.row.imageUrl)"
             ></el-button>
           </template>
         </el-table-column>
@@ -50,9 +50,9 @@ export default {
   layout: "admin",
   components: {},
   middleware: ["adminAuth"],
-  // Запрос всех подразделений из store/department.js в Action fetchAdmin()
+  // Запрос всех подразделений из store/department.js в Action getDepartment()
   async asyncData({ store }) {
-    const department = await store.dispatch("department/fetchAdmin");
+    const department = await store.dispatch("department/getDepartment");
     return { department };
   },
   data() {
@@ -64,10 +64,10 @@ export default {
       this.$router.push(`/admin/department/${id}`);
     },
     // Удаление подразделения
-    async remove(id, imageUrl) {
+    async remove(id, title, imageUrl) {
       // Вызов диалогового окна
       try {
-        await this.$confirm("Удалить подразделение?", "Внимание!", {
+        await this.$confirm(`Удалить подразделение "${title}"?`, "Внимание!", {
           confirmButtonText: "Удалить",
           cancelButtonText: "Отмена",
           cancelButtonClass: "el-button--danger",

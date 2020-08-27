@@ -12,7 +12,7 @@ module.exports.getNavigation = async (req, res) => {
   }
 }
 
-// Функция получения 1 пункта меню из БД
+// Функция получения одного пункта меню из БД
 module.exports.getNavigationItem = async (req, res) => {
   try {
     const navigation = await Navigation.findById(req.params.id)
@@ -41,7 +41,6 @@ module.exports.create = async (req, res) => {
 
 // Функция редактирования пункта меню
 module.exports.update = async (req, res) => {
-
   if (req.file) {
     const $set = {
       title: req.body.title,
