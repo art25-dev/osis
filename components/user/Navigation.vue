@@ -29,11 +29,13 @@ export default {
       fullNav: null,
       currentNav: null,
       history: [],
+      statistic: {}
     };
   },
   async mounted() {
     this.fullNav = await this.navigation;
     this.currentNav = this.sortArray(this.fullNav.filter((nav) => !nav.parent));
+    console.log(this.fullNav);
   },
   computed: {},
   filters: {},
