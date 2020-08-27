@@ -82,7 +82,7 @@ export default {
   middleware: ["adminAuth"],
   async asyncData({ store, params }) {
     const navigation = await store.dispatch(
-      "navigation/fetchAdminById",
+      "navigation/getNavigationItem",
       params.id
     );
 

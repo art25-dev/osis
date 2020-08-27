@@ -44,9 +44,9 @@ export default {
   layout: "admin",
   components: {},
   middleware: ["adminAuth"],
-  // Запрос всех пунктов меню из store/navigation.js в Action fetchAdmin()
+  // Запрос всех пунктов меню из store/navigation.js в Action getMenu()
   async asyncData({ store }) {
-    const navigation = await store.dispatch("navigation/fetchAdmin");
+    const navigation = await store.dispatch("navigation/getNavigation");
     return { navigation };
   },
   data() {

@@ -5,8 +5,8 @@ export const mutations = {
 }
 
 export const actions = {
-  // Запрос на сервер всех пунктов меню (панель администратора)
-  async fetchAdmin({ commit }) {
+  // Запрос на сервер всех пунктов навигации
+  async getNavigation({ commit, dispatch }) {
     try {
       return await this.$axios.$get("/api/navigation/admin")
     } catch (e) {
@@ -15,19 +15,17 @@ export const actions = {
     }
   },
 
-  // Запрос на сервер пунктов меню
-  async getMenu({ commit, dispatch }) {
+  // Запрос на сервер одного пункта навигации
+  async getNavigationItem({ commit }, id) {
     try {
-      const navigation = await this.$axios.$get("/api/navigation")
-      return navigation
+      return await this.$axios.$get(`/api/navigation/admin/${id}`)
     } catch (e) {
       commit('setError', e, { root: true })
       throw e
     }
   },
 
-
-  // Запрос на создание подразделения
+  // Запрос на создание пункта навигации
   async create({ commit }, { _id, title, parent, typeLink, file }) {
     try {
       const fd = new FormData()
@@ -35,12 +33,7 @@ export const actions = {
       fd.append("title", title)
       fd.append("parent", parent)
       fd.append("typeLink", typeLink)
-      if (file) {
-        fd.append("file", file, file.name)
-      } else {
-        fd.append("file", null)
-      }
-
+      file ? fd.append("file", file, file.name) : fd.append("file", null)
 
       return await this.$axios.$post('/api/navigation/admin', fd)
     } catch (e) {
@@ -49,7 +42,7 @@ export const actions = {
     }
   },
 
-  // Запрос на удаление подразделения
+  // Запрос на удаление пункта навигации
   async remove({ commit }, { id, pathFile }) {
     try {
       return await this.$axios.$delete(`/api/navigation/admin/${id}`, { params: { pathFile: pathFile } })
@@ -59,7 +52,7 @@ export const actions = {
     }
   },
 
-  // Запрос на редактирование подразделения
+  // Запрос на редактирование пункта навигации
   async update({ commit }, { id, title, parent, typeLink, newFile, oldFile }) {
 
     try {
@@ -77,31 +70,7 @@ export const actions = {
       throw e
     }
 
-  },
-
-
-
-  // Запрос на сервер одного подразделения
-  async fetchAdminById({ commit }, id) {
-    try {
-      return await this.$axios.$get(`/api/navigation/admin/${id}`)
-    } catch (e) {
-      commit('setError', e, { root: true })
-      throw e
-    }
-  },
-
-  // Запрос на сервер одного подразделения
-  async getPdfFile({ commit }, id) {
-    try {
-      return await this.$axios.$get(`/api/navigation/${id}`)
-    } catch (e) {
-      commit('setError', e, { root: true })
-      throw e
-    }
   }
-
-
 }
 
 export const getters = {

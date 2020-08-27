@@ -2,29 +2,20 @@ const Navigation = require("../models/navigation_M")
 const path = require('path')
 const fs = require('fs')
 
-// Функция получения 1 пункта меню из БД
-module.exports.getById = async (req, res) => {
-  try {
-    const navigation = await Navigation.findById(req.params.id)
-    res.json(navigation)
-  } catch (e) {
-    res.status(500).json(e)
-  }
-}
-
-module.exports.getPdfFile = async (req, res) => {
-  try {
-    const navigation = await Navigation.findById(req.params.id)
-    res.json(navigation)
-  } catch (e) {
-    res.status(500).json(e)
-  }
-}
-
-// Функция получения всех пунктов меню из БД
-module.exports.getAllMenu = async (req, res) => {
+// Функция получения всех пунктов навигации из БД
+module.exports.getNavigation = async (req, res) => {
   try {
     const navigation = await Navigation.find()
+    res.json(navigation)
+  } catch (e) {
+    res.status(500).json(e)
+  }
+}
+
+// Функция получения 1 пункта меню из БД
+module.exports.getNavigationItem = async (req, res) => {
+  try {
+    const navigation = await Navigation.findById(req.params.id)
     res.json(navigation)
   } catch (e) {
     res.status(500).json(e)
@@ -45,22 +36,6 @@ module.exports.create = async (req, res) => {
     res.status(201).json(navigation)
   } catch (e) {
     res.status(500).json(e)
-  }
-}
-
-// Функция удаления пункта меню
-module.exports.remove = async (req, res) => {
-  try {
-    await Navigation.deleteOne({ _id: req.params.id })
-    res.json({ message: "Пункт меню удален" })
-  } catch (e) {
-    res.status(500).json(e)
-  }
-  if (req.query["pathFile"]) {
-    const pathFile = path.resolve(`static/documents${req.query['pathFile']}`)
-    fs.unlink(pathFile, (err) => {
-      if (err) throw err;
-    })
   }
 }
 
@@ -105,7 +80,21 @@ module.exports.update = async (req, res) => {
       res.status(500).json(e)
     }
   }
-
-
-
 }
+
+// Функция удаления пункта меню
+module.exports.remove = async (req, res) => {
+  try {
+    await Navigation.deleteOne({ _id: req.params.id })
+    res.json({ message: "Пункт меню удален" })
+  } catch (e) {
+    res.status(500).json(e)
+  }
+  if (req.query["pathFile"]) {
+    const pathFile = path.resolve(`static/documents${req.query['pathFile']}`)
+    fs.unlink(pathFile, (err) => {
+      if (err) throw err;
+    })
+  }
+}
+

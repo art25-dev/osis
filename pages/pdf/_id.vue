@@ -1,8 +1,8 @@
 <template>
   <div class="pdf-wrapper">
-    <h1>{{  file.title  }}</h1>
+    <h1>{{  navigation.title  }}</h1>
     <div class="pdf">
-      <embed class="pdf-container" :src="require(`../../static/documents${file.pathFile}`)+'#view=FitH&toolbar=0'" type="application/pdf">
+      <embed class="pdf-container" :src="require(`../../static/documents${navigation.pathFile}`)+'#view=FitH&toolbar=0'" type="application/pdf">
     </div>
   </div>
 </template>
@@ -11,8 +11,8 @@
 export default {
   layout: "user",
   async asyncData({ store, params }) {
-    const file = await store.dispatch("navigation/getPdfFile", params.id);
-    return { file };
+    const navigation = await store.dispatch("navigation/getNavigationItem", params.id);
+    return { navigation };
   },
   data() {
     return {};
@@ -30,6 +30,17 @@ export default {
 <style lang="scss" scoped>
 .pdf-wrapper {
   height: calc(100vh - 12rem);
+
+  @include hd-plus {
+  }
+
+  @include wsx {
+    height: calc(100vh - 10rem);
+  }
+
+  @include hd {
+    height: calc(100vh - 10rem);
+  }
 }
 
 h1 {

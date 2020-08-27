@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     async getNavigation() {
-      const navigation = await this.$store.dispatch("navigation/getMenu");
+      const navigation = await this.$store.dispatch("navigation/getNavigation");
       this.navigation = navigation;
     }
   }
