@@ -26,7 +26,7 @@
               size="mini"
               type="danger"
               icon="el-icon-delete"
-              @click="remove(scope.row._id, scope.row.pathFile)"
+              @click="remove(scope.row._id, scope.row.title, scope.row.pathFile)"
             ></el-button>
           </template>
         </el-table-column>
@@ -75,10 +75,10 @@ export default {
         params: {id: id, navigation: this.navigation}
       });
     },
-    async remove(id, pathFile) {
+    async remove(id, title, pathFile) {
       // Вызов диалогового окна
       try {
-        await this.$confirm("Удалить пункт меню?", "Внимание!", {
+        await this.$confirm(`Удалить пункт меню "${title}"?`, "Внимание!", {
           confirmButtonText: "Удалить",
           cancelButtonText: "Отмена",
           cancelButtonClass: "el-button--danger",
