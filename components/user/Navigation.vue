@@ -15,7 +15,11 @@
       </el-menu>
     </div>
     <div class="menu__controls">
-      <svg-icon @click="getPrevMenu()" class="menu__controls-btn" name="arrow" />
+      <svg-icon
+        @click="getPrevMenu()"
+        class="menu__controls-btn"
+        name="arrow"
+      />
       <svg-icon @click="getMainMenu()" class="menu__controls-btn" name="home" />
     </div>
   </div>
@@ -29,14 +33,15 @@ export default {
       fullNav: null,
       currentNav: null,
       history: [],
-      statistic: {}
+      statistic: {
+        "currentId": null 
+      }
     };
   },
   async mounted() {
     this.fullNav = await this.navigation;
-    this.currentNav = this.sortArray(this.fullNav.filter((nav) => !nav.parent));
-    this.initStatistic()
-
+    this.currentNav = this.sortArray(this.fullNav.filter(nav => !nav.parent));
+    this.initStatistic();
   },
   computed: {},
   filters: {},
@@ -44,57 +49,71 @@ export default {
     // Инициализация статистики
     initStatistic() {
       for (let i = 0; i < this.fullNav.length; i++) {
-      this.statistic[`${this.fullNav[i]._id}`] = 0
-    }
+        this.statistic[`${this.fullNav[i]._id}`] = 0;
+      }
     },
+
     // Добавить просмотр
     addView(id) {
-      this.statistic[id] += 1
+      if (id !== this.statistic.currentId) {
+        this.statistic[id] += 1;
+        this.statistic.currentId = id
+      }
     },
+
     // Сортировка пунктов меню по алфавиту
     sortArray(arr) {
-      return arr.sort((a, b) => a.title > b.title ? 1 : -1);
+      return arr.sort((a, b) => (a.title > b.title ? 1 : -1));
     },
+
     // Получение дочерних пунктов меню
     getSubMenu(link, $event) {
-      let title = $event.$el.innerText
-      let typeLink = $event.$attrs["data-type"]
+      let title = $event.$el.innerText;
+      let typeLink = $event.$attrs["data-type"];
 
       switch (typeLink) {
         case "link":
-          this.currentNav = this.fullNav.filter((nav) => nav.parent === link);
-          this.sortArray(this.currentNav)
-          this.history.push(link)
-          this.addView(link)
-          break
+          this.currentNav = this.fullNav.filter(nav => nav.parent === link);
+          this.sortArray(this.currentNav);
+          this.history.push(link);
+          this.addView(link);
+          break;
         case "pdf":
-
           this.$router.push({
             name: "pdf-id",
             params: { id: link }
-          })
-          this.addView(link)
-          break
+          });
+          this.addView(link);
+          this.$store.commit("navigation/changeStatistic", this.statistic)
+          // this.$store.commit("changeStatistic")
+          // this.$store.state.navigation.statistic = this.statistic
+          // console.log(this.$store.state.navigation.statistic);
+          break;
       }
-
     },
+
     // Получение предыдущих пунктов меню
     getPrevMenu() {
+      this.statistic.currentId = null;
       this.history.pop();
       let prevMenu = this.history[this.history.length - 1];
       if (this.history.length <= 0) {
         this.getMainMenu();
       } else {
-        this.currentNav = this.sortArray(this.fullNav.filter((nav) => nav.parent === prevMenu));
+        this.currentNav = this.sortArray(
+          this.fullNav.filter(nav => nav.parent === prevMenu)
+        );
       }
     },
+
     // Получение главного меню
     getMainMenu() {
-      this.currentNav = this.sortArray(this.fullNav.filter((nav) => !nav.parent));
+      this.currentNav = this.sortArray(this.fullNav.filter(nav => !nav.parent));
+      this.statistic.currentId = null;
       this.history = [];
-      this.$router.push('/')
-    },
-  },
+      this.$router.push("/");
+    }
+  }
 };
 </script>
 

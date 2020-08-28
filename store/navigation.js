@@ -1,7 +1,11 @@
 export const state = () => ({
+  statistic: null
 })
 
 export const mutations = {
+  changeStatistic(state, payload) {
+    state.statistic = payload
+  }
 }
 
 export const actions = {
@@ -16,9 +20,10 @@ export const actions = {
   },
 
   // Запрос на сервер одного пункта навигации
-  async getNavigationItem({ commit }, id) {
+  async getNavigationItem({ commit, state }, id) {
+    console.log(state.statistic);
     try {
-      return await this.$axios.$get(`/api/navigation/admin/${id}`)
+      return await this.$axios.$get(`/api/navigation/admin/${id}`, {params: state.statistic})
     } catch (e) {
       commit('setError', e, { root: true })
       throw e

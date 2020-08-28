@@ -14,6 +14,7 @@ module.exports.getNavigation = async (req, res) => {
 
 // Функция получения одного пункта меню из БД
 module.exports.getNavigationItem = async (req, res) => {
+  this.changeStatistic(req.query)
   try {
     const navigation = await Navigation.findById(req.params.id)
     res.json(navigation)
@@ -95,5 +96,13 @@ module.exports.remove = async (req, res) => {
       if (err) throw err;
     })
   }
+}
+
+// Функция добавления статистики просмотров пунктов навигации
+module.exports.changeStatistic = async (statistic) => {
+  // const dataStatistic = new FormData()
+  // dataStatistic.append("_id",)
+  // delete statistic.currentId
+  console.log(statistic);
 }
 
