@@ -12,6 +12,7 @@ export default {
   layout: "user",
   async asyncData({ store, params }) {
     const navigation = await store.dispatch("navigation/getNavigationItem", params.id);
+    await store.commit("navigation/resetStatistic")
     return { navigation };
   },
   data() {

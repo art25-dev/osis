@@ -1,10 +1,27 @@
 export const state = () => ({
-  statistic: null
+  statistic: {},
+  currentItemNavigation: null
 })
 
 export const mutations = {
-  changeStatistic(state, payload) {
-    state.statistic = payload
+  initStatistic(state, payload) {
+    for (let i = 0; i < payload.length; i++) {
+      state.statistic[`${payload[i]._id}`] = 0;
+    }
+  },
+
+  resetStatistic(state) {
+    for (const value in state.statistic) {
+      state.statistic[value] = 0
+    }
+  },
+
+  addView(state, payload) {
+    if(payload !== state.currentItemNavigation) {
+      state.statistic[payload] += 1
+      state.currentItemNavigation = payload
+    }
+
   }
 }
 
@@ -21,9 +38,8 @@ export const actions = {
 
   // Запрос на сервер одного пункта навигации
   async getNavigationItem({ commit, state }, id) {
-    console.log(state.statistic);
     try {
-      return await this.$axios.$get(`/api/navigation/admin/${id}`, {params: state.statistic})
+      return await this.$axios.$get(`/api/navigation/admin/${id}`, { params: state.statistic })
     } catch (e) {
       commit('setError', e, { root: true })
       throw e
