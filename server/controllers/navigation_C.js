@@ -100,9 +100,11 @@ module.exports.remove = async (req, res) => {
 
 // Функция добавления статистики просмотров пунктов навигации
 module.exports.changeStatistic = async (statistic) => {
-  // const dataStatistic = new FormData()
-  // dataStatistic.append("_id",)
-  // delete statistic.currentId
-  console.log(statistic);
+  try {
+    for (const key in statistic) {
+      await Navigation.updateOne({_id: key}, {$inc: {views: statistic[key]}})
+    }
+  } catch (e) {
+  }
 }
 

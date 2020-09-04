@@ -44,10 +44,6 @@ export default {
   computed: {},
   filters: {},
   methods: {
-    // Добавить просмотр
-    addView(id) {
-      this.$store.commit("navigation/addView", id)
-    },
 
     // Сортировка пунктов меню по алфавиту
     sortArray(arr) {
@@ -64,14 +60,14 @@ export default {
           this.currentNav = this.fullNav.filter(nav => nav.parent === link);
           this.sortArray(this.currentNav);
           this.history.push(link);
-          await this.$store.commit("navigation/addView", link)
+          await this.$store.commit("navigation/changeStatistic", link)
           break;
         case "pdf":
           this.$router.push({
             name: "pdf-id",
             params: { id: link }
           });
-          await this.$store.commit("navigation/addView", link)
+          await this.$store.commit("navigation/changeStatistic", link)
           break;
       }
     },

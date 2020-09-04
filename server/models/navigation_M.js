@@ -20,6 +20,10 @@ const navigationSchema = new Schema({
   pathFile: {
     type: String,
     default: null
+  },
+  views: {
+    type: Number,
+    default: 0
   }
 })
 

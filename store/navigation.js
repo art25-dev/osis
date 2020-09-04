@@ -4,19 +4,22 @@ export const state = () => ({
 })
 
 export const mutations = {
+  // Создание объекта статистики
   initStatistic(state, payload) {
     for (let i = 0; i < payload.length; i++) {
       state.statistic[`${payload[i]._id}`] = 0;
     }
   },
 
+  // Обнуление значений объекта статистика
   resetStatistic(state) {
     for (const value in state.statistic) {
       state.statistic[value] = 0
     }
   },
 
-  addView(state, payload) {
+  // Добавление просмотра 
+  changeStatistic(state, payload) {
     if(payload !== state.currentItemNavigation) {
       state.statistic[payload] += 1
       state.currentItemNavigation = payload
