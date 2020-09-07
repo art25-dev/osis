@@ -94,7 +94,17 @@ export const actions = {
       throw e
     }
 
-  }
+  },
+
+    // Запрос на сервер статистики просмотров пунктов навигации
+    async getStatistic({ commit }) {
+      try {
+        return await this.$axios.$get(`/api/navigation/admin/get/statistic`)
+      } catch (e) {
+        commit('setError', e, { root: true })
+        throw e
+      }
+    },
 }
 
 export const getters = {

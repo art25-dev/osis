@@ -36,6 +36,10 @@ router.put(
 // Роут на удаление пункта навигации
 router.delete("/admin/:id", navigation_C.remove)
 
+router.get(
+  "/admin/get/statistic",
+  navigation_C.getStatistic
+)
 
 
 // USER

@@ -44,7 +44,6 @@ export default {
   computed: {},
   filters: {},
   methods: {
-
     // Сортировка пунктов меню по алфавиту
     sortArray(arr) {
       return arr.sort((a, b) => (a.title > b.title ? 1 : -1));

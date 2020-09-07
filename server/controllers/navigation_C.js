@@ -98,6 +98,24 @@ module.exports.remove = async (req, res) => {
   }
 }
 
+module.exports.getStatistic = async (req, res) => {
+  try {
+    const navigation = await Navigation.find()
+
+    // const title = navigation.map(navigationItem => navigationItem.title)
+    // const views = navigation.map(navigationItem => navigationItem.views)
+
+    // const staistic = {
+    //   title,
+    //   views
+    // }
+
+    res.json(navigation)
+  } catch (e) {
+    res.status(500).json(e)
+  }
+}
+
 // Функция добавления статистики просмотров пунктов навигации
 module.exports.changeStatistic = async (statistic) => {
   try {

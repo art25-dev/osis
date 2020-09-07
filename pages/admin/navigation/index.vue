@@ -1,7 +1,6 @@
 <template>
   <div>
     <h1>Навигация</h1>
-
     <div class="table">
       <el-table
         :data="navigation.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))"
