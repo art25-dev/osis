@@ -2,9 +2,11 @@
   <div class="wrap-statistic">
     <h1>Статистика просмотров</h1>
     <div class="wrap-filter">
-      <el-select @change="getStatistic" prop="id" clearable placeholder="Фильтр" class="filter" v-model="currentSelect">
+      <el-select @change="getStatistic" prop="id" placeholder="Фильтр" class="filter" v-model="currentSelect">
+        <el-option key="main" label="Главное меню" :value="null">
+        </el-option>
         <el-option
-          v-for="item in this.fullStatistic"
+          v-for="item in this.fullSelect"
           :key="item.value"
           :label="item.title"
           :value="item._id"
@@ -25,6 +27,7 @@ export default {
   data() {
     return {
       fullStatistic: null,
+      fullSelect: null,
       currentStatistic: null,
       currentSelect: null
     };
@@ -35,14 +38,13 @@ export default {
   },
   async mounted() {
     this.fullStatistic = await this.statistic;
+    this.fullSelect = this.fullStatistic.filter(stat => stat.typeLink === "link");
     this.getStatistic(this.currentSelect);
+
   },
   methods: {
     getStatistic(parent = null) {
-      console.log(parent);
-      this.currentStatistic = this.fullStatistic.filter(
-        stat => stat.parent === parent
-      );
+      this.currentStatistic = this.fullStatistic.filter(stat => stat.parent === parent);
       const title = this.currentStatistic.map(stat => stat.title);
       const views = this.currentStatistic.map(stat => stat.views);
       const data = {

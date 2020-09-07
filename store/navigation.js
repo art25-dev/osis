@@ -18,7 +18,7 @@ export const mutations = {
     }
   },
 
-  // Добавление просмотра 
+  // Добавление просмотра
   changeStatistic(state, payload) {
     if(payload !== state.currentItemNavigation) {
       state.statistic[payload] += 1
@@ -96,15 +96,15 @@ export const actions = {
 
   },
 
-    // Запрос на сервер статистики просмотров пунктов навигации
-    async getStatistic({ commit }) {
-      try {
-        return await this.$axios.$get(`/api/navigation/admin/get/statistic`)
-      } catch (e) {
-        commit('setError', e, { root: true })
-        throw e
-      }
-    },
+  // Запрос на сервер статистики просмотров пунктов навигации
+  async getStatistic({ commit }) {
+    try {
+      return await this.$axios.$get(`/api/navigation/admin/get/statistic`)
+    } catch (e) {
+      commit('setError', e, { root: true })
+      throw e
+    }
+  },
 }
 
 export const getters = {
