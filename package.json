@@ -15,6 +15,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "@fortawesome/vue-fontawesome": "^0.1.9",
     "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/pwa": "^3.0.2",
     "@nuxtjs/svg-sprite": "^0.4.11",
     "body-parser": "^1.19.0",
     "chart.js": "^2.9.3",

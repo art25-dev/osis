@@ -98,19 +98,11 @@ module.exports.remove = async (req, res) => {
   }
 }
 
+// Функция получения всей статистики просмотров из БД
 module.exports.getStatistic = async (req, res) => {
   try {
-    const navigation = await Navigation.find()
-
-    // const title = navigation.map(navigationItem => navigationItem.title)
-    // const views = navigation.map(navigationItem => navigationItem.views)
-
-    // const staistic = {
-    //   title,
-    //   views
-    // }
-
-    res.json(navigation)
+    const statistic = await Navigation.find()
+    res.json(statistic)
   } catch (e) {
     res.status(500).json(e)
   }

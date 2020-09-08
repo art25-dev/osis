@@ -13,13 +13,19 @@
       </el-input>
     </el-form-item>
     <el-form-item prop="password">
-      <el-input placeholder="Пароль" v-model.trim="controls.password" show-password>
+      <el-input
+        placeholder="Пароль"
+        v-model.trim="controls.password"
+        show-password
+      >
         <font-awesome-icon class="icon" slot="prefix" icon="key" size="1x" />
       </el-input>
     </el-form-item>
     <el-form-item class="btns">
       <el-button type="danger" @click="$router.push('/')">Отмена</el-button>
-      <el-button type="primary" native-type="submit" :loading="loading">Войти</el-button>
+      <el-button type="primary" native-type="submit" :loading="loading"
+        >Войти</el-button
+      >
     </el-form-item>
   </el-form>
 </template>
@@ -27,6 +33,9 @@
 <script>
 export default {
   layout: "empty",
+  head: {
+    title: "OSIS"
+  },
   data() {
     return {
       loading: false,
@@ -134,4 +143,3 @@ h2 {
   margin-left: 5px;
 }
 </style>
-

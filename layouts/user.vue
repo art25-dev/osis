@@ -13,7 +13,7 @@
             v-if="navigation"
           ></app-navigation>
         </div>
-        <div class="el-aside__tray">Антивирусные базы от 20.07.2020</div>
+        <div class="el-aside__tray">Антивирусные базы недоступны</div>
       </el-aside>
     </el-container>
   </div>

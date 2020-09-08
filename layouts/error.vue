@@ -8,6 +8,9 @@
 
 <script>
 export default {
+  head: {
+    title: "OSIS"
+  },
   layout: "empty"
 };
 </script>
@@ -44,4 +47,3 @@ a {
   color: $color-primary;
 }
 </style>
-

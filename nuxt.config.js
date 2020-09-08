@@ -45,6 +45,7 @@ module.exports = {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/pwa',
     'nuxt-moment',
     '@nuxtjs/style-resources',
     '@nuxtjs/svg-sprite'
