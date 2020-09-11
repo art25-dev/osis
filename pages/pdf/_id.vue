@@ -1,29 +1,40 @@
 <template>
   <div class="pdf-wrapper">
-    <h1>{{  navigation.title  }}</h1>
+    <h1>{{ navigation.title }}</h1>
     <div class="pdf">
-      <embed class="pdf-container" :src="require(`../../static/documents${navigation.pathFile}`)+'#view=FitH&toolbar=0'" type="application/pdf">
+      <embed
+        class="pdf-container"
+        :src="
+          require(`../../static/documents${navigation.pathFile}`) +
+            '#view=FitH&toolbar=0'
+        "
+        type="application/pdf"
+      />
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  head: {
+    title: "OSIS"
+  },
   layout: "user",
   async asyncData({ store, params }) {
-    const navigation = await store.dispatch("navigation/getNavigationItem", params.id);
-    await store.commit("navigation/resetStatistic")
+    const navigation = await store.dispatch(
+      "navigation/getNavigationItem",
+      params.id
+    );
+    await store.commit("navigation/resetStatistic");
     return { navigation };
   },
   data() {
     return {};
   },
-  mounted() {
-  },
+  mounted() {},
   computed: {},
   filters: {},
-  methods: {
-  }
+  methods: {}
 };
 </script>
 

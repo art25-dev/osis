@@ -62,6 +62,9 @@
 <script>
 export default {
   layout: "admin",
+  head: {
+    title: "OSIS"
+  },
   middleware: ["adminAuth"],
   async asyncData({ store, params }) {
     const department = await store.dispatch(

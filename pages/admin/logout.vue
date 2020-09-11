@@ -3,6 +3,9 @@
 <script>
 export default {
   layout: "admin",
+  head: {
+    title: "OSIS"
+  },
   middleware: ["adminAuth"],
   beforeCreate() {
     // Вызов Action logout() в store/auth.js

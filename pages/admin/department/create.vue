@@ -1,7 +1,9 @@
 <template>
   <div class="create-container">
     <el-breadcrumb separator="/" class="mb">
-      <el-breadcrumb-item to="/admin/department/">Все подразделения</el-breadcrumb-item>
+      <el-breadcrumb-item to="/admin/department/"
+        >Все подразделения</el-breadcrumb-item
+      >
       <el-breadcrumb-item></el-breadcrumb-item>
     </el-breadcrumb>
     <el-form
@@ -14,7 +16,12 @@
     >
       <h2>Создать подразделение</h2>
       <el-form-item prop="title">
-        <el-input placeholder="Название" v-model="controls.title" maxlength="60" show-word-limit></el-input>
+        <el-input
+          placeholder="Название"
+          v-model="controls.title"
+          maxlength="60"
+          show-word-limit
+        ></el-input>
       </el-form-item>
 
       <el-form-item class="mb-0">
@@ -33,7 +40,9 @@
       <div class="controls">
         <el-form-item>
           <el-button type="warning" @click="clearForm">Очистить</el-button>
-          <el-button type="primary" native-type="submit" :loading="loading">Создать</el-button>
+          <el-button type="primary" native-type="submit" :loading="loading"
+            >Создать</el-button
+          >
         </el-form-item>
       </div>
     </el-form>
@@ -43,6 +52,9 @@
 <script>
 export default {
   layout: "admin",
+  head: {
+    title: "OSIS"
+  },
   middleware: ["adminAuth"],
   data() {
     return {
@@ -50,17 +62,17 @@ export default {
       imagePreview: null,
       loading: false,
       controls: {
-        title: "",
+        title: ""
       },
       rules: {
         title: [
           {
             required: true,
             message: "Название не должно быть пустым",
-            trigger: "blur",
-          },
-        ],
-      },
+            trigger: "blur"
+          }
+        ]
+      }
     };
   },
   methods: {
@@ -82,14 +94,14 @@ export default {
     },
     /////////////////////////////////////////////////
     onSubmit() {
-      this.$refs.form.validate(async (valid) => {
+      this.$refs.form.validate(async valid => {
         if (valid && this.image) {
           this.loading = true;
 
           // Формирование объекта для отправки в store
           const formData = {
             title: this.firstLetter(this.controls.title),
-            image: this.image,
+            image: this.image
           };
 
           // Отправка объекта с данными формы в store/department.js и вызов Action create()
@@ -117,8 +129,8 @@ export default {
       }
       str = str.toLowerCase();
       return str[0].toUpperCase() + str.slice(1);
-    },
-  },
+    }
+  }
 };
 </script>
 

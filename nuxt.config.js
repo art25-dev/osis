@@ -2,9 +2,10 @@
 module.exports = {
   telemetry: false,
   mode: 'universal',
-  /*
-  ** Headers of the page
-  */
+  // server: {
+  //   port: 8000, // default: 3000
+  //   host: '192.168.0.1' // default: localhost
+  // },
   head: {
     title: process.env.npm_package_name || '',
     meta: [
@@ -16,60 +17,31 @@ module.exports = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
-  /*
-  ** Customize the progress-bar color
-  */
   loading: { color: '#2c382c' },
-  /*
-  ** Global CSS
-  */
   css: [
     '@fortawesome/fontawesome-svg-core/styles.css',
     "@/assets/styles/index.scss",
     'element-ui/lib/theme-chalk/index.css'
   ],
-  /*
-  ** Plugins to load before mounting the App
-  */
   plugins: [
     '@/plugins/globals'
   ],
-  /*
-  ** Nuxt.js dev-modules
-  */
   buildModules: [
   ],
-  /*
-  ** Nuxt.js modules
-  */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     'nuxt-moment',
     '@nuxtjs/style-resources',
     '@nuxtjs/svg-sprite'
   ],
-
   styleResources: {
-    // your settings here
     scss: ['@/assets/styles/variables.scss', '@/assets/styles/_mixin.scss']
   },
-  /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
   axios: {
   },
-  /*
-  ** Build configuration
-  */
   build: {
-
     transpile: [/^element-ui/],
-    /*
-    ** You can extend webpack config here
-    */
     extend(config, ctx) {
       // Добавление обработки pdf
       const assetsLoader = config.module.rules.find (rule => rule.test.test ('.svg'));
@@ -78,5 +50,4 @@ module.exports = {
       return config;
     }
   },
-
 }

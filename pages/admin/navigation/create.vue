@@ -86,6 +86,9 @@
 const cyrillicToTranslit = require("cyrillic-to-translit-js");
 export default {
   layout: "admin",
+  head: {
+    title: "OSIS"
+  },
   middleware: ["adminAuth"],
   data() {
     return {
@@ -123,7 +126,7 @@ export default {
             typeLink: this.controls.typeLink,
             file: this.controls.file
           };
-          
+
           // Отправка объекта с данными формы в store/navigation.js и вызов Action create()
           try {
             await this.$store.dispatch("navigation/create", formData);
@@ -212,7 +215,8 @@ h2 {
 .fade-leave-active {
   transition: opacity 0.5s;
 }
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 </style>

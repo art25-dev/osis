@@ -3,7 +3,12 @@
     <h1>Навигация</h1>
     <div class="table">
       <el-table
-        :data="navigation.filter(data => !search || data.title.toLowerCase().includes(search.toLowerCase()))"
+        :data="
+          navigation.filter(
+            data =>
+              !search || data.title.toLowerCase().includes(search.toLowerCase())
+          )
+        "
         style="width: 100%"
         height="calc(100vh - 120px)"
       >
@@ -25,7 +30,9 @@
               size="mini"
               type="danger"
               icon="el-icon-delete"
-              @click="remove(scope.row._id, scope.row.title, scope.row.pathFile)"
+              @click="
+                remove(scope.row._id, scope.row.title, scope.row.pathFile)
+              "
             ></el-button>
           </template>
         </el-table-column>
@@ -41,6 +48,9 @@
 <script>
 export default {
   layout: "admin",
+  head: {
+    title: "OSIS"
+  },
   components: {},
   middleware: ["adminAuth"],
   // Запрос всех пунктов меню из store/navigation.js в Action getMenu()
@@ -71,7 +81,7 @@ export default {
     edit(id) {
       this.$router.push({
         name: `admin-navigation-id`,
-        params: {id: id, navigation: this.navigation}
+        params: { id: id, navigation: this.navigation }
       });
     },
     async remove(id, title, pathFile) {

@@ -2,7 +2,9 @@
   <div class="create-container">
     <el-breadcrumb separator="/" class="mb">
       <el-breadcrumb-item to="/admin/navigation/">Навигация</el-breadcrumb-item>
-      <el-breadcrumb-item>Пункт навигации ID-{{ navigation._id }}</el-breadcrumb-item>
+      <el-breadcrumb-item
+        >Пункт навигации ID-{{ navigation._id }}</el-breadcrumb-item
+      >
     </el-breadcrumb>
     <h2>Редактор пункта меню</h2>
     <el-form
@@ -15,7 +17,12 @@
     >
       <div class="form-row">
         <el-form-item prop="title">
-          <el-input placeholder="Название" v-model="controls.title" maxlength="60" show-word-limit></el-input>
+          <el-input
+            placeholder="Название"
+            v-model="controls.title"
+            maxlength="60"
+            show-word-limit
+          ></el-input>
         </el-form-item>
         <el-form-item>
           <el-select
@@ -45,7 +52,9 @@
         <div class="controls">
           <el-form-item>
             <el-button type="warning" @click="clearForm">Очистить</el-button>
-            <el-button type="primary" native-type="submit" :loading="loading">Обновить</el-button>
+            <el-button type="primary" native-type="submit" :loading="loading"
+              >Обновить</el-button
+            >
           </el-form-item>
         </div>
       </div>
@@ -79,6 +88,9 @@
 const cyrillicToTranslit = require("cyrillic-to-translit-js");
 export default {
   layout: "admin",
+  head: {
+    title: "OSIS"
+  },
   middleware: ["adminAuth"],
   async asyncData({ store, params }) {
     const navigation = await store.dispatch(
@@ -103,15 +115,15 @@ export default {
           {
             required: true,
             message: "Название не должно быть пустым",
-            trigger: "blur",
-          },
-        ],
-      },
+            trigger: "blur"
+          }
+        ]
+      }
     };
   },
   methods: {
     onSubmit() {
-      this.$refs.form.validate(async (valid) => {
+      this.$refs.form.validate(async valid => {
         if (valid) {
           this.loading = true;
 
@@ -154,7 +166,7 @@ export default {
       this.loading = false;
       this.controls.currentFile = null;
       this.controls.newFile = null;
-    },
+    }
   },
   mounted() {
     // Подгрузка данных объявления в поля формы
@@ -162,7 +174,7 @@ export default {
     this.controls.parent = this.navigation.parent;
     this.controls.typeLink = this.navigation.typeLink;
     this.controls.currentFile = this.navigation.pathFile;
-  },
+  }
 };
 </script>
 

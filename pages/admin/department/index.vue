@@ -2,7 +2,11 @@
   <div>
     <h1>Подразделения</h1>
     <div class="table">
-      <el-table :data="department" style="width: 100%" height="calc(100vh - 120px)">
+      <el-table
+        :data="department"
+        style="width: 100%"
+        height="calc(100vh - 120px)"
+      >
         <el-table-column label="Изображение подразделения">
           <template slot-scope="scope">
             <div>
@@ -11,13 +15,18 @@
                   shape="square"
                   :size="40"
                   fit="cover"
-                  :src="require(`../../../static/departments${scope.row.imageUrl}`)"
+                  :src="
+                    require(`../../../static/departments${scope.row.imageUrl}`)
+                  "
                 ></el-avatar>
               </div>
             </div>
           </template>
         </el-table-column>
-        <el-table-column prop="title" label="Название подразделения"></el-table-column>
+        <el-table-column
+          prop="title"
+          label="Название подразделения"
+        ></el-table-column>
         <el-table-column label="Действия">
           <template slot-scope="scope">
             <el-button
@@ -32,7 +41,9 @@
               size="mini"
               type="danger"
               icon="el-icon-delete"
-              @click="remove(scope.row._id, scope.row.title, scope.row.imageUrl)"
+              @click="
+                remove(scope.row._id, scope.row.title, scope.row.imageUrl)
+              "
             ></el-button>
           </template>
         </el-table-column>
@@ -48,6 +59,9 @@
 <script>
 export default {
   layout: "admin",
+  head: {
+    title: "OSIS"
+  },
   components: {},
   middleware: ["adminAuth"],
   // Запрос всех подразделений из store/department.js в Action getDepartment()
