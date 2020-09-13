@@ -3,6 +3,10 @@
     <h1>Администратор</h1>
     <el-menu default-active="1" class="el-menu-vertical-demo" router>
       <el-menu-item index="/admin">
+        <font-awesome-icon icon="desktop" size="xs" fixed-width />
+        <span>Информация о сиситеме</span>
+      </el-menu-item>
+      <el-menu-item index="/admin/statistic">
         <font-awesome-icon icon="chart-bar" size="xs" fixed-width />
         <span>Статистика</span>
       </el-menu-item>
@@ -24,7 +28,7 @@
 
 <script>
 export default {
-  methods: {}
+  methods: {},
 };
 </script>
 
