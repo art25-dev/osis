@@ -12,7 +12,7 @@
         <span class="month">{{ month }}</span>
       </div>
     </div>
-    <svg-icon @click="auth" class="gerb" name="gerb" />
+    <svg-icon class="gerb" name="gerb" />
   </div>
 </template>
 
@@ -32,10 +32,6 @@ export default {
         this.hour = this.$moment().format("HH");
         this.minute = this.$moment().format("mm");
       }, 30000);
-    },
-
-    auth() {
-      this.$router.push('/admin')
     }
   },
   created() {

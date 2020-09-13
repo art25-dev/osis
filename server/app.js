@@ -5,6 +5,7 @@ const mongoose = require("mongoose")
 const authRoutes = require("./routes/auth_R")
 const departmentRoutes = require("./routes/department_R")
 const navigationRoutes = require("./routes/navigation_R")
+const postRoutes = require("./routes/post_R")
 
 const keys = require("./keys")
 const app = express()
@@ -24,5 +25,6 @@ app.use(bodyParser.json())
 app.use("/api/auth", authRoutes)
 app.use("/api/department", departmentRoutes)
 app.use("/api/navigation", navigationRoutes)
+app.use("/api/post", postRoutes)
 
 module.exports = app
