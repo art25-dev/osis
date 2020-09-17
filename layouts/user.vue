@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <div class="bg"></div>
+    <span class="version">Версия - 3.0.0</span>
     <el-container>
       <el-main>
         <nuxt></nuxt>
@@ -136,5 +137,14 @@ export default {
   @include hd {
     width: 29% !important;
   }
+}
+
+.version {
+  font-size: 12px;
+  color: rgba($color-second, .3);
+  padding: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 </style>
