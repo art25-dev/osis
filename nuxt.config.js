@@ -1,11 +1,6 @@
 
 module.exports = {
   telemetry: false,
-  mode: 'universal',
-  // server: {
-  //   port: 8000, // default: 3000
-  //   host: '192.168.0.1' // default: localhost
-  // },
   head: {
     title: process.env.npm_package_name || '',
     meta: [

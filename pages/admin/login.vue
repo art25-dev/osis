@@ -40,8 +40,8 @@ export default {
     return {
       loading: false,
       controls: {
-        login: "root",
-        password: "artgavr25"
+        login: "",
+        password: ""
       },
       rules: {
         login: [
