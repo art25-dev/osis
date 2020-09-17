@@ -30,6 +30,8 @@ export default {
   props: ["navigation"],
   data() {
     return {
+      currentTime: 10,
+      timer: null,
       fullNav: null,
       currentNav: null,
       history: [],
@@ -37,12 +39,24 @@ export default {
     };
   },
   async mounted() {
+    this.startTimer()
     this.fullNav = await this.navigation;
     this.currentNav = this.sortArray(this.fullNav.filter(nav => !nav.parent));
     await this.$store.commit("navigation/initStatistic", this.fullNav)
   },
+   destroyed() {
+    this.stopTimer()
+  },
   computed: {},
-  filters: {},
+  watch: {
+    currentTime(time) {
+      console.log(time);
+      if(time === 0) {
+          this.getMainMenu()
+          this.stopTimer()
+      }
+    }
+  },
   methods: {
     // Сортировка пунктов меню по алфавиту
     sortArray(arr) {
@@ -53,6 +67,7 @@ export default {
     async getSubMenu(link, $event) {
       let title = $event.$el.innerText;
       let typeLink = $event.$attrs["data-type"];
+
 
       switch (typeLink) {
         case "link":
@@ -89,7 +104,20 @@ export default {
       this.currentNav = this.sortArray(this.fullNav.filter(nav => !nav.parent));
       this.history = [];
       this.$router.push("/");
-    }
+      this.stopTimer()
+    },
+
+    // Запуск таймера
+    startTimer() {
+      this.timer = setInterval(() => {
+        this.currentTime--
+      }, 1000)
+    },
+
+    // Сброс таймера
+    stopTimer() {
+      clearTimeout(this.timer)
+    },
   }
 };
 </script>

@@ -12,7 +12,7 @@
         <span class="month">{{ month }}</span>
       </div>
     </div>
-    <svg-icon class="gerb" name="gerb" />
+    <svg-icon class="gerb" v-on:click.ctrl="goAdmin" name="gerb" />
   </div>
 </template>
 
@@ -32,6 +32,9 @@ export default {
         this.hour = this.$moment().format("HH");
         this.minute = this.$moment().format("mm");
       }, 30000);
+    },
+    goAdmin() {
+      this.$router.push("admin")
     }
   },
   created() {

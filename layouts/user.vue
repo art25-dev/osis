@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="bg"></div>
-    <span class="version">Версия - 3.0.0</span>
+    <span class="version">Версия - {{version}}</span>
     <el-container>
       <el-main>
         <nuxt></nuxt>
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import {version} from '@/package.json';
 import AppCalendar from "@/components/common/Calendar";
 import AppNavigation from "@/components/user/Navigation";
 export default {
@@ -31,6 +32,7 @@ export default {
   data() {
     return {
       navigation: null,
+      version: version
     };
   },
   computed: {
