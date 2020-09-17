@@ -49,11 +49,10 @@ export default {
   },
   computed: {},
   watch: {
+    // Текущее время бездействия пользователя
     currentTime(time) {
-      console.log(time);
       if(time === 0) {
           this.getMainMenu()
-          this.stopTimer()
       }
     }
   },
@@ -65,9 +64,11 @@ export default {
 
     // Получение дочерних пунктов меню
     async getSubMenu(link, $event) {
+      await this.stopTimer()
+      await this.startTimer()
+
       let title = $event.$el.innerText;
       let typeLink = $event.$attrs["data-type"];
-
 
       switch (typeLink) {
         case "link":
@@ -87,7 +88,10 @@ export default {
     },
 
     // Получение предыдущих пунктов меню
-    getPrevMenu() {
+    async getPrevMenu() {
+      await this.stopTimer()
+      await this.startTimer()
+
       this.history.pop();
       let prevMenu = this.history[this.history.length - 1];
       if (this.history.length <= 0) {
@@ -100,23 +104,24 @@ export default {
     },
 
     // Получение главного меню
-    getMainMenu() {
-      this.currentNav = this.sortArray(this.fullNav.filter(nav => !nav.parent));
-      this.history = [];
-      this.$router.push("/");
-      this.stopTimer()
+    async getMainMenu() {
+      this.currentNav = await this.sortArray(this.fullNav.filter(nav => !nav.parent));
+      this.history = await [];
+      await this.$router.push("/");
+      await this.stopTimer()
     },
 
     // Запуск таймера
     startTimer() {
       this.timer = setInterval(() => {
         this.currentTime--
-      }, 1000)
+      }, 10000)
     },
 
-    // Сброс таймера
-    stopTimer() {
-      clearTimeout(this.timer)
+    // Остановка таймера
+    async stopTimer() {
+      this.currentTime = await 10
+      await clearTimeout(this.timer)
     },
   }
 };
