@@ -12,7 +12,7 @@
         <span class="month">{{ month }}</span>
       </div>
     </div>
-    <svg-icon class="gerb" v-on:click.ctrl="goAdmin" name="gerb" />
+    <svg-icon class="gerb" v-on:click.shift="goAdmin" name="gerb" />
   </div>
 </template>
 
@@ -34,7 +34,7 @@ export default {
       }, 30000);
     },
     goAdmin() {
-      this.$router.push("admin")
+      this.$router.push({ path: '/admin' })
     }
   },
   created() {
