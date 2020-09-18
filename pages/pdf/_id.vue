@@ -5,7 +5,7 @@
       <embed
         class="pdf-container"
         :src="
-          require(`../../static/documents${navigation.pathFile}`) +
+          this.path +
             '#view=FitH&toolbar=0'
         "
         type="application/pdf"
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import loginVue from '../admin/login.vue';
 export default {
   head: {
     title: "OSIS"
@@ -29,9 +30,18 @@ export default {
     return { navigation };
   },
   data() {
-    return {};
+    return {
+      path: require(`../../static/documents/default.pdf`)
+    };
   },
-  mounted() {},
+  mounted() {
+    // Проверка на наличие файла .pdf
+    try {
+      this.path = require(`../../static/documents${this.navigation.pathFile}`)
+    } catch (error) {
+      this.path = require(`../../static/documents/default.pdf`)
+    }
+  },
   computed: {},
   filters: {},
   methods: {}
