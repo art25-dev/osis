@@ -39,7 +39,7 @@ export default {
     try {
       this.path = require(`../../static/documents${this.navigation.pathFile}`)
     } catch (error) {
-      this.path = require(`../../static/documents/default.pdf`)
+      this.path = require(`../../static/default.pdf`)
     }
   },
   computed: {},
