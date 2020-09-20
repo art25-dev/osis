@@ -1,7 +1,7 @@
 <template>
   <div class="create-container">
     <el-breadcrumb separator="/" class="mb">
-      <el-breadcrumb-item to="/admin/post/">Объявления</el-breadcrumb-item>
+      <el-breadcrumb-item to="/admin/post/">Все объявления</el-breadcrumb-item>
       <el-breadcrumb-item></el-breadcrumb-item>
     </el-breadcrumb>
     <h2>Создать объявление</h2>
@@ -69,32 +69,40 @@ export default {
             trigger: "blur",
           },
         ],
+        file: [
+          {
+            required: true,
+            message: "Нет файла",
+            trigger: "blur",
+          },
+        ],
       },
     };
   },
   methods: {
     onSubmit() {
       this.$refs.form.validate(async (valid) => {
-        if (valid) {
+        if (valid && this.controls.file) {
           this.loading = true;
 
           // Формирование объекта для отправки в store
           const formData = {
             title: this.firstLetter(this.controls.title),
+            status: this.status,
             file: this.controls.file,
           };
 
           // Отправка объекта с данными формы в store/post.js и вызов Action create()
           try {
+            console.log(formData);
             await this.$store.dispatch("post/create", formData);
           } catch (e) {
           } finally {
             this.$message.success("Объявление создано");
             this.clearForm();
-            this.$route.params.navigation.push(formData);
           }
         } else {
-          this.$message.warning("Форма не валидна");
+          this.$message.warning("Объявление должно иметь заголовок и файл .pdf");
         }
       });
     },

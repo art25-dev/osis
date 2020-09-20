@@ -1,10 +1,6 @@
 const { Schema, model } = require('mongoose')
 
 const postSchema = new Schema({
-  _id: {
-    type: String,
-    required: true
-  },
   title: {
     type: String,
     required: true
@@ -14,7 +10,8 @@ const postSchema = new Schema({
     default: null
   },
   date: {
-    type: Date
+    type: Date,
+    default: Date.now
   },
   status: {
     type: Boolean,

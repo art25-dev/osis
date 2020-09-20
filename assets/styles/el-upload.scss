@@ -10,6 +10,7 @@
   color: $color-primary !important;
 }
 
+
 .avatar-uploader .el-upload {
     border: 1px dashed $color-primary;
     border-radius: 5px !important;
@@ -17,7 +18,7 @@
     position: relative;
     overflow: hidden;
     display: block;
-  }
+}
   .avatar-uploader .el-upload:hover {
     border-color: $color-primary;
   }
