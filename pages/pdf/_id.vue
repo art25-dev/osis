@@ -31,7 +31,7 @@ export default {
   },
   data() {
     return {
-      path: require(`../../static/documents/default.pdf`)
+      path: require(`../../static/default.pdf`)
     };
   },
   mounted() {
