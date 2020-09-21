@@ -30,7 +30,7 @@
             placeholder="Родительское меню (по умолчанию - Главное меню)"
           >
             <el-option
-              v-for="item in this.$route.params.navigation"
+              v-for="item in this.select"
               :key="item.value"
               :label="item.title"
               :value="item._id"
@@ -93,6 +93,7 @@ export default {
   data() {
     return {
       loading: false,
+      select: [],
       controls: {
         title: "",
         parent: null,
@@ -109,6 +110,9 @@ export default {
         ]
       }
     };
+  },
+  mounted() {
+    this.select = this.$route.params.navigation
   },
   methods: {
     onSubmit() {
@@ -135,6 +139,7 @@ export default {
             this.$message.success("Пункт меню создан");
             this.clearForm();
             this.$route.params.navigation.push(formData);
+            this.select = this.sortArray(this.$route.params.navigation)
           }
         } else {
           this.$message.warning("Форма не валидна");
@@ -155,9 +160,11 @@ export default {
       if (!str) {
         return str;
       }
-
       return str[0].toUpperCase() + str.slice(1);
-    }
+    },
+    sortArray(arr) {
+      return arr.sort((a, b) => (a.title > b.title ? 1 : -1));
+    },
   }
 };
 </script>

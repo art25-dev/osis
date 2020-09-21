@@ -1,4 +1,4 @@
-# test
+# OSIS
 
 > My splendiferous Nuxt.js project
 

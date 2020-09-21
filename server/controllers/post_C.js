@@ -14,7 +14,6 @@ module.exports.getPost = async (req, res) => {
 
 // Функция создания объявления
 module.exports.create = async (req, res) => {
-  console.log(req.body);
   const post = new Post({
     title: req.body.title,
     status: req.body.status,

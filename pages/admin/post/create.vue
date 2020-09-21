@@ -94,7 +94,6 @@ export default {
 
           // Отправка объекта с данными формы в store/post.js и вызов Action create()
           try {
-            console.log(formData);
             await this.$store.dispatch("post/create", formData);
           } catch (e) {
           } finally {
