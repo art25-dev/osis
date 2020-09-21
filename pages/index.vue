@@ -11,6 +11,7 @@ export default {
   head: {
     title: "OSIS"
   },
+  components: {},
   layout: "user"
 };
 </script>
