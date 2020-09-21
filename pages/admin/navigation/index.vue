@@ -16,6 +16,12 @@
         </el-table-column>
         <el-table-column prop="parent" label="Родительское меню">
         </el-table-column>
+        <el-table-column prop="views" label="Кол-во просмотров">
+          <template slot-scope="{row: {views}}">
+            <i class="el-icon-view"></i>
+            <span style="margin-left: 10px">{{ views }}</span>  
+          </template>
+        </el-table-column>
         <el-table-column label="Действия">
           <template slot-scope="scope">
             <el-button

@@ -12,6 +12,10 @@
         <el-table-column prop="title" label="Заголовок объявления">
         </el-table-column>
         <el-table-column prop="date" label="Дата создания">
+          <template slot-scope="{row: {date}}">
+            <i class="el-icon-time"></i>
+            <span style="margin-left: 10px">{{ new Date(date).toLocaleString() }}</span>  
+          </template>
         </el-table-column>
         <el-table-column prop="status" label="Статус">
         </el-table-column>
