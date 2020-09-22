@@ -123,9 +123,9 @@ export default {
           // Формирование объекта для отправки в store
           const formData = {
             _id: cyrillicToTranslit()
-              .transform(this.controls.title, "_")
+              .transform(this.controls.title.trim(), "_")
               .toLowerCase(),
-            title: this.firstLetter(this.controls.title),
+            title: this.firstLetter(this.controls.title).trim(),
             parent: this.controls.parent,
             typeLink: this.controls.typeLink,
             file: this.controls.file

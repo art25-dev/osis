@@ -50,17 +50,20 @@ export default {
 
 <style lang="scss" scoped>
 .pdf-wrapper {
-  height: calc(100vh - 12rem);
+  height: calc(100vh - 6rem);
+  padding: 20px 20px 70px 20px;
+  background: rgba(220, 214, 196, 0.8);
 
   @include hd-plus {
+    height: calc(100vh - 6rem);
   }
 
   @include wsx {
-    height: calc(100vh - 10rem);
+    height: calc(100vh - 4.39rem);
   }
 
   @include hd {
-    height: calc(100vh - 10rem);
+    height: calc(100vh - 4.5rem);
   }
 }
 

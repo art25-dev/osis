@@ -100,7 +100,7 @@ export default {
 
           // Формирование объекта для отправки в store
           const formData = {
-            title: this.firstLetter(this.controls.title),
+            title: this.firstLetter(this.controls.title.trim()),
             image: this.image
           };
 

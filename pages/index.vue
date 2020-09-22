@@ -1,61 +1,18 @@
 <template>
-  <!-- <div class="wrapper">
-    <h1>Внимание!</h1>
-    <p>"Открытая справочная инфорационная система" работает в тестовом режиме.</p>
-    <p>Скачивание антивирусных баз временно недоступно.</p>
-  </div>-->
-  <div>
-    <svg-icon @click="showPrev()" class="menu__controls-btn" name="arrow" />
-    <VueSlickCarousel ref="carousel" v-bind="settings">
-      <div>
-        <img src="https://picsum.photos/300/300" />
-      </div>
-      <div>
-        <img src="https://picsum.photos/300/300" />
-      </div>
-      <div>
-        <img src="https://picsum.photos/300/300" />
-      </div>
-    </VueSlickCarousel>
-    <svg-icon @click="showNext()" class="menu__controls-btn" name="arrow" />
-  </div>
+  <div></div>
 </template>
 
 <script>
-import VueSlickCarousel from "vue-slick-carousel";
-import "vue-slick-carousel/dist/vue-slick-carousel.css";
-// optional style for arrows & dots
-import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
-
 export default {
   head: {
-    title: "OSIS",
+    title: "OSIS"
   },
-  components: {
-    VueSlickCarousel,
-  },
+  components: {},
   layout: "user",
   data() {
-    return {
-      settings: {
-        arrows: false,
-        dots: true,
-        fade: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-      },
-    };
+    return {};
   },
-  methods: {
-    showNext() {
-        this.$refs.carousel.next()
-    },
-    showPrev() {
-        this.$refs.carousel.prev()
-    },
-  }
+  methods: {}
 };
 </script>
 
@@ -65,10 +22,97 @@ export default {
   margin: 3rem;
 }
 h1 {
-  color: $color-danger;
-  font-size: 52px;
+  display: inline-block;
+  padding-bottom: 0.3rem;
+  margin-bottom: 1rem;
+  color: $color-primary;
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 5px;
+    background: $color-danger;
+    display: block;
+  }
 }
 p {
   font-size: 24px;
+}
+
+.slider-container {
+  position: relative;
+}
+
+.slider {
+  margin: 0 4rem;
+}
+
+.slider__prev-btn {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  transform: scaleX(-1);
+  cursor: pointer;
+
+  @include hd-plus {
+    width: 45px;
+    height: 45px;
+  }
+
+  @include wsx {
+    width: 40px;
+    height: 40px;
+  }
+
+  @include hd {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+.slider__next-btn {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+
+  @include hd-plus {
+    width: 45px;
+    height: 45px;
+  }
+
+  @include wsx {
+    width: 40px;
+    height: 40px;
+  }
+
+  @include hd {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+.pdf {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.pdf-container {
+  width: 100%;
+  height: 100%;
+  min-height: 75vh;
+  border-radius: 5px;
+  display: block;
+  padding: 0;
+  background-color: #fff;
 }
 </style>

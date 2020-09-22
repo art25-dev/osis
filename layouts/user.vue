@@ -68,8 +68,6 @@ export default {
 
 .el-main {
   margin: 3rem 2rem;
-  background: rgba($color-second, 0.8);
-  color: $color-primary;
   border-radius: 5px;
 
   @include hd-plus {
