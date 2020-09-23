@@ -1,13 +1,18 @@
 <template>
-  <div></div>
+  <div class="wrapper">
+    <app-slider></app-slider>
+  </div>
 </template>
 
 <script>
+import AppSlider from "@/components/user/Slider";
 export default {
   head: {
     title: "OSIS"
   },
-  components: {},
+  components: {
+    AppSlider
+  },
   layout: "user",
   data() {
     return {};
@@ -18,8 +23,12 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper {
-  text-align: center;
-  margin: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 h1 {
   display: inline-block;

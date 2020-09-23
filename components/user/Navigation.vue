@@ -170,6 +170,7 @@ export default {
     height: 50px;
     transform: scaleX(-1);
     cursor: pointer;
+    fill: rgba($color-second, 1);
 
     @include hd-plus {
       width: 45px;

@@ -52,7 +52,7 @@ export default {
 .pdf-wrapper {
   height: calc(100vh - 6rem);
   padding: 20px 20px 70px 20px;
-  background: rgba(220, 214, 196, 0.8);
+  background: rgba($color-second, 0.8);
 
   @include hd-plus {
     height: calc(100vh - 6rem);
@@ -100,5 +100,6 @@ h1 {
   display: block;
   padding: 0;
   background-color: #fff;
+   box-shadow: 0 16px 24px 2px rgba(0,0,0, 0.14), 0 6px 30px 5px rgba(0,0,0, 0.12), 0 8px 10px 0 rgba(0,0,0, 0.2);
 }
 </style>
