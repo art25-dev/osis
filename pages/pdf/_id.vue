@@ -5,9 +5,7 @@
       <embed
         class="pdf-container"
         :src="
-          this.path +
-            '#view=FitH&toolbar=0'
-        "
+          this.path + '#view=FitH&toolbar=0'"
         type="application/pdf"
       />
     </div>

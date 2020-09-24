@@ -14,8 +14,15 @@ export default {
     AppSlider
   },
   layout: "user",
+  // Запрос всех пунктов меню из store/post.js в Action getPost()
+  async asyncData({ store }) {
+    const post = await store.dispatch("post/getPost");
+    return { post };
+  },
   data() {
     return {};
+  },
+  mounted() {
   },
   methods: {}
 };
