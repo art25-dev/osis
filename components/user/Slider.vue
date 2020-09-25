@@ -11,10 +11,10 @@
         <h1 class="slider__item-title">{{ slide.title }}</h1>
         <embed
           class="slider__item-file"
-          :src="slide.pathFile + '#view=FitH&toolbar=0'"
+          :src="require(`../../static/posts${slide.pathFile}`) + '#view=FitH&toolbar=0'"
           type="application/pdf"
         />
-        <span class="slider__item-date">{{ slide.date }}</span>
+        <span class="slider__item-date">{{ new Date(slide.date).toLocaleDateString() }}</span>
       </li>
     </ul>
     <svg-icon @click="nextSlide()" class="slider__btn-next" name="arrow" />
@@ -32,36 +32,29 @@
 
 <script>
 export default {
+  props: {
+    slideList: {
+      type: Array,
+      default() {
+        return [];
+      }
+    }
+  },
   data() {
     return {
-      slideList: [
-        {
-          _id: "123",
-          title: "Объявление 1",
-          date: "23.09.2020",
-          pathFile: require(`../../static/default.pdf`)
-        },
-        {
-          _id: "1234",
-          title: "Объявление 2",
-          date: "24.09.2020",
-          pathFile: require(`../../static/default.pdf`)
-        },
-        {
-          _id: "12345",
-          title: "Объявление 3",
-          date: "25.09.2020",
-          pathFile: require(`../../static/default.pdf`)
-        }
-      ],
-      currentSlide: 1
+      currentSlide: 1,
+      timer: null
     };
   },
-  mounted() {
-    this.$refs.slide[0].classList.add("slider__item--active");
-    this.$refs.dot[0].classList.add("dot__item--active");
+  async mounted() {
+    await this.$refs.slide[0].classList.add("slider__item--active");
+    await this.$refs.dot[0].classList.add("dot__item--active");
+    await this.startTimer();
+    console.log(this.slideList);
   },
-  destroyed() {},
+  destroyed() {
+    this.stopTimer();
+  },
   computed: {},
   watch: {},
   methods: {
@@ -81,9 +74,7 @@ export default {
         "slider__item--active"
       );
 
-      this.$refs.dot[this.currentSlide - 1].classList.add(
-        "dot__item--active"
-      );
+      this.$refs.dot[this.currentSlide - 1].classList.add("dot__item--active");
     },
     prevSlide() {
       this.showSlide(--this.currentSlide);
@@ -92,7 +83,19 @@ export default {
       this.showSlide(++this.currentSlide);
     },
     goSlide(index) {
-      this.showSlide(this.currentSlide = index + 1)
+      this.showSlide((this.currentSlide = index + 1));
+    },
+
+    // Запуск таймера
+    startTimer() {
+      this.timer = setInterval(() => {
+        this.nextSlide();
+      }, 60000);
+    },
+    // Остановка таймера
+    async stopTimer() {
+      this.currentSlide = await 1;
+      await clearTimeout(this.timer);
     }
   }
 };
@@ -250,7 +253,6 @@ export default {
   }
 
   &--active {
-    
     &::after {
       position: absolute;
       display: block;
@@ -262,7 +264,7 @@ export default {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      animation: show .5s ease-in-out forwards;
+      animation: show 0.5s ease-in-out forwards;
     }
   }
 }

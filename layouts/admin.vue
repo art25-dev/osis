@@ -45,7 +45,7 @@ export default {
 }
 
 .el-main {
-  padding: 2rem;
+  padding: 2rem !important;
   background: rgba($color-second, 0.8);
   color: $color-primary;
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <app-slider></app-slider>
+    <app-slider :slideList="post"></app-slider>
   </div>
 </template>
 
