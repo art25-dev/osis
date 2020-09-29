@@ -1,5 +1,6 @@
 const { Router } = require("express")
 const uploadPost = require("../middleware/uploadPost")
+const folder = require("../middleware/folder")
 const post_C = require("../controllers/post_C")
 const router = Router()
 
@@ -16,6 +17,7 @@ router.get(
 // Роут на создание объявления
 router.post(
   "/admin/",
+  folder.create,
   uploadPost.single("file"),
   post_C.create
 )
