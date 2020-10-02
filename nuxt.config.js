@@ -38,11 +38,18 @@ module.exports = {
   build: {
     transpile: [/^element-ui/],
     extend(config, ctx) {
+      config.module.rules.push({
+        test: /\.(pdf)$/i,
+        loader: 'ignore-loader',
+        // options: { 
+        //   name: '[name].[ext]',
+        // }
+      })
       // Добавление обработки pdf
-      const assetsLoader = config.module.rules.find (rule => rule.test.test ('.svg'));
-      assetsLoader.test = /\.(png|jpe?g|gif|svg|webp|pdf)$/i;
+      // const assetsLoader = config.module.rules.find (rule => rule.test.test ('.svg'));
+      // assetsLoader.test = /\.(png|jpe?g|gif|svg|webp|pdf)$/i;
 
-      return config;
+      // return config;
     }
   },
 }

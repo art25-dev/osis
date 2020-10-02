@@ -31,6 +31,8 @@ export default {
       setInterval(() => {
         this.hour = this.$moment().format("HH");
         this.minute = this.$moment().format("mm");
+        this.day = this.$moment().format("dddd");
+        this.month = this.$moment().format("D MMMMM")
       }, 30000);
     },
     goAdmin() {

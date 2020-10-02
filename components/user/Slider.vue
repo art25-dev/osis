@@ -11,7 +11,7 @@
         <h1 class="slider__item-title">{{ slide.title }}</h1>
         <embed
           class="slider__item-file"
-          :src="require(`../../static/posts${slide.pathFile}`) + '#view=FitH&toolbar=0'"
+          :src="slide.pathFile + '#view=FitH&toolbar=0'"
           type="application/pdf"
         />
         <span class="slider__item-date">{{ new Date(slide.date).toLocaleDateString() }}</span>
