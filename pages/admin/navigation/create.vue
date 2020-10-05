@@ -112,7 +112,7 @@ export default {
     };
   },
   mounted() {
-    this.select = this.$route.params.navigation
+    this.select = this.$route.params.navigation.filter((nav) => nav.typeLink != "pdf")
   },
   methods: {
     onSubmit() {
@@ -122,9 +122,6 @@ export default {
 
           // Формирование объекта для отправки в store
           const formData = {
-            _id: cyrillicToTranslit()
-              .transform(this.controls.title.trim(), "_")
-              .toLowerCase(),
             title: this.firstLetter(this.controls.title).trim(),
             parent: this.controls.parent,
             typeLink: this.controls.typeLink,

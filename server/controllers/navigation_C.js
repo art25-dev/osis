@@ -26,7 +26,6 @@ module.exports.getNavigationItem = async (req, res) => {
 // Функция создания пункта меню
 module.exports.create = async (req, res) => {
   const navigation = new Navigation({
-    _id: req.body._id,
     title: req.body.title,
     parent: req.body.parent == "null" ? null : req.body.parent,
     typeLink: req.body.typeLink == "null" ? "link" : req.body.typeLink,
@@ -45,10 +44,11 @@ module.exports.update = async (req, res) => {
   if (req.file) {
     const $set = {
       title: req.body.title,
-      parent: req.body.parent,
+      parent: req.body.parent == "null" ? null : req.body.parent,
       typeLink: req.body.typeLink == "null" ? "link" : req.body.typeLink,
       pathFile: `/${req.file.filename}`
     }
+    console.log($set);
     // Отправка запроса на изменение записи в БД
     try {
       const navigation = await Navigation.findOneAndUpdate({
@@ -68,7 +68,7 @@ module.exports.update = async (req, res) => {
   } else {
     const $set = {
       title: req.body.title,
-      parent: req.body.parent
+      parent: req.body.parent == "null" ? null : req.body.parent
     }
     // Отправка запроса на изменение записи в БД
     try {

@@ -50,10 +50,10 @@ export const actions = {
   },
 
   // Запрос на создание пункта навигации
-  async create({ commit }, { _id, title, parent, typeLink, file }) {
+  async create({ commit }, { title, parent, typeLink, file }) {
     try {
+      console.log(parent);
       const fd = new FormData()
-      fd.append("_id", _id)
       fd.append("title", title)
       fd.append("parent", parent)
       fd.append("typeLink", typeLink)
@@ -78,7 +78,7 @@ export const actions = {
 
   // Запрос на редактирование пункта навигации
   async update({ commit }, { id, title, parent, typeLink, newFile, oldFile }) {
-
+    console.log(parent);
     try {
       const fd = new FormData()
       fd.append("title", title)

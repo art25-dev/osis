@@ -29,15 +29,15 @@ export default {
   },
   data() {
     return {
-      path: require(`../../static/default.pdf`)
+      path: "/default.pdf"
     };
   },
   mounted() {
     // Проверка на наличие файла .pdf
     try {
-      this.path = require(`../../static/documents${this.navigation.pathFile}`)
+      this.path = this.navigation.pathFile
     } catch (error) {
-      this.path = require(`../../static/default.pdf`)
+      this.path = "/default.pdf"
     }
   },
   computed: {},
