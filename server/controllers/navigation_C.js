@@ -59,7 +59,7 @@ module.exports.update = async (req, res) => {
       res.status(500).json(e)
     }
     // // Удаление старого файла
-    const pathFile = path.resolve(`static/documents${req.body['oldFile']}`)
+    const pathFile = path.resolve(`static${req.body['oldFile']}`)
     if(req.body['oldFile'] !== $set.pathFile) {
       fs.unlink(pathFile, (err) => {
         if (err) throw err;
@@ -91,7 +91,7 @@ module.exports.remove = async (req, res) => {
     res.status(500).json(e)
   }
   if (req.query["pathFile"]) {
-    const pathFile = path.resolve(`static/documents${req.query['pathFile']}`)
+    const pathFile = path.resolve(`static${req.query['pathFile']}`)
     fs.unlink(pathFile, (err) => {
       if (err) throw err;
     })

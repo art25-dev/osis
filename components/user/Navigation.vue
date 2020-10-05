@@ -42,7 +42,6 @@ export default {
     this.startTimer()
     this.fullNav = await this.navigation;
     this.currentNav = await this.sortArray(this.fullNav.filter(nav => !nav.parent));
-    console.log(this.currentNav);
     await this.$store.commit("navigation/initStatistic", this.fullNav)
   },
    destroyed() {
@@ -116,7 +115,7 @@ export default {
     startTimer() {
       this.timer = setInterval(() => {
         this.currentTime--
-      }, 10000)
+      }, 30000)
     },
 
     // Остановка таймера

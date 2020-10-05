@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
     cb(null, path.resolve(__dirname, '../..', 'static'))
   },
   filename(req, file, cb) {
-    const fileName = cyrillicToTranslit().transform(req.body.title, "_")
+    const fileName = `post-${cyrillicToTranslit().transform(req.body.title, "_")}`
     const fileFormat = file.mimetype.split("/")[1]
     cb(null, `${fileName}.${fileFormat}`)
   }

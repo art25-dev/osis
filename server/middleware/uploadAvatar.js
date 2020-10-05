@@ -6,7 +6,7 @@ const cyrillicToTranslit = require("cyrillic-to-translit-js")
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, path.resolve(__dirname, '../..', 'static/departments'))
+    cb(null, path.resolve(__dirname, '../..', 'static'))
   },
   filename(req, file, cb) {
     const fileName = cyrillicToTranslit().transform(req.body.title, "_")

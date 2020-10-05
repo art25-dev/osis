@@ -54,7 +54,7 @@ module.exports.update = async (req, res) => {
     }
     
     // Удаление старого файла
-    const pathFile = path.resolve(`static/departments${req.body['pathOldImage']}`)
+    const pathFile = path.resolve(`static${req.body['pathOldImage']}`)
 
     if(req.body['pathOldImage'] !== $set.imageUrl) {
       fs.unlink(pathFile, (err) => {
@@ -87,7 +87,7 @@ module.exports.remove = async (req, res) => {
   } catch (e) {
     res.status(500).json(e)
   }
-  const pathFile = path.resolve(`static/departments${req.query['pathFile']}`)
+  const pathFile = path.resolve(`static${req.query['pathFile']}`)
   fs.unlink(pathFile, (err) => {
     if (err) throw err;
   })

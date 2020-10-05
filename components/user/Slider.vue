@@ -36,7 +36,14 @@ export default {
     slideList: {
       type: Array,
       default() {
-        return [];
+        return [
+          {
+            _id: '1',
+            title: "Нет подключения к БД",
+            pathFile: "/default.pdf",
+            date: Date.now()
+          }
+        ];
       }
     }
   },
@@ -50,7 +57,6 @@ export default {
     await this.$refs.slide[0].classList.add("slider__item--active");
     await this.$refs.dot[0].classList.add("dot__item--active");
     await this.startTimer();
-    console.log(this.slideList);
   },
   destroyed() {
     this.stopTimer();
