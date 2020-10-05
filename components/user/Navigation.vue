@@ -41,7 +41,8 @@ export default {
   async mounted() {
     this.startTimer()
     this.fullNav = await this.navigation;
-    this.currentNav = this.sortArray(this.fullNav.filter(nav => !nav.parent));
+    this.currentNav = await this.sortArray(this.fullNav.filter(nav => !nav.parent));
+    console.log(this.currentNav);
     await this.$store.commit("navigation/initStatistic", this.fullNav)
   },
    destroyed() {

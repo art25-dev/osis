@@ -126,16 +126,17 @@ export default {
       this.$refs.form.validate(async valid => {
         if (valid) {
           this.loading = true;
-
+          console.log(this.controls.parent); 
           // Формирование объекта для отправки в store
           const formData = {
             id: this.navigation._id,
             title: this.firstLetter(this.controls.title),
-            parent: this.controls.parent === "" ? null : this.controls.parent,
+            parent: this.controls.parent === null ? null : this.controls.parent,
             typeLink: this.controls.typeLink,
             oldFile: this.controls.currentFile,
             newFile: this.controls.newFile
           };
+          
           // Отправка объекта с данными формы в store/navigation.js и вызов Action update()
           try {
             await this.$store.dispatch("navigation/update", formData);
