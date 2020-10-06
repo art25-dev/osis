@@ -15,7 +15,7 @@
           type="application/pdf"
         />
         <span class="slider__item-date">{{
-          new Date(slide.date).toLocaleDateString()
+          $moment(slide.date).format("DD.MM.YYYY")
         }}</span>
       </li>
     </ul>
