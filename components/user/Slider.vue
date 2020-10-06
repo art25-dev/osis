@@ -14,7 +14,9 @@
           :src="slide.pathFile + '#view=FitH&toolbar=0'"
           type="application/pdf"
         />
-        <span class="slider__item-date">{{ new Date(slide.date).toLocaleDateString() }}</span>
+        <span class="slider__item-date">{{
+          new Date(slide.date).toLocaleDateString()
+        }}</span>
       </li>
     </ul>
     <svg-icon @click="nextSlide()" class="slider__btn-next" name="arrow" />
@@ -36,14 +38,7 @@ export default {
     slideList: {
       type: Array,
       default() {
-        return [
-          {
-            _id: '1',
-            title: "Нет подключения к БД",
-            pathFile: "/default.pdf",
-            date: Date.now()
-          }
-        ];
+        return []
       }
     }
   },
@@ -54,9 +49,12 @@ export default {
     };
   },
   async mounted() {
-    await this.$refs.slide[0].classList.add("slider__item--active");
-    await this.$refs.dot[0].classList.add("dot__item--active");
-    await this.startTimer();
+    if(this.slideList.length > 0) {
+      await this.$refs.slide[0].classList.add("slider__item--active");
+      await this.$refs.dot[0].classList.add("dot__item--active");
+      await this.startTimer();
+    }
+
   },
   destroyed() {
     this.stopTimer();

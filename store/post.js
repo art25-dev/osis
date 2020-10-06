@@ -17,6 +17,16 @@ export const actions = {
     }
   },
 
+  // Запрос на сервер всех объявленй
+  async getActivePost({ commit, dispatch }) {
+    try {
+      return await this.$axios.$get("/api/post")
+    } catch (e) {
+      commit('setError', e, { root: true })
+      throw e
+    }
+  },
+
   // Запрос на создание объявления
   async create({ commit }, { title, status, file }) {
     try {
@@ -25,7 +35,7 @@ export const actions = {
       fd.append("status", status)
       fd.append("file", file, file.name)
 
-      return await this.$axios.$post('/api/post/admin', fd, { params: {pathFile: "static/posts"}})
+      return await this.$axios.$post('/api/post/admin', fd, { params: { pathFile: "static/posts" } })
     } catch (e) {
       commit('setError', e, { root: true })
       throw e

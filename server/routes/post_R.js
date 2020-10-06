@@ -27,6 +27,11 @@ router.delete("/admin/:id", post_C.remove)
 
 // USER
 // /api/navigation/
+// Роут на запрос активных объявлений
+router.get(
+  "/",
+  post_C.getActivePost
+),
 
 
 module.exports = router
