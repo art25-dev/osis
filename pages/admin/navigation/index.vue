@@ -78,17 +78,11 @@ export default {
       return arr.sort((a, b) => (a.title > b.title ? 1 : -1));
     },
     create() {
-      this.$router.push({
-        name: "admin-navigation-create",
-        params: { navigation: this.navigation }
-      });
+      this.$router.push({name: "admin-navigation-create"});
     },
     // Переход на страницу редактирования пункта навигации
     edit(id) {
-      this.$router.push({
-        name: `admin-navigation-id`,
-        params: { id: id, navigation: this.navigation }
-      });
+      this.$router.push({name: `admin-navigation-id`});
     },
     async remove(id, title, pathFile) {
       // Вызов диалогового окна

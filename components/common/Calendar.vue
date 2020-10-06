@@ -32,7 +32,7 @@ export default {
         this.hour = this.$moment().format("HH");
         this.minute = this.$moment().format("mm");
         this.day = this.$moment().format("dddd");
-        this.month = this.$moment().format("D MMMMM")
+        this.month = this.$moment().format("D MMMM")
       }, 30000);
     },
     goAdmin() {

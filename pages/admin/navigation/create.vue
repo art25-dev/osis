@@ -90,10 +90,14 @@ export default {
     title: "OSIS"
   },
   middleware: ["adminAuth"],
+  // Запрос всех пунктов меню из store/navigation.js в Action getMenu()
+  async asyncData({ store }) {
+    const select = await store.dispatch("navigation/getNavigation");
+    return { select };
+  },
   data() {
     return {
       loading: false,
-      select: [],
       controls: {
         title: "",
         parent: null,
@@ -112,7 +116,7 @@ export default {
     };
   },
   mounted() {
-    this.select = this.$route.params.navigation.filter((nav) => nav.typeLink != "pdf")
+    this.select = this.select.filter((nav) => nav.typeLink != "pdf")
   },
   methods: {
     onSubmit() {
@@ -131,12 +135,12 @@ export default {
           // Отправка объекта с данными формы в store/navigation.js и вызов Action create()
           try {
             await this.$store.dispatch("navigation/create", formData);
+            this.select = await this.$store.dispatch("navigation/getNavigation");
           } catch (e) {
           } finally {
             this.$message.success("Пункт меню создан");
             this.clearForm();
-            this.$route.params.navigation.push(formData);
-            this.select = this.sortArray(this.$route.params.navigation)
+            this.select = this.sortArray(this.select)
           }
         } else {
           this.$message.warning("Форма не валидна");

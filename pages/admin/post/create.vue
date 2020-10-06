@@ -56,7 +56,7 @@ export default {
   data() {
     return {
       loading: false,
-      status: false,
+      status: true,
       controls: {
         title: "",
         file: null,

@@ -1,6 +1,7 @@
 export const state = () => ({
   statistic: {},
-  currentItemNavigation: null
+  currentItemNavigation: null,
+  fullNavigation: []
 })
 
 export const mutations = {
@@ -52,7 +53,6 @@ export const actions = {
   // Запрос на создание пункта навигации
   async create({ commit }, { title, parent, typeLink, file }) {
     try {
-      console.log(parent);
       const fd = new FormData()
       fd.append("title", title)
       fd.append("parent", parent)
