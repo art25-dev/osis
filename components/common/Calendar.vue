@@ -23,7 +23,8 @@ export default {
       hour: this.$moment().format("HH"),
       minute: this.$moment().format("mm"),
       day: this.$moment().format("dddd"),
-      month: this.$moment().format("D MMMM")
+      month: this.$moment().format("LL")
+      // month: this.$moment().format("D MMMM")
     };
   },
   methods: {
@@ -32,8 +33,9 @@ export default {
         this.hour = this.$moment().format("HH");
         this.minute = this.$moment().format("mm");
         this.day = this.$moment().format("dddd");
-        this.month = this.$moment().format("D MMMM")
+        this.month = this.$moment().format("LL")
       }, 30000);
+     
     },
     goAdmin() {
       this.$router.push({ path: '/admin' })

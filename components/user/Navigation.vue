@@ -34,8 +34,7 @@ export default {
       timer: null,
       fullNav: null,
       currentNav: null,
-      history: [],
-      statistic: {}
+      history: []
     };
   },
   async mounted() {

@@ -17,7 +17,7 @@
         <el-table-column prop="parent" label="Родительское меню">
         </el-table-column>
         <el-table-column prop="views" label="Кол-во просмотров">
-          <template slot-scope="{row: {views}}">
+          <template slot-scope="{ row: { views } }">
             <i class="el-icon-view"></i>
             <span style="margin-left: 10px">{{ views }}</span>
           </template>
@@ -78,11 +78,11 @@ export default {
       return arr.sort((a, b) => (a.title > b.title ? 1 : -1));
     },
     create() {
-      this.$router.push({name: "admin-navigation-create"});
+      this.$router.push({ name: "admin-navigation-create" });
     },
     // Переход на страницу редактирования пункта навигации
     edit(id) {
-      this.$router.push({name: `admin-navigation-id`});
+      this.$router.push({ name: `admin-navigation-id` });
     },
     async remove(id, title, pathFile) {
       // Вызов диалогового окна

@@ -1,14 +1,14 @@
 export const state = () => ({
   statistic: {},
   currentItemNavigation: null,
-  fullNavigation: []
+  navigation: []
 })
 
 export const mutations = {
   // Создание объекта статистики
-  initStatistic(state, payload) {
-    for (let i = 0; i < payload.length; i++) {
-      state.statistic[`${payload[i]._id}`] = 0;
+  initStatistic(state, navigation) {
+    for (let i = 0; i < navigation.length; i++) {
+      state.statistic[`${navigation[i]._id}`] = 0;
     }
   },
 
@@ -20,10 +20,10 @@ export const mutations = {
   },
 
   // Добавление просмотра
-  changeStatistic(state, payload) {
-    if(payload !== state.currentItemNavigation) {
-      state.statistic[payload] += 1
-      state.currentItemNavigation = payload
+  changeStatistic(state, item) {
+    if(item !== state.currentItemNavigation) {
+      state.statistic[item] += 1
+      state.currentItemNavigation = item
     }
 
   }

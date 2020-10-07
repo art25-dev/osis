@@ -10,9 +10,11 @@
       >
         <h1 class="slider__item-title">{{ slide.title }}</h1>
         <embed
+          ref="pdf"
           class="slider__item-file"
           :src="slide.pathFile + '#view=FitH&toolbar=0'"
           type="application/pdf"
+          
         />
         <span class="slider__item-date">{{
           $moment(slide.date).format("DD.MM.YYYY")
@@ -54,7 +56,7 @@ export default {
       await this.$refs.dot[0].classList.add("dot__item--active");
       await this.startTimer();
     }
-
+    
   },
   destroyed() {
     this.stopTimer();
