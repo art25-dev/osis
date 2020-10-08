@@ -3,12 +3,7 @@
     <h1>Навигация</h1>
     <div class="table">
       <el-table
-        :data="
-          navigation.filter(
-            data =>
-              !search || data.title.toLowerCase().includes(search.toLowerCase())
-          )
-        "
+        :data="navigation"
         style="width: 100%"
         height="calc(100vh - 120px)"
       >
@@ -59,25 +54,20 @@ export default {
   },
   components: {},
   middleware: ["adminAuth"],
-  // Запрос всех пунктов меню из store/navigation.js в Action getMenu()
-  async asyncData({ store }) {
-    const navigation = await store.dispatch("navigation/getNavigation");
-    return { navigation };
-  },
   data() {
     return {
       search: ""
     };
   },
-  mounted() {
-    this.sortArray(this.navigation);
+  computed: {
+    // Запрос навигации из store
+    navigation() {
+      return this.$store.getters["navigation/getNavigation"];
+    }
   },
   methods: {
-    // Сортировка пунктов меню по алфавиту
-    sortArray(arr) {
-      return arr.sort((a, b) => (a.title > b.title ? 1 : -1));
-    },
     create() {
+    // Переход на страницу создания пункта навигации
       this.$router.push({ name: "admin-navigation-create" });
     },
     // Переход на страницу редактирования пункта навигации
@@ -100,7 +90,7 @@ export default {
           pathFile: pathFile
         };
         await this.$store.dispatch("navigation/remove", file);
-        this.navigation = this.navigation.filter(d => d._id !== id);
+        await this.$store.dispatch("navigation/getNavigation");
         this.$message({
           message: "Пункт меню удален",
           type: "success"

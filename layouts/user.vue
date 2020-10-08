@@ -9,10 +9,7 @@
       <el-aside>
         <div class="el-aside__navigation">
           <app-calendar></app-calendar>
-          <app-navigation
-            :navigation="navigation"
-            v-if="navigation"
-          ></app-navigation>
+          <app-navigation></app-navigation>
         </div>
         <div class="el-aside__tray">Антивирусные базы недоступны</div>
       </el-aside>
@@ -31,7 +28,6 @@ export default {
   },
   data() {
     return {
-      navigation: null,
       version: version
     };
   },
@@ -46,15 +42,11 @@ export default {
       this.$message.error(value.response.data.message);
     }
   },
-  created() {
-    this.getNavigation();
+  mounted() {
+    // Запрос навигации из БД
+    this.$store.dispatch("navigation/getNavigation")
   },
-  methods: {
-    async getNavigation() {
-      const navigation = await this.$store.dispatch("navigation/getNavigation");
-      this.navigation = navigation;
-    }
-  }
+  methods: {}
 };
 </script>
 

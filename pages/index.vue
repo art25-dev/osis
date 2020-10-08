@@ -16,8 +16,9 @@ export default {
   layout: "user",
   // Запрос всех пунктов меню из store/post.js в Action getPost()
   async asyncData({ store }) {
+    const navigation = await store.dispatch("navigation/getNavigation");
     const post = await store.dispatch("post/getActivePost");
-    return { post };
+    return { post, navigation };
   },
   data() {
     return {};

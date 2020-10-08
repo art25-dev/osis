@@ -30,7 +30,7 @@
             placeholder="Родительское меню (по умолчанию - Главное меню)"
           >
             <el-option
-              v-for="item in this.select"
+              v-for="item in navigation"
               :key="item.value"
               :label="item.title"
               :value="item._id"
@@ -90,11 +90,6 @@ export default {
     title: "OSIS"
   },
   middleware: ["adminAuth"],
-  // Запрос всех пунктов меню из store/navigation.js в Action getMenu()
-  async asyncData({ store }) {
-    const select = await store.dispatch("navigation/getNavigation");
-    return { select };
-  },
   data() {
     return {
       loading: false,
@@ -116,7 +111,12 @@ export default {
     };
   },
   mounted() {
-    this.select = this.select.filter((nav) => nav.typeLink != "pdf")
+  },
+  computed: {
+    // Запрос навигации из store
+    navigation() {
+      return this.$store.getters["navigation/getNavigationLink"];
+    }
   },
   methods: {
     onSubmit() {
@@ -126,7 +126,7 @@ export default {
 
           // Формирование объекта для отправки в store
           const formData = {
-            title: this.firstLetter(this.controls.title).trim(),
+            title: this.$options.filters.firstLetter(this.controls.title).trim(),
             parent: this.controls.parent,
             typeLink: this.controls.typeLink,
             file: this.controls.file
@@ -135,12 +135,11 @@ export default {
           // Отправка объекта с данными формы в store/navigation.js и вызов Action create()
           try {
             await this.$store.dispatch("navigation/create", formData);
-            this.select = await this.$store.dispatch("navigation/getNavigation");
+            await this.$store.dispatch("navigation/getNavigation");
           } catch (e) {
           } finally {
             this.$message.success("Пункт меню создан");
             this.clearForm();
-            this.select = this.sortArray(this.select)
           }
         } else {
           this.$message.warning("Форма не валидна");
@@ -156,16 +155,7 @@ export default {
       this.controls.typeLink = null;
       this.controls.file = null;
       this.loading = false;
-    },
-    firstLetter(str) {
-      if (!str) {
-        return str;
-      }
-      return str[0].toUpperCase() + str.slice(1);
-    },
-    sortArray(arr) {
-      return arr.sort((a, b) => (a.title > b.title ? 1 : -1));
-    },
+    }
   }
 };
 </script>

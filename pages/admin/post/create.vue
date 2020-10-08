@@ -87,7 +87,7 @@ export default {
 
           // Формирование объекта для отправки в store
           const formData = {
-            title: this.firstLetter(this.controls.title.trim()),
+            title: this.$options.filters.firstLetter(this.controls.title).trim(),
             status: this.status,
             file: this.controls.file,
           };
@@ -112,14 +112,7 @@ export default {
       this.controls.title = "";
       this.controls.file = null;
       this.loading = false;
-    },
-    firstLetter(str) {
-      if (!str) {
-        return str;
-      }
-
-      return str[0].toUpperCase() + str.slice(1);
-    },
+    }
   },
 };
 </script>

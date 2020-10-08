@@ -4,7 +4,7 @@
     <div class="menu-container__list">
       <el-menu class="el-menu-vertical-demo" router>
         <el-menu-item
-          v-for="item in currentNav"
+          v-for="item in navigation"
           :key="item._id"
           :data-link="item._id"
           :data-type="item.typeLink"
@@ -27,7 +27,6 @@
 
 <script>
 export default {
-  props: ["navigation"],
   data() {
     return {
       currentTime: 10,
@@ -38,20 +37,27 @@ export default {
     };
   },
   async mounted() {
-    this.startTimer()
+    this.startTimer();
     this.fullNav = await this.navigation;
-    this.currentNav = await this.sortArray(this.fullNav.filter(nav => !nav.parent));
-    await this.$store.commit("navigation/initStatistic", this.fullNav)
+    this.currentNav = await this.sortArray(
+    this.fullNav.filter(nav => !nav.parent)
+    );
+    await this.$store.commit("navigation/initStatistic", this.fullNav);
   },
-   destroyed() {
-    this.stopTimer()
+  destroyed() {
+    this.stopTimer();
   },
-  computed: {},
+  computed: {
+    // Запрос навигации из store
+    navigation() {
+      return this.$store.state.navigation["navigation"];
+    }
+  },
   watch: {
     // Текущее время бездействия пользователя
     currentTime(time) {
-      if(time === 0) {
-          this.getMainMenu()
+      if (time === 0) {
+        this.getMainMenu();
       }
     }
   },
@@ -63,8 +69,8 @@ export default {
 
     // Получение дочерних пунктов меню
     async getSubMenu(link, $event) {
-      await this.stopTimer()
-      await this.startTimer()
+      await this.stopTimer();
+      await this.startTimer();
 
       let title = $event.$el.innerText;
       let typeLink = $event.$attrs["data-type"];
@@ -74,22 +80,22 @@ export default {
           this.currentNav = this.fullNav.filter(nav => nav.parent === link);
           this.sortArray(this.currentNav);
           this.history.push(link);
-          await this.$store.commit("navigation/changeStatistic", link)
+          await this.$store.commit("navigation/changeStatistic", link);
           break;
         case "pdf":
           this.$router.push({
             name: "pdf-id",
             params: { id: link }
           });
-          await this.$store.commit("navigation/changeStatistic", link)
+          await this.$store.commit("navigation/changeStatistic", link);
           break;
       }
     },
 
     // Получение предыдущих пунктов меню
     async getPrevMenu() {
-      await this.stopTimer()
-      await this.startTimer()
+      await this.stopTimer();
+      await this.startTimer();
 
       this.history.pop();
       let prevMenu = this.history[this.history.length - 1];
@@ -104,24 +110,26 @@ export default {
 
     // Получение главного меню
     async getMainMenu() {
-      this.currentNav = await this.sortArray(this.fullNav.filter(nav => !nav.parent));
+      this.currentNav = await this.sortArray(
+        this.fullNav.filter(nav => !nav.parent)
+      );
       this.history = await [];
       await this.$router.push("/");
-      await this.stopTimer()
+      await this.stopTimer();
     },
 
     // Запуск таймера
     startTimer() {
       this.timer = setInterval(() => {
-        this.currentTime--
-      }, 30000)
+        this.currentTime--;
+      }, 30000);
     },
 
     // Остановка таймера
     async stopTimer() {
-      this.currentTime = await 10
-      await clearTimeout(this.timer)
-    },
+      this.currentTime = await 10;
+      await clearTimeout(this.timer);
+    }
   }
 };
 </script>

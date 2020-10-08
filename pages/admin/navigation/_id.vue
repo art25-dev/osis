@@ -130,7 +130,7 @@ export default {
           // Формирование объекта для отправки в store
           const formData = {
             id: this.navigation._id,
-            title: this.firstLetter(this.controls.title),
+            title: this.$options.filters.firstLetter(this.controls.title).trim(),
             parent: this.controls.parent === null ? null : this.controls.parent,
             typeLink: this.controls.typeLink,
             oldFile: this.controls.currentFile,
@@ -152,13 +152,6 @@ export default {
     },
     fileUpload(file) {
       this.controls.newFile = file.raw;
-    },
-    firstLetter(str) {
-      if (!str) {
-        return str;
-      }
-      
-      return str[0].toUpperCase() + str.slice(1);
     },
     // Очистка данных формы
     clearForm() {

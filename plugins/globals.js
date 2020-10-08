@@ -25,5 +25,6 @@ library.add(fas)
 // Register the component globally
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(Element, { locale })
+Vue.filter('firstLetter', (str = 'string') => str[0].toUpperCase() + str.slice(1))
 
 

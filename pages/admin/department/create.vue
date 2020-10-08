@@ -100,7 +100,7 @@ export default {
 
           // Формирование объекта для отправки в store
           const formData = {
-            title: this.firstLetter(this.controls.title.trim()),
+            title: this.$options.filters.firstLetter(this.controls.title).trim(),
             image: this.image
           };
 
@@ -122,13 +122,6 @@ export default {
       this.loading = false;
       this.image = null;
       this.imagePreview = null;
-    },
-    firstLetter(str) {
-      if (!str) {
-        return str;
-      }
-      str = str.toLowerCase();
-      return str[0].toUpperCase() + str.slice(1);
     }
   }
 };

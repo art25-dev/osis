@@ -22,6 +22,10 @@ export default {
     AppCalendar,
     AppNavigation
   },
+  mounted() {
+    // Запрос навигации из БД
+    this.$store.dispatch("navigation/getNavigation")
+  },
   computed: {
     error() {
       return this.$store.getters.error;

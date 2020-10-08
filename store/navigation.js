@@ -25,7 +25,11 @@ export const mutations = {
       state.statistic[item] += 1
       state.currentItemNavigation = item
     }
+  },
 
+  // Изменение навигации и сортировка по алфавиту
+  setNavigation(state, navigation) {
+    state.navigation = navigation.sort((a, b) => (a.title > b.title ? 1 : -1))
   }
 }
 
@@ -33,11 +37,16 @@ export const actions = {
   // Запрос на сервер всех пунктов навигации
   async getNavigation({ commit, dispatch }) {
     try {
-      return await this.$axios.$get("/api/navigation/admin")
+      const navigation = await this.$axios.$get("/api/navigation/admin")
+      dispatch("setNavigation", navigation)
     } catch (e) {
       commit('setError', e, { root: true })
       throw e
     }
+  },
+  // Вызов Mutation setNavigation
+  setNavigation({ commit }, navigation) {
+    commit("setNavigation", navigation)
   },
 
   // Запрос на сервер одного пункта навигации
@@ -58,7 +67,6 @@ export const actions = {
       fd.append("parent", parent)
       fd.append("typeLink", typeLink)
       file ? fd.append("file", file, file.name) : fd.append("file", null)
-
       return await this.$axios.$post('/api/navigation/admin', fd)
     } catch (e) {
       commit('setError', e, { root: true })
@@ -78,7 +86,6 @@ export const actions = {
 
   // Запрос на редактирование пункта навигации
   async update({ commit }, { id, title, parent, typeLink, newFile, oldFile }) {
-    console.log(parent);
     try {
       const fd = new FormData()
       fd.append("title", title)
@@ -108,5 +115,6 @@ export const actions = {
 }
 
 export const getters = {
-
+  getNavigation: state => state.navigation,
+  getNavigationLink: (state) => state.navigation.filter(item => item.typeLink == "link")
 }
