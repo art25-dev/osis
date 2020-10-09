@@ -15,9 +15,7 @@
                   shape="square"
                   :size="40"
                   fit="cover"
-                  :src="
-                    require(`../../../static/departments${scope.row.imageUrl}`)
-                  "
+                  :src="scope.row.imageUrl"
                 ></el-avatar>
               </div>
             </div>

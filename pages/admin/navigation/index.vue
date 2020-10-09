@@ -68,11 +68,11 @@ export default {
   methods: {
     create() {
     // Переход на страницу создания пункта навигации
-      this.$router.push({ name: "admin-navigation-create" });
+      this.$router.push(`/admin/navigation/create`);
     },
     // Переход на страницу редактирования пункта навигации
     edit(id) {
-      this.$router.push({ name: `admin-navigation-id` });
+      this.$router.push(`/admin/navigation/${id}`);
     },
     async remove(id, title, pathFile) {
       // Вызов диалогового окна

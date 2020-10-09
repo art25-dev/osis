@@ -83,7 +83,6 @@
 </template>
 
 <script>
-const cyrillicToTranslit = require("cyrillic-to-translit-js");
 export default {
   layout: "admin",
   head: {
@@ -115,7 +114,7 @@ export default {
   computed: {
     // Запрос навигации из store
     navigation() {
-      return this.$store.getters["navigation/getNavigationLink"];
+      return this.$store.getters["navigation/getNavigationLink"]
     }
   },
   methods: {
@@ -134,30 +133,30 @@ export default {
 
           // Отправка объекта с данными формы в store/navigation.js и вызов Action create()
           try {
-            await this.$store.dispatch("navigation/create", formData);
-            await this.$store.dispatch("navigation/getNavigation");
+            await this.$store.dispatch("navigation/create", formData)
+            await this.$store.dispatch("navigation/getNavigation")
           } catch (e) {
           } finally {
-            this.$message.success("Пункт меню создан");
-            this.clearForm();
+            this.$message.success("Пункт меню создан")
+            this.clearForm()
           }
         } else {
-          this.$message.warning("Форма не валидна");
+          this.$message.warning("Форма не валидна")
         }
       });
     },
     fileUpload(file) {
-      this.controls.file = file.raw;
+      this.controls.file = file.raw
     },
     clearForm() {
-      this.controls.title = "";
-      this.controls.parent = null;
-      this.controls.typeLink = null;
-      this.controls.file = null;
-      this.loading = false;
+      this.controls.title = ""
+      this.controls.parent = null
+      this.controls.typeLink = null
+      this.controls.file = null
+      this.loading = false
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -116,5 +116,7 @@ export const actions = {
 
 export const getters = {
   getNavigation: state => state.navigation,
-  getNavigationLink: (state) => state.navigation.filter(item => item.typeLink == "link")
+  getNavigationLink: state => state.navigation.filter(item => item.typeLink === "link"),
+  getNavigationId: state => id => state.navigation.find(item => item._id === id)
 }
+

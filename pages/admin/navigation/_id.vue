@@ -85,23 +85,15 @@
 </template>
 
 <script>
-const cyrillicToTranslit = require("cyrillic-to-translit-js");
 export default {
   layout: "admin",
   head: {
     title: "OSIS"
   },
   middleware: ["adminAuth"],
-  async asyncData({ store, params }) {
-    const navigation = await store.dispatch(
-      "navigation/getNavigationItem",
-      params.id
-    );
-
-    return { navigation };
-  },
   data() {
     return {
+      navigation: this.$store.getters["navigation/getNavigationId"](this.$route.params.id),
       loading: false,
       controls: {
         title: "",
@@ -126,7 +118,7 @@ export default {
       this.$refs.form.validate(async valid => {
         if (valid) {
           this.loading = true;
-          console.log(this.controls.parent); 
+
           // Формирование объекта для отправки в store
           const formData = {
             id: this.navigation._id,

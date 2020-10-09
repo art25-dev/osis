@@ -43,7 +43,7 @@ export default {
     }
   },
   mounted() {
-    // Запрос навигации из БД
+    // Запрос данных из БД
     this.$store.dispatch("navigation/getNavigation")
   },
   methods: {}
