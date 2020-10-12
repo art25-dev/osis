@@ -4,11 +4,9 @@
     <div class="menu-container__list">
       <el-menu class="el-menu-vertical-demo" router>
         <el-menu-item
-          v-for="item in navigation"
+          v-for="item in currentNavigation"
           :key="item._id"
-          :data-link="item._id"
-          :data-type="item.typeLink"
-          @click="getSubMenu(item._id, $event)"
+          @click="getSubMenu(item._id, item.typeLink)"
         >
           <p class="menu__item-text">{{ item.title }}</p>
         </el-menu-item>
@@ -31,27 +29,17 @@ export default {
     return {
       currentTime: 10,
       timer: null,
-      fullNav: null,
-      currentNav: null,
+      fullNavigation: this.$store.getters["navigation/getNavigation"],
+      currentNavigation: this.$store.getters["navigation/getNavigationChildren"](),
       history: []
     };
   },
   async mounted() {
     this.startTimer();
-    this.fullNav = await this.navigation;
-    this.currentNav = await this.sortArray(
-    this.fullNav.filter(nav => !nav.parent)
-    );
-    await this.$store.commit("navigation/initStatistic", this.fullNav);
+    await this.$store.commit("navigation/initStatistic", this.fullNavigation);
   },
   destroyed() {
     this.stopTimer();
-  },
-  computed: {
-    // Запрос навигации из store
-    navigation() {
-      return this.$store.state.navigation["navigation"];
-    }
   },
   watch: {
     // Текущее время бездействия пользователя
@@ -62,32 +50,24 @@ export default {
     }
   },
   methods: {
-    // Сортировка пунктов меню по алфавиту
-    sortArray(arr) {
-      return arr.sort((a, b) => (a.title > b.title ? 1 : -1));
-    },
-
     // Получение дочерних пунктов меню
-    async getSubMenu(link, $event) {
+    async getSubMenu(id, typeLink) {
       await this.stopTimer();
       await this.startTimer();
 
-      let title = $event.$el.innerText;
-      let typeLink = $event.$attrs["data-type"];
 
       switch (typeLink) {
         case "link":
-          this.currentNav = this.fullNav.filter(nav => nav.parent === link);
-          this.sortArray(this.currentNav);
-          this.history.push(link);
-          await this.$store.commit("navigation/changeStatistic", link);
+          this.currentNavigation = this.$store.getters["navigation/getNavigationChildren"](id)
+          this.history.push(id);
+          this.$store.commit("navigation/changeStatistic", id);
           break;
         case "pdf":
           this.$router.push({
             name: "pdf-id",
-            params: { id: link }
+            params: { id }
           });
-          await this.$store.commit("navigation/changeStatistic", link);
+          this.$store.commit("navigation/changeStatistic", id);
           break;
       }
     },
@@ -98,22 +78,18 @@ export default {
       await this.startTimer();
 
       this.history.pop();
-      let prevMenu = this.history[this.history.length - 1];
+      const prevMenu = this.history[this.history.length - 1];
       if (this.history.length <= 0) {
         this.getMainMenu();
       } else {
-        this.currentNav = this.sortArray(
-          this.fullNav.filter(nav => nav.parent === prevMenu)
-        );
+        this.currentNavigation = this.$store.getters["navigation/getNavigationChildren"](prevMenu)
       }
     },
 
     // Получение главного меню
     async getMainMenu() {
-      this.currentNav = await this.sortArray(
-        this.fullNav.filter(nav => !nav.parent)
-      );
-      this.history = await [];
+      this.currentNavigation = this.$store.getters["navigation/getNavigationChildren"]()
+      this.history = [];
       await this.$router.push("/");
       await this.stopTimer();
     },
