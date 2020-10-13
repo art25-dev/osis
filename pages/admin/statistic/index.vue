@@ -1,6 +1,9 @@
 <template>
   <div class="wrap-statistic">
-    <h1>Статистика просмотров</h1>
+    <div class="wrap-title">
+      <h1>Статистика просмотров</h1>
+    </div>
+    
     <div class="wrap-filter">
       <el-select
         @change="getStatistic"
@@ -11,14 +14,14 @@
       >
         <el-option key="main" label="Главное меню" :value="null"> </el-option>
         <el-option
-          v-for="item in this.fullSelect"
+          v-for="item in fullSelect"
           :key="item.value"
           :label="item.title"
           :value="item._id"
         ></el-option>
       </el-select>
     </div>
-    <canvas ref="canvas"></canvas>
+    <canvas class="canvas" ref="canvas"></canvas>
   </div>
 </template>
 
@@ -34,28 +37,24 @@ export default {
   extends: Bar,
   data() {
     return {
-      fullStatistic: null,
-      fullSelect: null,
+      fullStatistic: this.$store.dispatch("navigation/getNavigation"),
       currentStatistic: null,
       currentSelect: null
     };
   },
-  async asyncData({ store }) {
-    const statistic = await store.dispatch("navigation/getStatistic");
-    return { statistic };
-  },
   async mounted() {
-    this.fullStatistic = await this.statistic;
-    this.fullSelect = this.fullStatistic.filter(
-      stat => stat.typeLink === "link"
-    );
-    this.getStatistic(this.currentSelect);
+    this.getStatistic();
+  },
+  computed: {
+    // Запрос навигации из store
+    fullSelect() {
+      return this.$store.getters["navigation/getNavigationLink"];
+    }
   },
   methods: {
     getStatistic(parent = null) {
-      this.currentStatistic = this.fullStatistic.filter(
-        stat => stat.parent === parent
-      );
+      this.currentStatistic = this.$store.getters["navigation/getNavigationChildren"](parent)
+  
       const title = this.currentStatistic.map(stat => stat.title);
       const views = this.currentStatistic.map(stat => stat.views);
       const data = {
@@ -115,6 +114,12 @@ h1 {
   position: relative;
 }
 
+.wrap-title {
+  position: absolute;
+    display: inline-block;
+    left: 0;
+}
+
 .wrap-filter {
   position: absolute;
   display: inline-block;
@@ -124,5 +129,9 @@ h1 {
 .filter {
   width: 300px;
   margin-bottom: 1rem;
+}
+
+.canvas {
+  padding-top: 4rem;
 }
 </style>

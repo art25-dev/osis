@@ -1,6 +1,6 @@
 export const state = () => ({
   statistic: {},
-  currentItemNavigation: null,
+  currentIdNavigation: null,
   navigation: []
 })
 
@@ -20,10 +20,10 @@ export const mutations = {
   },
 
   // Добавление просмотра
-  changeStatistic(state, item) {
-    if(item !== state.currentItemNavigation) {
-      state.statistic[item] += 1
-      state.currentItemNavigation = item
+  changeStatistic(state, id) {
+    if(id !== state.currentIdNavigation) {
+      state.statistic[id] += 1
+      state.currentIdNavigation = id
     }
   },
 
