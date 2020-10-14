@@ -1,24 +1,31 @@
 <template>
-<app-pdf :title="navigationItem.title" :pathFile="navigationItem.pathFile"></app-pdf>
+  <div class="pdf-wrapper">
+    <h1>{{ this.title }}</h1>
+    <div class="pdf">
+      <embed
+        class="pdf-container"
+        :src="this.pathFile + '#view=FitH&toolbar=0'"
+        type="application/pdf"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
-import AppPdf from "@/components/common/Pdf";
 export default {
-  head: {
-    title: "OSIS"
-  },
-  layout: "user",
-    components: {
-    AppPdf
-  },
-  async asyncData({ store, params }) {
-    const navigationItem = await store.dispatch(
-      "navigation/getNavigationItem",
-      params.id
-    );
-    await store.commit("navigation/resetStatistic");
-    return { navigationItem };
+  props: {
+    title: {
+      type: String,
+      default() {
+        return "Нет подключения к БД"
+      }
+    },
+    pathFile: {
+      type: String,
+      default() {
+        return "/default.pdf"
+      }
+    }
   }
 };
 </script>
@@ -75,6 +82,7 @@ h1 {
   display: block;
   padding: 0;
   background-color: #fff;
-   box-shadow: 0 16px 24px 2px rgba(0,0,0, 0.14), 0 6px 30px 5px rgba(0,0,0, 0.12), 0 8px 10px 0 rgba(0,0,0, 0.2);
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+    0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px 0 rgba(0, 0, 0, 0.2);
 }
 </style>
