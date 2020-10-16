@@ -1,16 +1,21 @@
 <template>
-<app-pdf :title="navigationItem.title" :pathFile="navigationItem.pathFile"></app-pdf>
+  <div class="wrapper">
+    <app-pdf
+      :title="navigationItem.title"
+      :pathFile="navigationItem.pathFile"
+    ></app-pdf>
+  </div>
 </template>
 
 <script>
 import AppPdf from "@/components/common/Pdf";
 export default {
   head: {
-    title: "OSIS"
+    title: "OSIS",
   },
   layout: "user",
-    components: {
-    AppPdf
+  components: {
+    AppPdf,
   },
   async asyncData({ store, params }) {
     const navigationItem = await store.dispatch(
@@ -19,62 +24,16 @@ export default {
     );
     await store.commit("navigation/resetStatistic");
     return { navigationItem };
-  }
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.pdf-wrapper {
-  height: calc(100vh - 6rem);
-  padding: 20px 20px 70px 20px;
-  background: rgba($color-second, 0.8);
-
-  @include hd-plus {
-    height: calc(100vh - 6rem);
-  }
-
-  @include wsx {
-    height: calc(100vh - 4.39rem);
-  }
-
-  @include hd {
-    height: calc(100vh - 4.5rem);
-  }
-}
-
-h1 {
-  display: inline-block;
-  padding-bottom: 0.3rem;
-  margin-bottom: 1rem;
-  color: $color-primary;
-  position: relative;
-
-  &::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 5px;
-    background: $color-danger;
-    display: block;
-  }
-}
-
-.pdf {
+.wrapper {
   display: flex;
-  align-items: center;
-  width: 100%;
+  justify-content: center;
   height: 100%;
-  position: relative;
-}
-
-.pdf-container {
-  width: 100%;
-  height: 100%;
-  border-radius: 5px;
-  display: block;
-  padding: 0;
-  background-color: #fff;
-   box-shadow: 0 16px 24px 2px rgba(0,0,0, 0.14), 0 6px 30px 5px rgba(0,0,0, 0.12), 0 8px 10px 0 rgba(0,0,0, 0.2);
+  background: rgba($color-second, 0.8);
+  padding: 2rem;
 }
 </style>

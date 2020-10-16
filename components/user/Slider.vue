@@ -1,21 +1,14 @@
 <template>
   <div class="slider">
     <svg-icon @click="prevSlide()" class="slider__btn-prev" name="arrow" />
-    <ul class="slider__container">
+    <ul class="slider__list">
       <li
         ref="slide"
         class="slider__item"
         v-for="slide in slideList"
         :key="slide._id"
       >
-        <h1 class="slider__item-title">{{ slide.title }}</h1>
-        <embed
-          ref="pdf"
-          class="slider__item-file"
-          :src="slide.pathFile + '#view=FitH&toolbar=0'"
-          type="application/pdf"
-          
-        />
+        <app-pdf :title="slide.title" :pathFile="slide.pathFile"></app-pdf>
         <span class="slider__item-date">{{
           $moment(slide.date).format("DD.MM.YYYY")
         }}</span>
@@ -35,28 +28,31 @@
 </template>
 
 <script>
+import AppPdf from "@/components/common/Pdf";
 export default {
+  components: {
+    AppPdf,
+  },
   props: {
     slideList: {
       type: Array,
       default() {
-        return []
-      }
-    }
+        return [];
+      },
+    },
   },
   data() {
     return {
       currentSlide: 1,
-      timer: null
+      timer: null,
     };
   },
   async mounted() {
-    if(this.slideList.length > 0) {
+    if (this.slideList.length > 0) {
       await this.$refs.slide[0].classList.add("slider__item--active");
       await this.$refs.dot[0].classList.add("dot__item--active");
       await this.startTimer();
     }
-    
   },
   destroyed() {
     this.stopTimer();
@@ -102,8 +98,8 @@ export default {
     async stopTimer() {
       this.currentSlide = await 1;
       await clearTimeout(this.timer);
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -115,19 +111,19 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 85%;
+  height: 95%;
   flex: 1;
 }
 
-.slider__container {
-  display: block;
+.slider__list {
+  display: flex;
   position: relative;
   flex: 1;
   list-style: none;
-  margin: 0 2.5rem !important;
+  margin: 0 2.5rem;
   background: rgba($color-second, 0.8);
   border-radius: 5px;
-  min-height: 100%;
+  min-height: 90%;
   box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
     0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px 0 rgba(0, 0, 0, 0.2);
 
@@ -160,12 +156,16 @@ export default {
 }
 
 .slider__item {
-  margin: 2rem;
+  flex-basis: 100%;
+  margin: 2rem 2rem 1rem 2rem;
   display: none;
   opacity: 1;
 
+
+
   &--active {
-    display: block;
+    flex-direction: column;
+    display: flex;
     animation: show 1s ease-in-out forwards;
   }
 }
@@ -191,42 +191,24 @@ export default {
 .slider__item-file {
   display: block;
   border-radius: 5px;
-  width: 100%;
-  min-height: 100%;
-  height: 63vh;
-  padding: 0;
-  margin: 0;
-
-  @include hd-plus {
-    height: 60vh;
-  }
-
-  @include wsx {
-    height: 61vh;
-  }
-
-  @include hd {
-    height: 58vh;
-  }
 }
 
 .slider__item-date {
-  position: absolute;
-  bottom: 1.5rem;
-  right: 2rem;
+  margin-top: 1rem;
+  text-align: right;
   color: $color-primary;
   font-family: "Roboto-Bold", "Arial", sans-serif;
 
   @include hd-plus {
-    bottom: 1.2rem;
+
   }
 
   @include wsx {
-    bottom: 1.5rem;
+
   }
 
   @include hd {
-    bottom: 1.3rem;
+
   }
 }
 
@@ -237,7 +219,6 @@ export default {
   list-style: none;
   width: 300px;
   justify-content: center;
-  margin-top: 2rem;
 }
 
 .dot__item {
