@@ -45,6 +45,7 @@ export default {
   mounted() {
     // Запрос данных из БД
     this.$store.dispatch("navigation/getNavigation")
+    this.$store.dispatch("post/getPost")
   },
   methods: {}
 };

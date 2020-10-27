@@ -47,11 +47,11 @@ export default {
       timer: null,
     };
   },
-  async mounted() {
+  mounted() {
     if (this.slideList.length > 0) {
-      await this.$refs.slide[0].classList.add("slider__item--active");
-      await this.$refs.dot[0].classList.add("dot__item--active");
-      await this.startTimer();
+      this.$refs.slide[0].classList.add("slider__item--active");
+      this.$refs.dot[0].classList.add("dot__item--active");
+      this.startTimer();
     }
   },
   destroyed() {

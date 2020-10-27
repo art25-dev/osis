@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <app-slider :slideList="post"></app-slider>
+    <app-slider :slideList="slideList"></app-slider>
   </div>
 </template>
 
@@ -14,17 +14,16 @@ export default {
     AppSlider
   },
   layout: "user",
-  // Запрос всех пунктов меню из store/post.js в Action getPost()
-  async asyncData({ store }) {
-    const navigation = await store.dispatch("navigation/getNavigation");
-    const post = await store.dispatch("post/getActivePost");
-    return { post, navigation };
-  },
   data() {
     return {};
   },
-  mounted() {
+  computed: {
+    // Запрос объявлений из store
+    slideList() {
+      return this.$store.getters["post/getPost"];
+    }
   },
+  mounted() {},
   methods: {}
 };
 </script>

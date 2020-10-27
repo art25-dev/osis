@@ -12,16 +12,6 @@ module.exports.getPost = async (req, res) => {
   }
 },
 
-// Функция получения активных объявлений из БД
-module.exports.getActivePost = async (req, res) => {
-  try {
-    const post = await Post.find({status: true})
-    res.json(post)
-  } catch (e) {
-    res.status(500).json(e)
-  }
-},
-
 // Функция создания объявления
 module.exports.create = async (req, res) => {
   const post = new Post({
