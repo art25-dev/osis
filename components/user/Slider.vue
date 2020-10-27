@@ -51,6 +51,7 @@ export default {
     if (this.slideList.length > 0) {
       this.$refs.slide[0].classList.add("slider__item--active");
       this.$refs.dot[0].classList.add("dot__item--active");
+      this.goSlide(0)
       this.startTimer();
     }
   },
