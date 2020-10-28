@@ -4,7 +4,7 @@
     <div class="table">
       <el-table
         :data="
-          post
+          postList
         "
         style="width: 100%"
         height="calc(100vh - 120px)"
@@ -65,14 +65,15 @@ export default {
     return {
     };
   },
+    computed: {
+    // Запрос навигации из store
+    postList() {
+      return this.$store.getters["post/getPost"];
+    }
+  },
   mounted() {
-    this.sortArray(this.post);
   },
   methods: {
-    // Сортировка объявлений по алфавиту
-    sortArray(arr) {
-      return arr.sort((a, b) => (a.title > b.title ? 1 : -1));
-    },
     // Переход на страницу создания объявления
     create() {
       this.$router.push({

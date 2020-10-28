@@ -5,7 +5,7 @@ export const state = () => ({
 export const mutations = {
   // Изменение навигации и сортировка по алфавиту
   setPost(state, post) {
-    state.post = post.sort((a, b) => (a.title > b.title ? 1 : -1))
+    state.post = post
   }
 }
 
