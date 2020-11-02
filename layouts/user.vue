@@ -42,11 +42,7 @@ export default {
       this.$message.error(value.response.data.message);
     }
   },
-  mounted() {
-    // Запрос данных из БД
-    this.$store.dispatch("navigation/getNavigation")
-    this.$store.dispatch("post/getPost")
-  },
+  mounted() {},
   methods: {}
 };
 </script>

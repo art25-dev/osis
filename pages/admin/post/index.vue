@@ -3,22 +3,21 @@
     <h1>Объявления</h1>
     <div class="table">
       <el-table
-        :data="
-          postList
-        "
+        :data="postList"
         style="width: 100%"
         height="calc(100vh - 120px)"
       >
         <el-table-column prop="title" label="Заголовок объявления">
         </el-table-column>
         <el-table-column prop="date" label="Дата создания">
-          <template slot-scope="{row: {date}}">
+          <template slot-scope="{ row: { date } }">
             <i class="el-icon-time"></i>
-            <span style="margin-left: 10px">{{ $moment(date).format("DD.MM.YYYY") }}</span>  
+            <span style="margin-left: 10px">{{
+              $moment(date).format("DD.MM.YYYY")
+            }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="status" label="Статус">
-        </el-table-column>
+        <el-table-column prop="status" label="Статус"> </el-table-column>
         <el-table-column label="Действия">
           <template slot-scope="scope">
             <el-button
@@ -56,23 +55,16 @@ export default {
   },
   components: {},
   middleware: ["adminAuth"],
-  // Запрос всех пунктов меню из store/post.js в Action getPost()
-  async asyncData({ store }) {
-    const post = await store.dispatch("post/getPost");
-    return { post };
-  },
   data() {
-    return {
-    };
+    return {};
   },
-    computed: {
+  computed: {
     // Запрос навигации из store
     postList() {
       return this.$store.getters["post/getPost"];
     }
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
     // Переход на страницу создания объявления
     create() {

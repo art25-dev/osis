@@ -14,15 +14,20 @@ export default {
     AppSlider
   },
   layout: "user",
+    // Запрос всех пунктов меню из store/post.js в Action getPost()
+  async asyncData({ store }) {
+    const slideList = await store.dispatch("post/getPost");
+    return { slideList };
+  },
   data() {
     return {};
   },
-  computed: {
-    // Запрос объявлений из store
-    slideList() {
-      return this.$store.getters["post/getPost"];
-    }
-  },
+  // computed: {
+  //   // Запрос объявлений из store
+  //   slideList() {
+  //     return this.$store.getters["post/getPost"];
+  //   }
+  // },
   mounted() {},
   methods: {}
 };

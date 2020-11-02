@@ -25,6 +25,7 @@ export default {
   mounted() {
     // Запрос навигации из БД
     this.$store.dispatch("navigation/getNavigation")
+    this.$store.dispatch("post/getPost")
   },
   computed: {
     error() {

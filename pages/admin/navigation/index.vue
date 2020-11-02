@@ -59,6 +59,7 @@ export default {
       search: ""
     };
   },
+  mounted() {},
   computed: {
     // Запрос навигации из store
     navigation() {

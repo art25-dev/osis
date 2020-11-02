@@ -13,8 +13,10 @@ export const actions = {
   // Запрос на сервер всех объявленй
   async getPost({ commit, dispatch }) {
     try {
+      // return await this.$axios.$get("/api/post/admin")
       const post = await this.$axios.$get("/api/post/admin")
       dispatch("setPost", post)
+      return post
     } catch (e) {
       commit('setError', e, { root: true })
       throw e
