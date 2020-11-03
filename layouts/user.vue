@@ -35,15 +35,12 @@ export default {
     error() {
       return this.$store.getters.error;
     },
- 
   },
   watch: {
     error(value) {
       this.$message.error(value.response.data.message);
     }
-  },
-  mounted() {},
-  methods: {}
+  }
 };
 </script>
 

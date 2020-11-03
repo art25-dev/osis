@@ -52,14 +52,7 @@ export default {
   head: {
     title: "OSIS"
   },
-  components: {},
   middleware: ["adminAuth"],
-  data() {
-    return {
-      search: ""
-    };
-  },
-  mounted() {},
   computed: {
     // Запрос навигации из store
     navigation() {

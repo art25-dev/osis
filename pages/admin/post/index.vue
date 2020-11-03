@@ -55,24 +55,18 @@ export default {
   },
   components: {},
   middleware: ["adminAuth"],
-  data() {
-    return {};
-  },
   computed: {
-    // Запрос навигации из store
+    // Запрос объявлений из store
     postList() {
       return this.$store.getters["post/getPost"];
     }
   },
-  mounted() {},
   methods: {
     // Переход на страницу создания объявления
     create() {
-      this.$router.push({
-        name: "admin-post-create",
-        params: { post: this.post }
-      });
+     this.$router.push(`/admin/post/create`);
     },
+
     // Переход на страницу редактирования объявления
     edit(id) {
       this.$router.push({
@@ -80,6 +74,8 @@ export default {
         params: { id: id, post: this.post }
       });
     },
+    
+    // Удаление объявления
     async remove(id, title, pathFile) {
       // Вызов диалогового окна
       try {
@@ -96,7 +92,7 @@ export default {
           pathFile: pathFile
         };
         await this.$store.dispatch("post/remove", file);
-        this.post = this.post.filter(d => d._id !== id);
+        await this.$store.dispatch("post/getPost");
         this.$message({
           message: "Объявление удалено",
           type: "success"

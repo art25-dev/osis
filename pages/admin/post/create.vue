@@ -95,6 +95,7 @@ export default {
           // Отправка объекта с данными формы в store/post.js и вызов Action create()
           try {
             await this.$store.dispatch("post/create", formData);
+            await this.$store.dispatch("post/getPost")
           } catch (e) {
           } finally {
             this.$message.success("Объявление создано");

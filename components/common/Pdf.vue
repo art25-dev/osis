@@ -1,7 +1,7 @@
 <template>
   <div class="pdf">
     <h1>{{ this.title }}</h1>
-    <embed
+    <embed ref="file"
       :src="this.pathFile + '#view=FitH&toolbar=0'"
       type="application/pdf"
     />
@@ -24,6 +24,7 @@ export default {
       },
     },
   },
+
 };
 </script>
 

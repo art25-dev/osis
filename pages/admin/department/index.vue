@@ -60,15 +60,11 @@ export default {
   head: {
     title: "OSIS"
   },
-  components: {},
   middleware: ["adminAuth"],
   // Запрос всех подразделений из store/department.js в Action getDepartment()
   async asyncData({ store }) {
     const department = await store.dispatch("department/getDepartment");
     return { department };
-  },
-  data() {
-    return {};
   },
   methods: {
     // Переход на страницу редактирования подразделения

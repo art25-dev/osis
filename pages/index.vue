@@ -19,15 +19,6 @@ export default {
     const slideList = await store.dispatch("post/getPost");
     return { slideList };
   },
-  data() {
-    return {};
-  },
-  // computed: {
-  //   // Запрос объявлений из store
-  //   slideList() {
-  //     return this.$store.getters["post/getPost"];
-  //   }
-  // },
   mounted() {},
   methods: {}
 };

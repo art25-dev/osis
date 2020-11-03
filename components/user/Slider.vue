@@ -48,7 +48,7 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$props.slideList);
+    
     if (this.slideList.length > 0) {
       this.$refs.slide[0].classList.add("slider__item--active");
       this.$refs.dot[0].classList.add("dot__item--active");
@@ -62,7 +62,11 @@ export default {
   computed: {},
   watch: {},
   methods: {
+    onScroll() {
+      console.log(111);
+    },
     showSlide(index = 1) {
+   
       index > this.slideList.length ? (this.currentSlide = 1) : false;
       index < 1 ? (this.currentSlide = this.slideList.length) : false;
 
@@ -79,6 +83,8 @@ export default {
       );
 
       this.$refs.dot[this.currentSlide - 1].classList.add("dot__item--active");
+
+      this.checkScroll(this.$children[this.currentSlide - 1].$refs.file)
     },
     prevSlide() {
       this.showSlide(--this.currentSlide);
@@ -101,6 +107,10 @@ export default {
       this.currentSlide = await 1;
       await clearTimeout(this.timer);
     },
+
+    checkScroll(item) {
+      console.log(item.scrollTop);
+    }
   },
 };
 </script>
