@@ -1,10 +1,7 @@
 <template>
   <div class="pdf">
     <h1>{{ this.title }}</h1>
-    <embed v-on:scroll.passive="onScroll()" ref="file"
-      :src="this.pathFile + '#view=FitH&toolbar=0'"
-      type="application/pdf"
-    />
+    <object ref="file" :data="this.pathFile + '#view=FitH&toolbar=0'" type="application/pdf"></object>
   </div>
 </template>
 
@@ -23,11 +20,6 @@ export default {
         return "/default.pdf";
       },
     },
-  },
-  methods: {
-    onScroll() {
-      console.log(1);
-    }
   }
 
 };
@@ -57,7 +49,8 @@ h1 {
   }
 }
 
-embed {
+
+object {
   flex: 1;
   border-radius: 5px;
 }

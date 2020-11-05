@@ -8,7 +8,7 @@
         v-for="slide in slideList"
         :key="slide._id"
       >
-        <app-pdf :title="slide.title" :pathFile="slide.pathFile"></app-pdf>
+        <app-pdf :key="componentKey" :title="slide.title" :pathFile="slide.pathFile"></app-pdf>
         <span class="slider__item-date">{{
           $moment(slide.date).format("DD.MM.YYYY")
         }}</span>
@@ -43,6 +43,7 @@ export default {
   },
   data() {
     return {
+      componentKey: 0,
       currentSlide: 1,
       timer: null,
     };
@@ -62,8 +63,8 @@ export default {
   computed: {},
   watch: {},
   methods: {
-    onScroll() {
-      console.log(111);
+    forceRender() {
+      this.componentKey += 1
     },
     showSlide(index = 1) {
    
@@ -84,7 +85,7 @@ export default {
 
       this.$refs.dot[this.currentSlide - 1].classList.add("dot__item--active");
 
-      this.checkScroll(this.$children[this.currentSlide - 1].$refs.file)
+      this.forceRender()
     },
     prevSlide() {
       this.showSlide(--this.currentSlide);
@@ -106,10 +107,6 @@ export default {
     async stopTimer() {
       this.currentSlide = await 1;
       await clearTimeout(this.timer);
-    },
-
-    checkScroll(item) {
-      console.log(item.scrollTop);
     }
   },
 };

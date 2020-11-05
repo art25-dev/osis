@@ -17,9 +17,12 @@ export default {
     // Запрос всех пунктов меню из store/post.js в Action getPost()
   async asyncData({ store }) {
     const slideList = await store.dispatch("post/getPost");
+    const navigation = await store.dispatch("navigation/getNavigation");
     return { slideList };
   },
-  mounted() {},
+  mounted() {
+
+  },
   methods: {}
 };
 </script>

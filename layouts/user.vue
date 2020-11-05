@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="bg"></div>
-    <span class="version">Версия - {{version}}</span>
+    <span class="version">Версия - {{ version }}</span>
     <el-container>
       <el-main>
         <nuxt></nuxt>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {version} from '@/package.json';
+import { version } from "@/package.json";
 import AppCalendar from "@/components/common/Calendar";
 import AppNavigation from "@/components/user/Navigation";
 export default {
@@ -28,13 +28,14 @@ export default {
   },
   data() {
     return {
+      navigation: null,
       version: version
     };
   },
   computed: {
     error() {
       return this.$store.getters.error;
-    },
+    }
   },
   watch: {
     error(value) {
@@ -72,7 +73,8 @@ export default {
   display: flex;
   flex-direction: column;
   user-select: none;
-  box-shadow: 0 16px 24px 2px rgba(0,0,0, 0.14), 0 6px 30px 5px rgba(0,0,0, 0.12), 0 8px 10px 0 rgba(0,0,0, 0.2);
+  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14),
+    0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px 0 rgba(0, 0, 0, 0.2);
 
   &__navigation {
     padding: 2rem;
@@ -128,7 +130,7 @@ export default {
 
 .version {
   font-size: 12px;
-  color: rgba($color-second, .3);
+  color: rgba($color-second, 0.3);
   padding: 10px;
   position: absolute;
   top: 0;
