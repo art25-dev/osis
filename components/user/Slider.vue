@@ -8,7 +8,7 @@
         v-for="slide in slideList"
         :key="slide._id"
       >
-        <app-pdf :key="componentKey" :title="slide.title" :pathFile="slide.pathFile"></app-pdf>
+        <app-pdf :title="slide.title" :pathFile="slide.pathFile"></app-pdf>
         <span class="slider__item-date">{{
           $moment(slide.date).format("DD.MM.YYYY")
         }}</span>
@@ -43,13 +43,11 @@ export default {
   },
   data() {
     return {
-      componentKey: 0,
       currentSlide: 1,
       timer: null,
     };
   },
   mounted() {
-    
     if (this.slideList.length > 0) {
       this.$refs.slide[0].classList.add("slider__item--active");
       this.$refs.dot[0].classList.add("dot__item--active");
@@ -63,11 +61,7 @@ export default {
   computed: {},
   watch: {},
   methods: {
-    forceRender() {
-      this.componentKey += 1
-    },
     showSlide(index = 1) {
-   
       index > this.slideList.length ? (this.currentSlide = 1) : false;
       index < 1 ? (this.currentSlide = this.slideList.length) : false;
 
@@ -84,8 +78,6 @@ export default {
       );
 
       this.$refs.dot[this.currentSlide - 1].classList.add("dot__item--active");
-
-      this.forceRender()
     },
     prevSlide() {
       this.showSlide(--this.currentSlide);

@@ -14,16 +14,12 @@ export default {
     AppSlider
   },
   layout: "user",
-    // Запрос всех пунктов меню из store/post.js в Action getPost()
+    // Запрос всех пунктов меню и постов из store/post.js в Action getPost()
   async asyncData({ store }) {
     const slideList = await store.dispatch("post/getPost");
     const navigation = await store.dispatch("navigation/getNavigation");
-    return { slideList };
-  },
-  mounted() {
-
-  },
-  methods: {}
+    return { slideList, navigation };
+  }
 };
 </script>
 
