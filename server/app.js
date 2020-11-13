@@ -6,6 +6,7 @@ const authRoutes = require("./routes/auth_R")
 const departmentRoutes = require("./routes/department_R")
 const navigationRoutes = require("./routes/navigation_R")
 const postRoutes = require("./routes/post_R")
+const dbRoutes = require("./routes/db_R")
 
 const keys = require("./keys")
 const app = express()
@@ -26,5 +27,6 @@ app.use("/api/auth", authRoutes)
 app.use("/api/department", departmentRoutes)
 app.use("/api/navigation", navigationRoutes)
 app.use("/api/post", postRoutes)
+app.use("/api/db", dbRoutes)
 
 module.exports = app

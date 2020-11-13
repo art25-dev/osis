@@ -30,7 +30,9 @@ export default {
       currentTime: 10,
       timer: null,
       fullNavigation: this.$store.getters["navigation/getNavigation"],
-      currentNavigation: this.$store.getters["navigation/getNavigationChildren"](),
+      currentNavigation: this.$store.getters[
+        "navigation/getNavigationChildren"
+      ](),
       history: []
     };
   },
@@ -55,10 +57,11 @@ export default {
       await this.stopTimer();
       await this.startTimer();
 
-
       switch (typeLink) {
         case "link":
-          this.currentNavigation = this.$store.getters["navigation/getNavigationChildren"](id)
+          this.currentNavigation = this.$store.getters[
+            "navigation/getNavigationChildren"
+          ](id);
           this.history.push(id);
           this.$store.commit("navigation/changeStatistic", id);
           break;
@@ -69,6 +72,31 @@ export default {
           });
           this.$store.commit("navigation/changeStatistic", id);
           break;
+        case "db":
+          // const post = await this.$axios.$get("/api/db/admin")
+          // const post = await this.$axios
+          //   .request({
+          //     url: "/api/db/admin",
+          //     method: "GET",
+          //     responseType: "blob",
+          //     onDownloadProgress: progressEvent => {
+          //       let percentCompleted = Math.round(
+          //         (progressEvent.loaded * 100) / progressEvent.total
+          //       );
+          //       console.log(progressEvent.lengthComputable);
+          //       console.log(percentCompleted);
+          //     }
+          //   })
+          //   .then(({ data }) => {
+          //     const downloadUrl = window.URL.createObjectURL(new Blob([data]));
+          //     const link = document.createElement("a");
+          //     link.href = downloadUrl;
+          //     link.setAttribute("download", "file.zip"); //any other extension
+          //     document.body.appendChild(link);
+          //     link.click();
+          //     link.remove();
+          //   });
+          console.log(chrome);
       }
     },
 
@@ -82,13 +110,17 @@ export default {
       if (this.history.length <= 0) {
         this.getMainMenu();
       } else {
-        this.currentNavigation = this.$store.getters["navigation/getNavigationChildren"](prevMenu)
+        this.currentNavigation = this.$store.getters[
+          "navigation/getNavigationChildren"
+        ](prevMenu);
       }
     },
 
     // Получение главного меню
     async getMainMenu() {
-      this.currentNavigation = this.$store.getters["navigation/getNavigationChildren"]()
+      this.currentNavigation = this.$store.getters[
+        "navigation/getNavigationChildren"
+      ]();
       this.history = [];
       await this.$router.push("/");
       await this.stopTimer();

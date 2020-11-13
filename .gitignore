@@ -93,3 +93,4 @@ sw.*
 
 /static/**/*.pdf
 !static/default.pdf
+*.zip
