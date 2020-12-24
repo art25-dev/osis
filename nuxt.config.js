@@ -19,7 +19,8 @@ module.exports = {
     'element-ui/lib/theme-chalk/index.css'
   ],
   plugins: [
-    '@/plugins/globals'
+    '@/plugins/globals',
+    { src: '@/plugins/socket', ssr: false }
   ],
   buildModules: [
   ],

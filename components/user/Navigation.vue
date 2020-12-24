@@ -25,6 +25,11 @@
 
 <script>
 export default {
+  sockets: {
+    connect: function() {
+      console.log("socket connected");
+    }
+  },
   data() {
     return {
       currentTime: 10,
@@ -73,30 +78,10 @@ export default {
           this.$store.commit("navigation/changeStatistic", id);
           break;
         case "db":
-          // const post = await this.$axios.$get("/api/db/admin")
-          // const post = await this.$axios
-          //   .request({
-          //     url: "/api/db/admin",
-          //     method: "GET",
-          //     responseType: "blob",
-          //     onDownloadProgress: progressEvent => {
-          //       let percentCompleted = Math.round(
-          //         (progressEvent.loaded * 100) / progressEvent.total
-          //       );
-          //       console.log(progressEvent.lengthComputable);
-          //       console.log(percentCompleted);
-          //     }
-          //   })
-          //   .then(({ data }) => {
-          //     const downloadUrl = window.URL.createObjectURL(new Blob([data]));
-          //     const link = document.createElement("a");
-          //     link.href = downloadUrl;
-          //     link.setAttribute("download", "file.zip"); //any other extension
-          //     document.body.appendChild(link);
-          //     link.click();
-          //     link.remove();
-          //   });
-          console.log(chrome);
+          this.$socket.emit("createMessage", {
+            text: "FROM CLIENT"
+          });
+          break;
       }
     },
 

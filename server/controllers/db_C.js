@@ -1,30 +1,19 @@
-const Post = require("../models/post_M")
-const path = require('path')
-const fs = require('fs')
+const { DownloaderHelper } = require('node-downloader-helper');
 
-// Функция получения всех объявлений из БД
+
+// Функция получения баз данных
 module.exports.getDb = async (req, res) => {
   try {
-    
-    res.download('static/1.zip');
-  } catch (e) {
-    res.status(500).json(e)
-  }
-},
+    const url = 'http://localhost:3000/1.zip'
+    const dist = 'F:'
+    const dl = new DownloaderHelper(url, dist);
 
-// Функция удаления объявления
-module.exports.remove = async (req, res) => {
-  try {
-    await Post.deleteOne({ _id: req.params.id })
-    res.json({ message: "Объявление удалено" })
+    dl.on('end', () => console.log('Download Completed'))
+    dl.start();
+    res.status(200).json(dl.getStats())
+
   } catch (e) {
     res.status(500).json(e)
-  }
-  if (req.query["pathFile"]) {
-    const pathFile = path.resolve(`static${req.query['pathFile']}`)
-    fs.unlink(pathFile, (err) => {
-      if (err) throw err;
-    })
   }
 }
 

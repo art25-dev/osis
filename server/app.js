@@ -1,4 +1,17 @@
-const express = require("express")
+const app = require("express")()
+const server = require('http').createServer(app)
+const io = require('socket.io')(server)
+
+io.on('connection', socket => {
+  socket.on('createMessage', data => {
+    setTimeout(() => {
+      socket.emit('newMessage', {
+        text: data.text + ' SERVER'
+      })
+    }, 500)
+  })
+})
+
 const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
 
@@ -9,7 +22,6 @@ const postRoutes = require("./routes/post_R")
 const dbRoutes = require("./routes/db_R")
 
 const keys = require("./keys")
-const app = express()
 
 // Подключение к базе данных
 /////////////////////////////////////////////////////////////////////////////////////
@@ -29,4 +41,9 @@ app.use("/api/navigation", navigationRoutes)
 app.use("/api/post", postRoutes)
 app.use("/api/db", dbRoutes)
 
-module.exports = app
+
+
+module.exports = {
+  app,
+  server
+}

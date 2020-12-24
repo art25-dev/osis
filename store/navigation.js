@@ -111,7 +111,7 @@ export const actions = {
       commit('setError', e, { root: true })
       throw e
     }
-  },
+  }
 }
 
 export const getters = {
